@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="vscode,sqltools," />
+  <meta name="keywords" content="swagger,c#," />
 
 
 
@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="好久没写东西了，感觉不能再这样下去了，赶紧补一补，正好今天边查数据库边写Api，突然想为何不都在vscode中干活呢，然后就搜了搜，还真有这样的插件，就是sqltools，其实之前最早是sublime上找的，貌似是一个开发者，但是没配置成功，今天在vscode里配置成功了，就此记录下 sqltools的安装这个很简单，如果方便呢直接在vscode的插件里搜索sqltools，或者用命令安装，貌似呼">
-<meta name="keywords" content="vscode,sqltools">
+<meta name="description" content="最近项目中用到swagger进行Api文档说明，之前只是匆匆的测试了一下，这次前端说要看一下就仔细研究了一下，由于项目中增加了jwt认证，当然也要在swagger中体现出来，就网上搜索了一下，虽然文章不少可是不是版本对不上就是用不了，好不容易在这个博客上找到点线索，在此记录一下。 添加Swagger这个很简单，网上教程也多的是，具体流程如下:   //添加引用 using Swashbuckle.">
+<meta name="keywords" content="swagger,c#">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Vscode插件sqltools的用法">
-<meta property="og:url" content="http://hellojxl.com/2018/04/10/Vscode插件sqltools的用法/index.html">
+<meta property="og:title" content="dotnet core在swagger中添加认证">
+<meta property="og:url" content="http://hellojxl.com/2018/04/11/dotnet-core在swagger中添加认证/index.html">
 <meta property="og:site_name" content="hellojxl">
-<meta property="og:description" content="好久没写东西了，感觉不能再这样下去了，赶紧补一补，正好今天边查数据库边写Api，突然想为何不都在vscode中干活呢，然后就搜了搜，还真有这样的插件，就是sqltools，其实之前最早是sublime上找的，貌似是一个开发者，但是没配置成功，今天在vscode里配置成功了，就此记录下 sqltools的安装这个很简单，如果方便呢直接在vscode的插件里搜索sqltools，或者用命令安装，貌似呼">
+<meta property="og:description" content="最近项目中用到swagger进行Api文档说明，之前只是匆匆的测试了一下，这次前端说要看一下就仔细研究了一下，由于项目中增加了jwt认证，当然也要在swagger中体现出来，就网上搜索了一下，虽然文章不少可是不是版本对不上就是用不了，好不容易在这个博客上找到点线索，在此记录一下。 添加Swagger这个很简单，网上教程也多的是，具体流程如下:   //添加引用 using Swashbuckle.">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-04-10T14:13:36.448Z">
+<meta property="og:updated_time" content="2018-04-11T15:11:32.994Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Vscode插件sqltools的用法">
-<meta name="twitter:description" content="好久没写东西了，感觉不能再这样下去了，赶紧补一补，正好今天边查数据库边写Api，突然想为何不都在vscode中干活呢，然后就搜了搜，还真有这样的插件，就是sqltools，其实之前最早是sublime上找的，貌似是一个开发者，但是没配置成功，今天在vscode里配置成功了，就此记录下 sqltools的安装这个很简单，如果方便呢直接在vscode的插件里搜索sqltools，或者用命令安装，貌似呼">
+<meta name="twitter:title" content="dotnet core在swagger中添加认证">
+<meta name="twitter:description" content="最近项目中用到swagger进行Api文档说明，之前只是匆匆的测试了一下，这次前端说要看一下就仔细研究了一下，由于项目中增加了jwt认证，当然也要在swagger中体现出来，就网上搜索了一下，虽然文章不少可是不是版本对不上就是用不了，好不容易在这个博客上找到点线索，在此记录一下。 添加Swagger这个很简单，网上教程也多的是，具体流程如下:   //添加引用 using Swashbuckle.">
 
 
 
@@ -120,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://hellojxl.com/2018/04/10/Vscode插件sqltools的用法/"/>
+  <link rel="canonical" href="http://hellojxl.com/2018/04/11/dotnet-core在swagger中添加认证/"/>
 
 
 
 
 
-  <title>Vscode插件sqltools的用法 | hellojxl</title>
+  <title>dotnet core在swagger中添加认证 | hellojxl</title>
   
 
 
@@ -263,7 +263,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://hellojxl.com/2018/04/10/Vscode插件sqltools的用法/">
+    <link itemprop="mainEntityOfPage" href="http://hellojxl.com/2018/04/11/dotnet-core在swagger中添加认证/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Sean Jin">
@@ -280,7 +280,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Vscode插件sqltools的用法</h1>
+          <h1 class="post-title" itemprop="name headline">dotnet core在swagger中添加认证</h1>
         
 
         <div class="post-meta">
@@ -292,8 +292,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-10T21:26:58+08:00">
-                2018-04-10
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-11T22:24:08+08:00">
+                2018-04-11
               </time>
             
 
@@ -315,8 +315,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/vscode/" itemprop="url" rel="index">
-                    <span itemprop="name">vscode</span>
+                  <a href="/categories/dotnet-core/" itemprop="url" rel="index">
+                    <span itemprop="name">dotnet core</span>
                   </a>
                 </span>
 
@@ -357,10 +357,73 @@
       
 
       
-        <p>好久没写东西了，感觉不能再这样下去了，赶紧补一补，正好今天边查数据库边写Api，突然想为何不都在vscode中干活呢，然后就搜了搜，还真有这样的插件，就是sqltools，其实之前最早是sublime上找的，貌似是一个开发者，但是没配置成功，今天在vscode里配置成功了，就此记录下</p>
-<h5 id="sqltools的安装"><a href="#sqltools的安装" class="headerlink" title="sqltools的安装"></a>sqltools的安装</h5><p>这个很简单，如果方便呢直接在vscode的插件里搜索sqltools，或者用命令安装，貌似呼出控制台的快捷键不一样，Windows上是：F1，Mac上是：Shift+Command+P，或许是跟我设置的快捷键有关，因为本人之前比较喜欢sublime(现在也用)，输入命令：ext install sqltools就可以了</p>
-<h4 id="sqltools的配置"><a href="#sqltools的配置" class="headerlink" title="sqltools的配置"></a>sqltools的配置</h4><p>之前在sublime中没配置成功，按网上的教程好像不起作用，这次花了点时间具体研究了vscode的，具体是：<br>1.新建连接<br>用命令很简单，呼出命令窗口，输入：sqltools management:setup就会提示有提示新建连接，按提示输入所需要的字段即可，或者在配置文件中添加一个新连接，安装完时会有例子，仿照着放到配置文件里的“sqltools.connections”里就好了<br>2.连接数据库<br>同样输入命令：sqltools tools:connect就会连接，如果有多个数据库会提示让进行选择，同样也可以在配置文件里设置默认连接数据库<br>3.执行查询<br>连接成功后会在左下角显示所有的表，此时写查询语句时就会出现自动提示，非常好用，写完之后选中语句按Ctrl+E键两次就可以执行了，具体的用法可以看插件说明</p>
-<h4 id="结尾"><a href="#结尾" class="headerlink" title="结尾"></a>结尾</h4><p>插件虽然不错，可是总觉得有点不适应，但是拿来应应急总是好的，此外还推荐个插件：background，可以添加背景图片，也可以自定义，好了，就这样吧😊。</p>
+        <p>最近项目中用到swagger进行Api文档说明，之前只是匆匆的测试了一下，这次前端说要看一下就仔细研究了一下，由于项目中增加了jwt认证，当然也要在swagger中体现出来，就网上搜索了一下，虽然文章不少可是不是版本对不上就是用不了，好不容易在这个<a href="https://blog.sluijsveld.com/28/01/2016/CustomSwaggerUIField/" target="_blank" rel="noopener">博客</a>上找到点线索，在此记录一下。</p>
+<h4 id="添加Swagger"><a href="#添加Swagger" class="headerlink" title="添加Swagger"></a>添加Swagger</h4><p>这个很简单，网上教程也多的是，具体流程如下:  </p>
+<pre><code>//添加引用
+using Swashbuckle.AspNetCore.Swagger;
+
+
+//在ConfigureServices中添加
+services.AddSwaggerGen(c =&gt;
+{
+    c.SwaggerDoc(&quot;v1&quot;, new Info { Title = &quot;My API&quot;, Version = &quot;v1&quot; });
+    //添加xml注释说明，下面会说
+    var filePath = Path.Combine(PlatformServices.Default.Application.ApplicationBasePath, &quot;MyApi.xml&quot;);
+    c.IncludeXmlComments(filePath);
+    //添加认证，下面会说
+    c.OperationFilter&lt;AuthorizationHeaderFilter&gt;();
+});
+
+//在Configure中添加
+app.UseSwagger();
+app.UseSwaggerUI(c =&gt;
+{
+    c.SwaggerEndpoint(&quot;/swagger/v1/swagger.json&quot;, &quot;My API V1&quot;);
+});
+
+</code></pre><p>这样默认swagger就可以启动了，当然如果现在真要运行是起不来的，因为还没有生成xml注释文档，下面来添加  </p>
+<h4 id="添加xml文档注释"><a href="#添加xml文档注释" class="headerlink" title="添加xml文档注释"></a>添加xml文档注释</h4><p>这个如果用vs的话很简单，在项目配置里配置一下就好，如果用vs code的话稍微有点麻烦，其实更简单，只是刚开始不知道怎么加而已，只需要在csproj文件中添加下面代码  </p>
+<pre><code>&lt;PropertyGroup&gt;
+    &lt;TargetFramework&gt;netcoreapp2.0&lt;/TargetFramework&gt;
+    //下面这句，注意文件名称
+    &lt;DocumentationFile&gt;bin/Debug/netcoreapp2.0/myApi.xml&lt;/DocumentationFile&gt; 
+  &lt;/PropertyGroup&gt;    
+</code></pre><p>其实也可以添加到这里  </p>
+<pre><code>&lt;PropertyGroup Condition=&quot;&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|AnyCPU&apos;&quot;&gt;
+&lt;DocumentationFile&gt;bin/Debug/netcoreapp2.0/myApi.xml&lt;/DocumentationFile&gt;  
+</code></pre><p>只是我发现有的工程里没有Condition选项，发现添加到TargetFramework下也可以就都写上了，vs code添加注释可以用XML Documentation Comments Support for Visual Studio Code插件，和vs一样，只是有的时候貌似会多加个return，而且一旦要注释，整个工程都要有注释，否则无法运行，暂时没考虑怎么解决，以后再说  </p>
+<h4 id="添加认证选项"><a href="#添加认证选项" class="headerlink" title="添加认证选项"></a>添加认证选项</h4><p>下面说到怎么添加认证了，就是上面那个AuthorizationHeaderFilter，新建一个类，并实现接口IOperationFilter就可以了，代码如下：  </p>
+<pre><code>using System.Collections.Generic;
+using System.Linq;
+using Microsoft.AspNetCore.Mvc.Authorization;
+using Swashbuckle.AspNetCore.Swagger;
+using Swashbuckle.AspNetCore.SwaggerGen;
+
+public class AuthorizationHeaderFilter : IOperationFilter
+{
+    public void Apply(Operation operation, OperationFilterContext context)
+    {
+         var filterPipeline = context.ApiDescription.ActionDescriptor.FilterDescriptors;
+         var isAuthorized = filterPipeline.Select(filterInfo =&gt; filterInfo.Filter).Any(filter =&gt; filter is AuthorizeFilter);
+         var allowAnonymous = filterPipeline.Select(filterInfo =&gt; filterInfo.Filter).Any(filter =&gt; filter is IAllowAnonymousFilter);
+         if (isAuthorized &amp;&amp; !allowAnonymous)
+         {
+             if (operation.Parameters == null)
+             {
+                 operation.Parameters = new List&lt;IParameter&gt;();
+             }
+             operation.Parameters.Add(new NonBodyParameter
+             {
+                    Name = &quot;Authorization&quot;,
+                    In = &quot;header&quot;,
+                    Description = &quot;access token&quot;,
+                    Required = true,
+                    Type = &quot;string&quot;
+              });
+          }
+     }
+} 
+</code></pre><h4 id="结束"><a href="#结束" class="headerlink" title="结束"></a>结束</h4><p>好了，这样启动项目就可以看见swagger中要求填入Authorization的字段了，虽然可以实现但还没具体的测试，明天有时间测试下，可能有错误的地方，如果发现了会改，仅供参考吧🔚</p>
 
       
     </div>
@@ -381,7 +444,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="http://hellojxl.com/2018/04/10/Vscode插件sqltools的用法/" title="Vscode插件sqltools的用法">http://hellojxl.com/2018/04/10/Vscode插件sqltools的用法/</a>
+    <a href="http://hellojxl.com/2018/04/11/dotnet-core在swagger中添加认证/" title="dotnet core在swagger中添加认证">http://hellojxl.com/2018/04/11/dotnet-core在swagger中添加认证/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>
@@ -396,9 +459,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/vscode/" rel="tag"># vscode</a>
+            <a href="/tags/swagger/" rel="tag"># swagger</a>
           
-            <a href="/tags/sqltools/" rel="tag"># sqltools</a>
+            <a href="/tags/c/" rel="tag"># c#</a>
           
         </div>
       
@@ -411,8 +474,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/03/29/在vscode中启用just-my-code/" rel="next" title="在vscode中禁用just my code">
-                <i class="fa fa-chevron-left"></i> 在vscode中禁用just my code
+              <a href="/2018/04/10/Vscode插件sqltools的用法/" rel="next" title="Vscode插件sqltools的用法">
+                <i class="fa fa-chevron-left"></i> Vscode插件sqltools的用法
               </a>
             
           </div>
@@ -420,10 +483,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/04/11/dotnet-core在swagger中添加认证/" rel="prev" title="dotnet core在swagger中添加认证">
-                dotnet core在swagger中添加认证 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -577,7 +636,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#sqltools的安装"><span class="nav-number">1.</span> <span class="nav-text">sqltools的安装</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#sqltools的配置"><span class="nav-number"></span> <span class="nav-text">sqltools的配置</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#结尾"><span class="nav-number"></span> <span class="nav-text">结尾</span></a></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#添加Swagger"><span class="nav-number">1.</span> <span class="nav-text">添加Swagger</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#添加xml文档注释"><span class="nav-number">2.</span> <span class="nav-text">添加xml文档注释</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#添加认证选项"><span class="nav-number">3.</span> <span class="nav-text">添加认证选项</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#结束"><span class="nav-number">4.</span> <span class="nav-text">结束</span></a></li></ol></div>
             
 
           </div>
