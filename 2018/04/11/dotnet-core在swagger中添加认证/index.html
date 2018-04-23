@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="2018-04-16更新：经过测试，这么写是可以的，只是每次调用前都要加上：bearer token,可以在命名Filter的时候加上提醒一下，暂时没去想其它更好的方法 还有当前如果有多个项目的话，比如这个项目引用了另一个项目的model，默认是不会显示注释的，解决方法是：每个项目单独生成xml文件，然后在include XML文档时同时引入，那么就可以显示了 Nignx反向代理的情况下，默认会">
+<meta name="description" content="2018-04-16更新：经过测试，这么写是可以的，只是每次调用前都要加上：bearer token,可以在命名Filter的时候加上提醒一下，暂时没去想其它更好的方法   还有当前如果有多个项目的话，比如这个项目引用了另一个项目的model，默认是不会显示注释的，解决方法是：每个项目单独生成xml文件，然后在include XML文档时同时引入，那么就可以显示了 Nignx反向代理的情况下，默">
 <meta name="keywords" content="swagger,c#">
 <meta property="og:type" content="article">
 <meta property="og:title" content="dotnet core在swagger中添加认证">
 <meta property="og:url" content="http://hellojxl.com/2018/04/11/dotnet-core在swagger中添加认证/index.html">
 <meta property="og:site_name" content="hellojxl">
-<meta property="og:description" content="2018-04-16更新：经过测试，这么写是可以的，只是每次调用前都要加上：bearer token,可以在命名Filter的时候加上提醒一下，暂时没去想其它更好的方法 还有当前如果有多个项目的话，比如这个项目引用了另一个项目的model，默认是不会显示注释的，解决方法是：每个项目单独生成xml文件，然后在include XML文档时同时引入，那么就可以显示了 Nignx反向代理的情况下，默认会">
+<meta property="og:description" content="2018-04-16更新：经过测试，这么写是可以的，只是每次调用前都要加上：bearer token,可以在命名Filter的时候加上提醒一下，暂时没去想其它更好的方法   还有当前如果有多个项目的话，比如这个项目引用了另一个项目的model，默认是不会显示注释的，解决方法是：每个项目单独生成xml文件，然后在include XML文档时同时引入，那么就可以显示了 Nignx反向代理的情况下，默">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:updated_time" content="2018-04-16T13:52:18.159Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="dotnet core在swagger中添加认证">
-<meta name="twitter:description" content="2018-04-16更新：经过测试，这么写是可以的，只是每次调用前都要加上：bearer token,可以在命名Filter的时候加上提醒一下，暂时没去想其它更好的方法 还有当前如果有多个项目的话，比如这个项目引用了另一个项目的model，默认是不会显示注释的，解决方法是：每个项目单独生成xml文件，然后在include XML文档时同时引入，那么就可以显示了 Nignx反向代理的情况下，默认会">
+<meta name="twitter:description" content="2018-04-16更新：经过测试，这么写是可以的，只是每次调用前都要加上：bearer token,可以在命名Filter的时候加上提醒一下，暂时没去想其它更好的方法   还有当前如果有多个项目的话，比如这个项目引用了另一个项目的model，默认是不会显示注释的，解决方法是：每个项目单独生成xml文件，然后在include XML文档时同时引入，那么就可以显示了 Nignx反向代理的情况下，默">
 
 
 
@@ -358,16 +358,14 @@
 
       
         <hr>
-<p>2018-04-16更新：经过测试，这么写是可以的，只是每次调用前都要加上：bearer token,可以在命名Filter的时候加上提醒一下，暂时没去想其它更好的方法</p>
+<p>2018-04-16更新：经过测试，这么写是可以的，只是每次调用前都要加上：bearer token,可以在命名Filter的时候加上提醒一下，暂时没去想其它更好的方法  </p>
 <p>还有当前如果有多个项目的话，比如这个项目引用了另一个项目的model，默认是不会显示注释的，解决方法是：每个项目单独生成xml文件，然后在include XML文档时同时引入，那么就可以显示了</p>
-<p>Nignx反向代理的情况下，默认会找不到swagger的json文件导致失败，方法是：</p>
+<p>Nignx反向代理的情况下，默认会找不到swagger的json文件导致失败，方法是：  </p>
 <pre><code>//加入两个点
 c.SwaggerEndpoint(&quot;../swagger/v1/swagger.json&quot;, &quot;My API V1&quot;);
-</code></pre>
-<hr>
+</code></pre><hr>
 <p>最近项目中用到swagger进行Api文档说明，之前只是匆匆的测试了一下，这次前端说要看一下就仔细研究了一下，由于项目中增加了jwt认证，当然也要在swagger中体现出来，就网上搜索了一下，虽然文章不少可是不是版本对不上就是用不了，好不容易在这个<a href="https://blog.sluijsveld.com/28/01/2016/CustomSwaggerUIField/" target="_blank" rel="noopener">博客</a>上找到点线索，在此记录一下。</p>
-<h4>添加Swagger</h4>
-<p>这个很简单，网上教程也多的是，具体流程如下:</p>
+<h4 id="添加Swagger"><a href="#添加Swagger" class="headerlink" title="添加Swagger"></a>添加Swagger</h4><p>这个很简单，网上教程也多的是，具体流程如下:  </p>
 <pre><code>//添加引用
 using Swashbuckle.AspNetCore.Swagger;
 
@@ -390,23 +388,18 @@ app.UseSwaggerUI(c =&gt;
     c.SwaggerEndpoint(&quot;/swagger/v1/swagger.json&quot;, &quot;My API V1&quot;);
 });
 
-</code></pre>
-<p>这样默认swagger就可以启动了，当然如果现在真要运行是起不来的，因为还没有生成xml注释文档，下面来添加</p>
-<h4>添加xml文档注释</h4>
-<p>这个如果用vs的话很简单，在项目配置里配置一下就好，如果用vs code的话稍微有点麻烦，其实更简单，只是刚开始不知道怎么加而已，只需要在csproj文件中添加下面代码</p>
+</code></pre><p>这样默认swagger就可以启动了，当然如果现在真要运行是起不来的，因为还没有生成xml注释文档，下面来添加  </p>
+<h4 id="添加xml文档注释"><a href="#添加xml文档注释" class="headerlink" title="添加xml文档注释"></a>添加xml文档注释</h4><p>这个如果用vs的话很简单，在项目配置里配置一下就好，如果用vs code的话稍微有点麻烦，其实更简单，只是刚开始不知道怎么加而已，只需要在csproj文件中添加下面代码  </p>
 <pre><code>&lt;PropertyGroup&gt;
     &lt;TargetFramework&gt;netcoreapp2.0&lt;/TargetFramework&gt;
     //下面这句，注意文件名称
     &lt;DocumentationFile&gt;bin/Debug/netcoreapp2.0/myApi.xml&lt;/DocumentationFile&gt; 
   &lt;/PropertyGroup&gt;    
-</code></pre>
-<p>其实也可以添加到这里</p>
-<pre><code>&lt;PropertyGroup Condition=&quot;'$(Configuration)|$(Platform)'=='Debug|AnyCPU'&quot;&gt;
+</code></pre><p>其实也可以添加到这里  </p>
+<pre><code>&lt;PropertyGroup Condition=&quot;&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|AnyCPU&apos;&quot;&gt;
 &lt;DocumentationFile&gt;bin/Debug/netcoreapp2.0/myApi.xml&lt;/DocumentationFile&gt;  
-</code></pre>
-<p>只是我发现有的工程里没有Condition选项，发现添加到TargetFramework下也可以就都写上了，vs code添加注释可以用XML Documentation Comments Support for Visual Studio Code插件，和vs一样，只是有的时候貌似会多加个return，而且一旦要注释，整个工程都要有注释，否则无法运行，暂时没考虑怎么解决，以后再说</p>
-<h4>添加认证选项</h4>
-<p>下面说到怎么添加认证了，就是上面那个AuthorizationHeaderFilter，新建一个类，并实现接口IOperationFilter就可以了，代码如下：</p>
+</code></pre><p>只是我发现有的工程里没有Condition选项，发现添加到TargetFramework下也可以就都写上了，vs code添加注释可以用XML Documentation Comments Support for Visual Studio Code插件，和vs一样，只是有的时候貌似会多加个return，而且一旦要注释，整个工程都要有注释，否则无法运行，暂时没考虑怎么解决，以后再说  </p>
+<h4 id="添加认证选项"><a href="#添加认证选项" class="headerlink" title="添加认证选项"></a>添加认证选项</h4><p>下面说到怎么添加认证了，就是上面那个AuthorizationHeaderFilter，新建一个类，并实现接口IOperationFilter就可以了，代码如下：  </p>
 <pre><code>using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc.Authorization;
@@ -437,9 +430,7 @@ public class AuthorizationHeaderFilter : IOperationFilter
           }
      }
 } 
-</code></pre>
-<h4>结束</h4>
-<p>好了，这样启动项目就可以看见swagger中要求填入Authorization的字段了，虽然可以实现但还没具体的测试，明天有时间测试下，可能有错误的地方，如果发现了会改，仅供参考吧🔚</p>
+</code></pre><h4 id="结束"><a href="#结束" class="headerlink" title="结束"></a>结束</h4><p>好了，这样启动项目就可以看见swagger中要求填入Authorization的字段了，虽然可以实现但还没具体的测试，明天有时间测试下，可能有错误的地方，如果发现了会改，仅供参考吧🔚</p>
 
       
     </div>
@@ -499,6 +490,10 @@ public class AuthorizationHeaderFilter : IOperationFilter
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/04/23/关于dapper迁移到sqlSugar的记录/" rel="prev" title="关于dapper迁移到sqlSugar的记录">
+                关于dapper迁移到sqlSugar的记录 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -581,7 +576,7 @@ public class AuthorizationHeaderFilter : IOperationFilter
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-count">7</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -592,7 +587,7 @@ public class AuthorizationHeaderFilter : IOperationFilter
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-count">4</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -603,7 +598,7 @@ public class AuthorizationHeaderFilter : IOperationFilter
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-count">10</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -652,7 +647,7 @@ public class AuthorizationHeaderFilter : IOperationFilter
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#undefined"><span class="nav-number">1.</span> <span class="nav-text">添加Swagger</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#undefined"><span class="nav-number">2.</span> <span class="nav-text">添加xml文档注释</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#undefined"><span class="nav-number">3.</span> <span class="nav-text">添加认证选项</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#undefined"><span class="nav-number">4.</span> <span class="nav-text">结束</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#添加Swagger"><span class="nav-number">1.</span> <span class="nav-text">添加Swagger</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#添加xml文档注释"><span class="nav-number">2.</span> <span class="nav-text">添加xml文档注释</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#添加认证选项"><span class="nav-number">3.</span> <span class="nav-text">添加认证选项</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#结束"><span class="nav-number">4.</span> <span class="nav-text">结束</span></a></li></ol></div>
             
 
           </div>
