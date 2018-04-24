@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="好久没写东西了，感觉不能再这样下去了，赶紧补一补，正好今天边查数据库边写Api，突然想为何不都在vscode中干活呢，然后就搜了搜，还真有这样的插件，就是sqltools，其实之前最早是sublime上找的，貌似是一个开发者，但是没配置成功，今天在vscode里配置成功了，就此记录下 sqltools的安装 这个很简单，如果方便呢直接在vscode的插件里搜索sqltools，或者用命令安装，貌似">
+<meta name="description" content="好久没写东西了，感觉不能再这样下去了，赶紧补一补，正好今天边查数据库边写Api，突然想为何不都在vscode中干活呢，然后就搜了搜，还真有这样的插件，就是sqltools，其实之前最早是sublime上找的，貌似是一个开发者，但是没配置成功，今天在vscode里配置成功了，就此记录下 sqltools的安装这个很简单，如果方便呢直接在vscode的插件里搜索sqltools，或者用命令安装，貌似呼">
 <meta name="keywords" content="vscode,sqltools">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Vscode插件sqltools的用法">
 <meta property="og:url" content="http://hellojxl.com/2018/04/10/Vscode插件sqltools的用法/index.html">
 <meta property="og:site_name" content="hellojxl">
-<meta property="og:description" content="好久没写东西了，感觉不能再这样下去了，赶紧补一补，正好今天边查数据库边写Api，突然想为何不都在vscode中干活呢，然后就搜了搜，还真有这样的插件，就是sqltools，其实之前最早是sublime上找的，貌似是一个开发者，但是没配置成功，今天在vscode里配置成功了，就此记录下 sqltools的安装 这个很简单，如果方便呢直接在vscode的插件里搜索sqltools，或者用命令安装，貌似">
+<meta property="og:description" content="好久没写东西了，感觉不能再这样下去了，赶紧补一补，正好今天边查数据库边写Api，突然想为何不都在vscode中干活呢，然后就搜了搜，还真有这样的插件，就是sqltools，其实之前最早是sublime上找的，貌似是一个开发者，但是没配置成功，今天在vscode里配置成功了，就此记录下 sqltools的安装这个很简单，如果方便呢直接在vscode的插件里搜索sqltools，或者用命令安装，貌似呼">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:updated_time" content="2018-04-10T14:13:36.448Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Vscode插件sqltools的用法">
-<meta name="twitter:description" content="好久没写东西了，感觉不能再这样下去了，赶紧补一补，正好今天边查数据库边写Api，突然想为何不都在vscode中干活呢，然后就搜了搜，还真有这样的插件，就是sqltools，其实之前最早是sublime上找的，貌似是一个开发者，但是没配置成功，今天在vscode里配置成功了，就此记录下 sqltools的安装 这个很简单，如果方便呢直接在vscode的插件里搜索sqltools，或者用命令安装，貌似">
+<meta name="twitter:description" content="好久没写东西了，感觉不能再这样下去了，赶紧补一补，正好今天边查数据库边写Api，突然想为何不都在vscode中干活呢，然后就搜了搜，还真有这样的插件，就是sqltools，其实之前最早是sublime上找的，貌似是一个开发者，但是没配置成功，今天在vscode里配置成功了，就此记录下 sqltools的安装这个很简单，如果方便呢直接在vscode的插件里搜索sqltools，或者用命令安装，貌似呼">
 
 
 
@@ -358,18 +358,9 @@
 
       
         <p>好久没写东西了，感觉不能再这样下去了，赶紧补一补，正好今天边查数据库边写Api，突然想为何不都在vscode中干活呢，然后就搜了搜，还真有这样的插件，就是sqltools，其实之前最早是sublime上找的，貌似是一个开发者，但是没配置成功，今天在vscode里配置成功了，就此记录下</p>
-<h5>sqltools的安装</h5>
-<p>这个很简单，如果方便呢直接在vscode的插件里搜索sqltools，或者用命令安装，貌似呼出控制台的快捷键不一样，Windows上是：F1，Mac上是：Shift+Command+P，或许是跟我设置的快捷键有关，因为本人之前比较喜欢sublime(现在也用)，输入命令：ext install sqltools就可以了</p>
-<h4>sqltools的配置</h4>
-<p>之前在sublime中没配置成功，按网上的教程好像不起作用，这次花了点时间具体研究了vscode的，具体是：<br>
-1.新建连接<br>
-用命令很简单，呼出命令窗口，输入：sqltools management:setup就会提示有提示新建连接，按提示输入所需要的字段即可，或者在配置文件中添加一个新连接，安装完时会有例子，仿照着放到配置文件里的“sqltools.connections”里就好了<br>
-2.连接数据库<br>
-同样输入命令：sqltools tools:connect就会连接，如果有多个数据库会提示让进行选择，同样也可以在配置文件里设置默认连接数据库<br>
-3.执行查询<br>
-连接成功后会在左下角显示所有的表，此时写查询语句时就会出现自动提示，非常好用，写完之后选中语句按Ctrl+E键两次就可以执行了，具体的用法可以看插件说明</p>
-<h4>结尾</h4>
-<p>插件虽然不错，可是总觉得有点不适应，但是拿来应应急总是好的，此外还推荐个插件：background，可以添加背景图片，也可以自定义，好了，就这样吧😊。</p>
+<h5 id="sqltools的安装"><a href="#sqltools的安装" class="headerlink" title="sqltools的安装"></a>sqltools的安装</h5><p>这个很简单，如果方便呢直接在vscode的插件里搜索sqltools，或者用命令安装，貌似呼出控制台的快捷键不一样，Windows上是：F1，Mac上是：Shift+Command+P，或许是跟我设置的快捷键有关，因为本人之前比较喜欢sublime(现在也用)，输入命令：ext install sqltools就可以了</p>
+<h4 id="sqltools的配置"><a href="#sqltools的配置" class="headerlink" title="sqltools的配置"></a>sqltools的配置</h4><p>之前在sublime中没配置成功，按网上的教程好像不起作用，这次花了点时间具体研究了vscode的，具体是：<br>1.新建连接<br>用命令很简单，呼出命令窗口，输入：sqltools management:setup就会提示有提示新建连接，按提示输入所需要的字段即可，或者在配置文件中添加一个新连接，安装完时会有例子，仿照着放到配置文件里的“sqltools.connections”里就好了<br>2.连接数据库<br>同样输入命令：sqltools tools:connect就会连接，如果有多个数据库会提示让进行选择，同样也可以在配置文件里设置默认连接数据库<br>3.执行查询<br>连接成功后会在左下角显示所有的表，此时写查询语句时就会出现自动提示，非常好用，写完之后选中语句按Ctrl+E键两次就可以执行了，具体的用法可以看插件说明</p>
+<h4 id="结尾"><a href="#结尾" class="headerlink" title="结尾"></a>结尾</h4><p>插件虽然不错，可是总觉得有点不适应，但是拿来应应急总是好的，此外还推荐个插件：background，可以添加背景图片，也可以自定义，好了，就这样吧😊。</p>
 
       
     </div>
@@ -515,7 +506,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-count">8</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -526,7 +517,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-count">5</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -537,7 +528,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-count">12</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -586,7 +577,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#undefined"><span class="nav-number">1.</span> <span class="nav-text">sqltools的安装</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#undefined"><span class="nav-number"></span> <span class="nav-text">sqltools的配置</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#undefined"><span class="nav-number"></span> <span class="nav-text">结尾</span></a></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#sqltools的安装"><span class="nav-number">1.</span> <span class="nav-text">sqltools的安装</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#sqltools的配置"><span class="nav-number"></span> <span class="nav-text">sqltools的配置</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#结尾"><span class="nav-number"></span> <span class="nav-text">结尾</span></a></div>
             
 
           </div>
