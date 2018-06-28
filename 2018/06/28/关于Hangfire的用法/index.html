@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="最近项目中要执行后台任务，所以找了一下相关库，刚开始用的是TimedJob，用起来很简单，本身提供依赖注入,代码如下：   //先在ConfigureServices添加 app.AddTimedJob();   //然后在Configure中使用 app.UseTimedJob(); //定义一个类继承接口Job public Class MyJob:Job {     private ICon">
+<meta name="description" content="最近项目中要执行后台任务，所以找了一下相关库，刚开始用的是TimedJob，用起来很简单，本身提供依赖注入,代码如下：    //先在ConfigureServices添加 app.AddTimedJob();   //然后在Configure中使用 app.UseTimedJob(); //定义一个类继承接口Job public Class MyJob:Job {     private ICo">
 <meta name="keywords" content="dotnet core,c#">
 <meta property="og:type" content="article">
 <meta property="og:title" content="关于Hangfire的用法">
 <meta property="og:url" content="http://hellojxl.com/2018/06/28/关于Hangfire的用法/index.html">
 <meta property="og:site_name" content="hellojxl">
-<meta property="og:description" content="最近项目中要执行后台任务，所以找了一下相关库，刚开始用的是TimedJob，用起来很简单，本身提供依赖注入,代码如下：   //先在ConfigureServices添加 app.AddTimedJob();   //然后在Configure中使用 app.UseTimedJob(); //定义一个类继承接口Job public Class MyJob:Job {     private ICon">
+<meta property="og:description" content="最近项目中要执行后台任务，所以找了一下相关库，刚开始用的是TimedJob，用起来很简单，本身提供依赖注入,代码如下：    //先在ConfigureServices添加 app.AddTimedJob();   //然后在Configure中使用 app.UseTimedJob(); //定义一个类继承接口Job public Class MyJob:Job {     private ICo">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-06-28T15:15:35.813Z">
+<meta property="og:updated_time" content="2018-06-28T15:16:57.527Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="关于Hangfire的用法">
-<meta name="twitter:description" content="最近项目中要执行后台任务，所以找了一下相关库，刚开始用的是TimedJob，用起来很简单，本身提供依赖注入,代码如下：   //先在ConfigureServices添加 app.AddTimedJob();   //然后在Configure中使用 app.UseTimedJob(); //定义一个类继承接口Job public Class MyJob:Job {     private ICon">
+<meta name="twitter:description" content="最近项目中要执行后台任务，所以找了一下相关库，刚开始用的是TimedJob，用起来很简单，本身提供依赖注入,代码如下：    //先在ConfigureServices添加 app.AddTimedJob();   //然后在Configure中使用 app.UseTimedJob(); //定义一个类继承接口Job public Class MyJob:Job {     private ICo">
 
 
 
@@ -358,7 +358,8 @@
 
       
         <p>最近项目中要执行后台任务，所以找了一下相关库，刚开始用的是<a href="https://www.nuget.org/packages/Pomelo.AspNetCore.TimedJob/2.0.0-rtm-10046" target="_blank" rel="noopener">TimedJob</a>，用起来很简单，本身提供依赖注入,代码如下：  </p>
-<pre><code>//先在ConfigureServices添加
+<pre><code>
+//先在ConfigureServices添加
 app.AddTimedJob();  
 //然后在Configure中使用
 app.UseTimedJob();
@@ -377,7 +378,8 @@ public Class MyJob:Job
           //Job要执行的逻辑代码
           Console.WriteLine(&quot;hello world&quot;);
      }
-}
+}  
+
 </code></pre><p>整个用法还是很简单的，如果只是一些简单任务可以采用这种方式，只是如果想通过UI控制的话，这种方式做的工作有点多，所以接下来就要说到<a href="https://www.hangfire.io" target="_blank" rel="noopener">Hangfire</a>了,这个用起来就更简单了，而且自带UI，可以直接在UI上进行任务触发，用法跟TimedJob差不多，同时由于Hangfire需要保存任务，需要数据库支持，第三方插件也支持Redis，由于项目正好用Sql Server，再加上任务不是很复杂就直接用数据库了  </p>
 <pre><code>
 //添加Hangfire，此处用的是PostgreSql
