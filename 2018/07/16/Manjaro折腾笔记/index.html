@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="hellojxl">
 <meta property="og:description" content="前言由于公司配的E460笔记本经常死机，不清楚是不是win10的问题，同时由于win10是家庭版无法使用Docker，所以打算换一下系统看看有没有改善，并且不想装双系统，所以用虚拟机代替，下面就是整个折腾的过程，虽然最终以失败而告终。   1.选择宿主主机系统 以win10为宿主主机，虚拟linux，但是由于win10系统下大概率会死机，所以不想采用这种方案     以linux为宿主主机，虚拟W">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-07-21T14:41:53.568Z">
+<meta property="og:updated_time" content="2018-07-21T14:46:11.463Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Manjaro折腾笔记">
 <meta name="twitter:description" content="前言由于公司配的E460笔记本经常死机，不清楚是不是win10的问题，同时由于win10是家庭版无法使用Docker，所以打算换一下系统看看有没有改善，并且不想装双系统，所以用虚拟机代替，下面就是整个折腾的过程，虽然最终以失败而告终。   1.选择宿主主机系统 以win10为宿主主机，虚拟linux，但是由于win10系统下大概率会死机，所以不想采用这种方案     以linux为宿主主机，虚拟W">
@@ -385,7 +385,7 @@
 </ul>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">sudo pacman -S fcitx-im</span><br><span class="line">sudo pacman -S fcitx-configtool </span><br><span class="line">sudo pacman -S fcitx-sogoupinyin  </span><br><span class="line"></span><br><span class="line">//增加配置文件</span><br><span class="line">$ sudo nano ~/.xprofile //没有新建并添加一下代码</span><br><span class="line"></span><br><span class="line">export GTK_IM_MODULE=fcitx </span><br><span class="line">export QT_IM_MODULE=fcitx </span><br><span class="line">export XMODIFIERS=”@im=fcitx”</span><br><span class="line"></span><br><span class="line">//保存后注销，我这里总是出问题，所以没用搜狗，用的默认的</span><br></pre></td></tr></table></figure>
 <ul>
-<li>其它软件大部分都可以用pacman就可以了，不赘述了  </li>
+<li>其它软件大部分都可以用pacman就可以了，不赘述了，顺便说下sublime3的安装，官方教程很好可就是https被墙了，用http就可以了  </li>
 </ul>
 <h4 id="结束"><a href="#结束" class="headerlink" title="结束"></a>结束</h4><p>浪费了一个周末安装这些东西，结果还是失败了，果然老了，不爱折腾了，睡觉了😪。</p>
 
