@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="dotnet core,vscode,c#," />
+  <meta name="keywords" content="Nginx,Let's Encrypt," />
 
 
 
@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="最近打算开始用vscode写代码，之前用过一段时间，感觉不怎么好用，最近又用了用，感觉好用很多，今天打开一个项目发现调试不了其它项目，同时调试中一直在打印启用了just my code，所以就搜怎么禁用，当时还没搜到，后来偶然在微软的网站上查到可以在launch.json下添加： &amp;quot;just my code&amp;quot;:false 就可以禁用just my code了，试用下来感觉已经不">
-<meta name="keywords" content="dotnet core,vscode,c#">
+<meta name="description" content="记录原因之前也部署过，结果上次因为买了一个新的VPS，打算部署v2ray的时候，遇到点问题，感觉还是要记录下来，因为是自己用所以就直接用Let’s Encrypt部署吧，因为可以自动续期，90天也无所谓。   安装部署啥也不说，直接上certbot,详细的可以参考官方文档，这里只记录简单的部署    安装前提因为certbot基于python，所以系统需要先安装Python 2.7 or 3.4+">
+<meta name="keywords" content="Nginx,Let&#39;s Encrypt">
 <meta property="og:type" content="article">
-<meta property="og:title" content="在vscode中禁用just my code">
-<meta property="og:url" content="http://hellojxl.com/2018/03/29/在vscode中启用just-my-code/index.html">
+<meta property="og:title" content="关于Nginx启用Https的记录">
+<meta property="og:url" content="http://hellojxl.com/2018/07/21/关于Nginx启用Https的记录/index.html">
 <meta property="og:site_name" content="hellojxl">
-<meta property="og:description" content="最近打算开始用vscode写代码，之前用过一段时间，感觉不怎么好用，最近又用了用，感觉好用很多，今天打开一个项目发现调试不了其它项目，同时调试中一直在打印启用了just my code，所以就搜怎么禁用，当时还没搜到，后来偶然在微软的网站上查到可以在launch.json下添加： &amp;quot;just my code&amp;quot;:false 就可以禁用just my code了，试用下来感觉已经不">
+<meta property="og:description" content="记录原因之前也部署过，结果上次因为买了一个新的VPS，打算部署v2ray的时候，遇到点问题，感觉还是要记录下来，因为是自己用所以就直接用Let’s Encrypt部署吧，因为可以自动续期，90天也无所谓。   安装部署啥也不说，直接上certbot,详细的可以参考官方文档，这里只记录简单的部署    安装前提因为certbot基于python，所以系统需要先安装Python 2.7 or 3.4+">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-04-04T14:05:09.493Z">
+<meta property="og:updated_time" content="2018-07-21T16:28:26.012Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="在vscode中禁用just my code">
-<meta name="twitter:description" content="最近打算开始用vscode写代码，之前用过一段时间，感觉不怎么好用，最近又用了用，感觉好用很多，今天打开一个项目发现调试不了其它项目，同时调试中一直在打印启用了just my code，所以就搜怎么禁用，当时还没搜到，后来偶然在微软的网站上查到可以在launch.json下添加： &amp;quot;just my code&amp;quot;:false 就可以禁用just my code了，试用下来感觉已经不">
+<meta name="twitter:title" content="关于Nginx启用Https的记录">
+<meta name="twitter:description" content="记录原因之前也部署过，结果上次因为买了一个新的VPS，打算部署v2ray的时候，遇到点问题，感觉还是要记录下来，因为是自己用所以就直接用Let’s Encrypt部署吧，因为可以自动续期，90天也无所谓。   安装部署啥也不说，直接上certbot,详细的可以参考官方文档，这里只记录简单的部署    安装前提因为certbot基于python，所以系统需要先安装Python 2.7 or 3.4+">
 
 
 
@@ -120,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://hellojxl.com/2018/03/29/在vscode中启用just-my-code/"/>
+  <link rel="canonical" href="http://hellojxl.com/2018/07/21/关于Nginx启用Https的记录/"/>
 
 
 
 
 
-  <title>在vscode中禁用just my code | hellojxl</title>
+  <title>关于Nginx启用Https的记录 | hellojxl</title>
   
 
 
@@ -263,7 +263,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://hellojxl.com/2018/03/29/在vscode中启用just-my-code/">
+    <link itemprop="mainEntityOfPage" href="http://hellojxl.com/2018/07/21/关于Nginx启用Https的记录/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Sean Jin">
@@ -280,7 +280,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">在vscode中禁用just my code</h1>
+          <h1 class="post-title" itemprop="name headline">关于Nginx启用Https的记录</h1>
         
 
         <div class="post-meta">
@@ -292,8 +292,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-29T20:32:32+08:00">
-                2018-03-29
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-07-21T22:54:45+08:00">
+                2018-07-21
               </time>
             
 
@@ -315,8 +315,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/vscode/" itemprop="url" rel="index">
-                    <span itemprop="name">vscode</span>
+                  <a href="/categories/Nginx/" itemprop="url" rel="index">
+                    <span itemprop="name">Nginx</span>
                   </a>
                 </span>
 
@@ -357,9 +357,35 @@
       
 
       
-        <p>最近打算开始用vscode写代码，之前用过一段时间，感觉不怎么好用，最近又用了用，感觉好用很多，今天打开一个项目发现调试不了其它项目，同时调试中一直在打印启用了just my code，所以就搜怎么禁用，当时还没搜到，后来偶然在微软的网站上查到可以在launch.json下添加：</p>
-<pre><code>&quot;just my code&quot;:false
-</code></pre><p>就可以禁用just my code了，试用下来感觉已经不比vs差了，还有智能提示，感觉很智能，对了顺便说一下，可以装一下由开发者jchannon开发的C# Extensions，非常好用！</p>
+        <h4 id="记录原因"><a href="#记录原因" class="headerlink" title="记录原因"></a>记录原因</h4><p>之前也部署过，结果上次因为买了一个新的VPS，打算部署<a href="https://www.v2ray.com" target="_blank" rel="noopener">v2ray</a>的时候，遇到点问题，感觉还是要记录下来，因为是自己用所以就直接用Let’s Encrypt部署吧，因为可以自动续期，90天也无所谓。  </p>
+<h4 id="安装部署"><a href="#安装部署" class="headerlink" title="安装部署"></a>安装部署</h4><p>啥也不说，直接上<a href="https://certbot.eff.org/" target="_blank" rel="noopener">certbot</a>,详细的可以参考官方文档，这里只记录简单的部署  </p>
+<ul>
+<li>安装前提<br>因为certbot基于python，所以系统需要先安装Python 2.7 or 3.4+以上的版本</li>
+<li>下载certbot  </li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># wget https://dl.eff.org/certbot-auto //下载</span><br><span class="line"># chmod a+x ./certbot-auto  //修改权限</span><br><span class="line"># ./certbot-auto --help  //验证是否成功</span><br></pre></td></tr></table></figure>
+<ul>
+<li>开始部署  </li>
+</ul>
+<p>首先要看nginx的根目录在什么位置，有的在/var/www/html下，有的在/usr/share/nginx/html下。</p>
+<p>然后配置nginx读取certbot产生的文本文件  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">location ~ /.well-known/acme-challenge/ &#123;</span><br><span class="line">	allow	all;</span><br><span class="line">	root /usr/share/nginx/html;</span><br><span class="line">	default_type	&quot;text/plain&quot;;</span><br><span class="line">&#125;</span><br><span class="line">location = /.well-known/acme-challenge/ &#123;</span><br><span class="line">	return 404;</span><br><span class="line">&#125; </span><br><span class="line">~~~~  </span><br><span class="line"></span><br><span class="line">运行nginx -s reload重新加载配置</span><br></pre></td></tr></table></figure>
+<p>certbot certonly –webroot -w /usr/share/nginx/html/ -d your.domain.com  </p>
+<pre><code>
+指定webroot和域名，只要能够访问就成功了，切记一次最多五次，否则会被限制，当时因为地址弄错了，等了一个星期...  
+
+发放证书了还需要配置nginx启用  
+
+</code></pre><p>server {<br>    listen    80;<br>    server_name    domain.com;<br>    return    301    https://$server_name$request_uri;<br>}</p>
+<p>server {<br>    listen       443    ssl http2;<br>    ssl    on;<br>    server_name  your.domain.com;<br>    add_header Strict-Transport-Security “max-age=63072000; includeSubdomains; preload”;<br>    ssl_certificate    /etc/letsencrypt/live/your.domain.com/cert.pem;<br>    ssl_certificate_key     /etc/letsencrypt/live/your.domain.com/privkey.pem;<br>    ssl_trusted_certificate    /etc/letsencrypt/live/your.domain.com/chain.pem;<br>    ssl_protocols    TLSV1.1    TLSV1.2;<br>    ssl_prefer_server_ciphers    on;<br>    ssl_ciphers    AES256+EECDH:AES256+EDH:!aNULL;<br>}</p>
+<pre><code>
+这里遇到一个问题就是网上好多配置的ssl_certificate是fullchain.pem，结果浏览器上都会报不信任错误，改成cert.pem就没事了,还不知道有没有其它问题，暂时没有时间处理  
+
+接下来就是自动续期了，很简单  
+
+</code></pre><p>certbot-auto renew –quiet<br>~~~~  </p>
+<p>因为我是在centos7上执行的，不同的系统命令可能不太一样，精力有限没办法一一测试，一定要注意。  </p>
+<h4 id="结尾"><a href="#结尾" class="headerlink" title="结尾"></a>结尾</h4><p>部署完之后可以用test https服务进行测试看看得多少分，也挺好玩的😄</p>
 
       
     </div>
@@ -380,7 +406,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="http://hellojxl.com/2018/03/29/在vscode中启用just-my-code/" title="在vscode中禁用just my code">http://hellojxl.com/2018/03/29/在vscode中启用just-my-code/</a>
+    <a href="http://hellojxl.com/2018/07/21/关于Nginx启用Https的记录/" title="关于Nginx启用Https的记录">http://hellojxl.com/2018/07/21/关于Nginx启用Https的记录/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>
@@ -395,11 +421,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/dotnet-core/" rel="tag"># dotnet core</a>
+            <a href="/tags/Nginx/" rel="tag"># Nginx</a>
           
-            <a href="/tags/vscode/" rel="tag"># vscode</a>
-          
-            <a href="/tags/c/" rel="tag"># c#</a>
+            <a href="/tags/Let-s-Encrypt/" rel="tag"># Let's Encrypt</a>
           
         </div>
       
@@ -412,8 +436,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/03/29/Dotnet-Core中错误的模型绑定/" rel="next" title="Dotnet Core中错误的模型绑定">
-                <i class="fa fa-chevron-left"></i> Dotnet Core中错误的模型绑定
+              <a href="/2018/07/16/Manjaro折腾笔记/" rel="next" title="Manjaro折腾笔记">
+                <i class="fa fa-chevron-left"></i> Manjaro折腾笔记
               </a>
             
           </div>
@@ -421,10 +445,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/04/10/Vscode插件sqltools的用法/" rel="prev" title="Vscode插件sqltools的用法">
-                Vscode插件sqltools的用法 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -478,8 +498,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -559,6 +588,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#记录原因"><span class="nav-number">1.</span> <span class="nav-text">记录原因</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#安装部署"><span class="nav-number">2.</span> <span class="nav-text">安装部署</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#结尾"><span class="nav-number">3.</span> <span class="nav-text">结尾</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       

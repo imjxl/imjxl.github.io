@@ -259,6 +259,178 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://hellojxl.com/2018/07/21/关于Nginx启用Https的记录/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Sean Jin">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="hellojxl">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/07/21/关于Nginx启用Https的记录/" itemprop="url">关于Nginx启用Https的记录</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-07-21T22:54:45+08:00">
+                2018-07-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Nginx/" itemprop="url" rel="index">
+                    <span itemprop="name">Nginx</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h4 id="记录原因"><a href="#记录原因" class="headerlink" title="记录原因"></a>记录原因</h4><p>之前也部署过，结果上次因为买了一个新的VPS，打算部署<a href="https://www.v2ray.com" target="_blank" rel="noopener">v2ray</a>的时候，遇到点问题，感觉还是要记录下来，因为是自己用所以就直接用Let’s Encrypt部署吧，因为可以自动续期，90天也无所谓。  </p>
+<h4 id="安装部署"><a href="#安装部署" class="headerlink" title="安装部署"></a>安装部署</h4><p>啥也不说，直接上<a href="https://certbot.eff.org/" target="_blank" rel="noopener">certbot</a>,详细的可以参考官方文档，这里只记录简单的部署  </p>
+<ul>
+<li>安装前提<br>因为certbot基于python，所以系统需要先安装Python 2.7 or 3.4+以上的版本</li>
+<li>下载certbot  </li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># wget https://dl.eff.org/certbot-auto //下载</span><br><span class="line"># chmod a+x ./certbot-auto  //修改权限</span><br><span class="line"># ./certbot-auto --help  //验证是否成功</span><br></pre></td></tr></table></figure>
+<ul>
+<li>开始部署  </li>
+</ul>
+<p>首先要看nginx的根目录在什么位置，有的在/var/www/html下，有的在/usr/share/nginx/html下。</p>
+<p>然后配置nginx读取certbot产生的文本文件  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">location ~ /.well-known/acme-challenge/ &#123;</span><br><span class="line">	allow	all;</span><br><span class="line">	root /usr/share/nginx/html;</span><br><span class="line">	default_type	&quot;text/plain&quot;;</span><br><span class="line">&#125;</span><br><span class="line">location = /.well-known/acme-challenge/ &#123;</span><br><span class="line">	return 404;</span><br><span class="line">&#125; </span><br><span class="line">~~~~  </span><br><span class="line"></span><br><span class="line">运行nginx -s reload重新加载配置</span><br></pre></td></tr></table></figure>
+<p>certbot certonly –webroot -w /usr/share/nginx/html/ -d your.domain.com  </p>
+<pre><code>
+指定webroot和域名，只要能够访问就成功了，切记一次最多五次，否则会被限制，当时因为地址弄错了，等了一个星期...  
+
+发放证书了还需要配置nginx启用  
+
+</code></pre><p>server {<br>    listen    80;<br>    server_name    domain.com;<br>    return    301    https://$server_name$request_uri;<br>}</p>
+<p>server {<br>    listen       443    ssl http2;<br>    ssl    on;<br>    server_name  your.domain.com;<br>    add_header Strict-Transport-Security “max-age=63072000; includeSubdomains; preload”;<br>    ssl_certificate    /etc/letsencrypt/live/your.domain.com/cert.pem;<br>    ssl_certificate_key     /etc/letsencrypt/live/your.domain.com/privkey.pem;<br>    ssl_trusted_certificate    /etc/letsencrypt/live/your.domain.com/chain.pem;<br>    ssl_protocols    TLSV1.1    TLSV1.2;<br>    ssl_prefer_server_ciphers    on;<br>    ssl_ciphers    AES256+EECDH:AES256+EDH:!aNULL;<br>}</p>
+<pre><code>
+这里遇到一个问题就是网上好多配置的ssl_certificate是fullchain.pem，结果浏览器上都会报不信任错误，改成cert.pem就没事了,还不知道有没有其它问题，暂时没有时间处理  
+
+接下来就是自动续期了，很简单  
+
+</code></pre><p>certbot-auto renew –quiet<br>~~~~  </p>
+<p>因为我是在centos7上执行的，不同的系统命令可能不太一样，精力有限没办法一一测试，一定要注意。  </p>
+<h4 id="结尾"><a href="#结尾" class="headerlink" title="结尾"></a>结尾</h4><p>部署完之后可以用test https服务进行测试看看得多少分，也挺好玩的😄</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://hellojxl.com/2018/07/16/Manjaro折腾笔记/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1765,165 +1937,6 @@ public class AuthorizationHeaderFilter : IOperationFilter
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://hellojxl.com/2018/03/24/windows-subsystem-linux-环境配置/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Sean Jin">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="hellojxl">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/03/24/windows-subsystem-linux-环境配置/" itemprop="url">hexo在windows subsystem for linux 环境下的配置</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-24T18:58:27+08:00">
-                2018-03-24
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/hexo/" itemprop="url" rel="index">
-                    <span itemprop="name">hexo</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>最近想重新启用hexo来写博客，可总不能只在一台机子上写，于是就在公司的Windows笔记本hexo环境，正好最近捣鼓sublinux，就想在Linux里部署，当时选的Debian系统，然后麻烦就来了，Windows上的sublinux跟mini版一样，各种环境都没有，什么命令都没有，可经过一番折腾，现在回想起来可能跟自己的Linux水平太差有关，废话不多说，进入正题</p>
-<h4 id="安装nodejs"><a href="#安装nodejs" class="headerlink" title="安装nodejs"></a>安装nodejs</h4><p>先开始在Mac上安装的时候太顺了，本以为Linux上也不会太难，结果折腾了一天才安装上<br>nodejs官网有三种安装方式，①Debian的本身的apt②已经编译好的二进制文件③源码编译，这三个里面最简单的事第二种，下载完成之后只需配置环境变量即可，由于是sublinux的缘故，配置环境变量只有用户下的.bashrc文件里才行，比如root用户需要如下操作:</p>
-<blockquote>
-<ul>
-<li>vi ~/.bashrc  </li>
-<li>在最后一行添加：export PATH=$PATH:/usr/local/node/bin 注：路径可以自由写  </li>
-<li>source ~/.bashrc 立即生效即可  </li>
-</ul>
-</blockquote>
-<h4 id="安装Git和ssh"><a href="#安装Git和ssh" class="headerlink" title="安装Git和ssh"></a>安装Git和ssh</h4><p>这个就比较简单了，直接apt-get install就可以了，具体的配置就不多说了，网上多的是。</p>
-<h4 id="安装hexo"><a href="#安装hexo" class="headerlink" title="安装hexo"></a>安装hexo</h4><p>这里还是要再提一句Windows下的subsystem for Linux，感觉还是跟缺少相关库，安装的时候会提示：gyp WARN EACCES user “root” does not have permission to access the dev dir：xxx，网上参考查到的<a href="https://stackoverflow.com/questions/29468404/gyp-warn-eacces-user-root-does-not-have-permission-to-access-the-dev-dir" target="_blank" rel="noopener">stackoverflow</a>,用的第二种方法：  </p>
-<blockquote>
-<p>node install -g hexo-cli –unsafe-perm  </p>
-</blockquote>
-<p>安装过程中会装几个库，然后就可以用了。</p>
-<h4 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h4><p>至于同步问题，我也是参考网上的教程，用的码云的git，因为可以创建私有的git，至于其它方面因为自己git方面也不是很熟，就不误人子弟了，最近也一直在折腾Linux，感觉也挺有意思，后续有什么也会再贴出来。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1980,7 +1993,7 @@ public class AuthorizationHeaderFilter : IOperationFilter
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-count">12</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1991,7 +2004,7 @@ public class AuthorizationHeaderFilter : IOperationFilter
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-count">8</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -2002,7 +2015,7 @@ public class AuthorizationHeaderFilter : IOperationFilter
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">15</span>
+                  <span class="site-state-item-count">17</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
