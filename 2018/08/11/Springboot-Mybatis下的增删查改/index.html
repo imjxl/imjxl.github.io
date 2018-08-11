@@ -1,0 +1,885 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="springboot,java,mybatis," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="前言上次写了一篇文章，但只是粗略了写了一下，这次本来是工作上有个小项目，本打算用java写，可惜死活没配置好，就放弃了。正好周末就又基于上次那个项目捣鼓了一遍，可算是成功了，在此记录下。   开发工具之前在公司试用了一下大名鼎鼎的IDEA旗舰版，虽然还算比较好用，可惜就是太贵了，所以就装了社区版，后来才知道社区版不支持web开发，那就只能用eclipse了，装上Springboot的STS插件也还">
+<meta name="keywords" content="springboot,java,mybatis">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Springboot+Mybatis下的增删查改">
+<meta property="og:url" content="http://hellojxl.com/2018/08/11/Springboot-Mybatis下的增删查改/index.html">
+<meta property="og:site_name" content="hellojxl">
+<meta property="og:description" content="前言上次写了一篇文章，但只是粗略了写了一下，这次本来是工作上有个小项目，本打算用java写，可惜死活没配置好，就放弃了。正好周末就又基于上次那个项目捣鼓了一遍，可算是成功了，在此记录下。   开发工具之前在公司试用了一下大名鼎鼎的IDEA旗舰版，虽然还算比较好用，可惜就是太贵了，所以就装了社区版，后来才知道社区版不支持web开发，那就只能用eclipse了，装上Springboot的STS插件也还">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-08-11T14:23:36.295Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Springboot+Mybatis下的增删查改">
+<meta name="twitter:description" content="前言上次写了一篇文章，但只是粗略了写了一下，这次本来是工作上有个小项目，本打算用java写，可惜死活没配置好，就放弃了。正好周末就又基于上次那个项目捣鼓了一遍，可算是成功了，在此记录下。   开发工具之前在公司试用了一下大名鼎鼎的IDEA旗舰版，虽然还算比较好用，可惜就是太贵了，所以就装了社区版，后来才知道社区版不支持web开发，那就只能用eclipse了，装上Springboot的STS插件也还">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"hide","offset":12,"b2t":false,"scrollpercent":false,"onmobile":true},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://hellojxl.com/2018/08/11/Springboot-Mybatis下的增删查改/"/>
+
+
+
+
+
+  <title>Springboot+Mybatis下的增删查改 | hellojxl</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">hellojxl</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://hellojxl.com/2018/08/11/Springboot-Mybatis下的增删查改/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Sean Jin">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="hellojxl">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Springboot+Mybatis下的增删查改</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-11T19:42:45+08:00">
+                2018-08-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/java/" itemprop="url" rel="index">
+                    <span itemprop="name">java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span id="busuanzi_container_page_pv">阅读量 <span id="busuanzi_value_page_pv"></span> 次</span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>上次写了<a href="http://hellojxl.com/2018/04/24/Springboot-Mybatis%E6%B5%8B%E8%AF%95%E6%88%90%E5%8A%9F/">一篇文章</a>，但只是粗略了写了一下，这次本来是工作上有个小项目，本打算用java写，可惜死活没配置好，就放弃了。正好周末就又基于上次那个项目捣鼓了一遍，可算是成功了，在此记录下。  </p>
+<h4 id="开发工具"><a href="#开发工具" class="headerlink" title="开发工具"></a>开发工具</h4><p>之前在公司试用了一下大名鼎鼎的IDEA旗舰版，虽然还算比较好用，可惜就是太贵了，所以就装了社区版，后来才知道社区版不支持web开发，那就只能用eclipse了，装上Springboot的STS插件也还可以，回到家本想也这么来，可惜最近网不好，各种被墙，代理也半死不活，慢的一匹，然后发现Springboot有基于eclipse封装好的STS，而且没有被墙，很是不错！👍  </p>
+<h4 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h4><p>这篇文章是基于Xml进行的，虽然有注解，总感觉那样是没有灵魂的（笑～～），注解的非常简单，就不多介绍了，下面开始介绍xml的配置  </p>
+<ol>
+<li>添加实体类，新建包，命名为Entity，我这里是直接在com.hellojxl.helloMybaits下新建的所以包名为：com.hellojxl.helloMybaits.Entity，这点很重要，然后新建一个class，命名为User  </li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">package com.hellojxl.helloMybaits.Entity;</span><br><span class="line"></span><br><span class="line">public class User &#123;</span><br><span class="line">	private int id;</span><br><span class="line">	private String name;</span><br><span class="line">	private String sex;</span><br><span class="line">	</span><br><span class="line">	public int getId() &#123;</span><br><span class="line">		return id;</span><br><span class="line">	&#125;</span><br><span class="line">	public void setId(int id) &#123;</span><br><span class="line">		this.id = id;</span><br><span class="line">	&#125;</span><br><span class="line">	public String getName() &#123;</span><br><span class="line">		return name;</span><br><span class="line">	&#125;</span><br><span class="line">	public void setName(String name) &#123;</span><br><span class="line">		this.name = name;</span><br><span class="line">	&#125;</span><br><span class="line">	public String getSex() &#123;</span><br><span class="line">		return sex;</span><br><span class="line">	&#125;</span><br><span class="line">	public void setSex(String sex) &#123;</span><br><span class="line">		this.sex = sex;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">~~~~  </span><br><span class="line">2. 添加Service接口，新建包，命名为Dao</span><br></pre></td></tr></table></figure>
+<p>package com.hellojxl.helloMybaits.Dao;</p>
+<p>import java.util.List;<br>import com.hellojxl.helloMybaits.Entity.*;</p>
+<p>public interface UserService {</p>
+<pre><code>public List&lt;User&gt; getAll();
+public User getUser(int id);
+public int deleteUser(int id);
+public int addUser(User u);
+public int editUser(User u);
+</code></pre><p>}<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">3. 配置allocation.yml，这里没用连接池</span><br><span class="line"></span><br><span class="line">~~~~ </span><br><span class="line">spring:</span><br><span class="line">  datasource:</span><br><span class="line">    url: jdbc:postgresql://127.0.0.1:5432/test</span><br><span class="line">    username: jinxiaolei</span><br><span class="line">    password: xxxxxx</span><br><span class="line">    driver-class-name: org.postgresql.Driver</span><br><span class="line">    </span><br><span class="line">mybatis:</span><br><span class="line">  mapper-locations: classpath:mapper/*.xml</span><br><span class="line">~~~~  </span><br><span class="line"></span><br><span class="line">4. 在src/main/resource目录下新建目录mapper，添加一个xml文件，可以随便命名，这里命名为user.xml</span><br></pre></td></tr></table></figure></p>
+<p> &lt;?xml version=”1.0” encoding=”UTF-8” ?&gt;<br>&lt;!DOCTYPE mapper<br>        PUBLIC “-//mybatis.org//DTD Mapper 3.0//EN”<br>        “<a href="http://mybatis.org/dtd/mybatis-3-mapper.dtd&quot;&gt;" target="_blank" rel="noopener">http://mybatis.org/dtd/mybatis-3-mapper.dtd&quot;&gt;</a></p>
+<p><mapper namespace="com.hellojxl.helloMybaits.Dao.UserService"><br>    <select id="getAll" resulttype="com.hellojxl.helloMybaits.Entity.User"><br>        select <em> from t_user<br>    </em></select><br>    <select id="getUser" parametertype="java.lang.Integer" resulttype="com.hellojxl.helloMybaits.Entity.User"><br>        select  from t_user where id = #{id,jdbcType=INTEGER}<br>    </select></mapper></p>
+<pre><code>&lt;delete id=&quot;deleteUser&quot; parameterType=&quot;java.lang.Integer&quot; &gt;
+    delete from t_user where id = #{id,jdbcType=INTEGER}
+&lt;/delete&gt;
+
+&lt;insert id=&quot;addUser&quot; parameterType=&quot;com.hellojxl.helloMybaits.Entity.User&quot;&gt;
+    insert into t_user (name,sex) 
+    values (#{name,jdbcType=VARCHAR}, #{sex,jdbcType=VARCHAR})
+&lt;/insert&gt;
+
+&lt;update id=&quot;editUser&quot; parameterType=&quot;com.hellojxl.helloMybaits.Entity.User&quot;&gt;
+    update t_user 
+    set name = #{name,jdbcType=VARCHAR},
+    sex = #{sex,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+&lt;/update&gt;
+</code></pre><p><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">所有的id对应UserService里方法名，参数根据实际情况进行选择  </span><br><span class="line"></span><br><span class="line">5. 在新建的Controller包里添加一个Controller，此处命名为HelloController，代码如下：</span><br></pre></td></tr></table></figure></p>
+<p>package com.hellojxl.helloMybaits.Controller;</p>
+<p>import java.util.List;<br>import org.springframework.beans.factory.annotation.Autowired;<br>import org.springframework.web.bind.annotation.RequestBody;<br>import org.springframework.web.bind.annotation.RequestMapping;<br>import org.springframework.web.bind.annotation.RestController;<br>import com.hellojxl.helloMybaits.Dao.UserService;<br>import com.hellojxl.helloMybaits.Entity.User;</p>
+<p>@RestController<br>public class HelloController {</p>
+<pre><code>@Autowired
+private UserService userService;
+
+@RequestMapping(value=&quot;/get&quot;)
+public List&lt;User&gt; getAll(){
+    List&lt;User&gt; test=userService.getAll();
+    return test;
+}
+
+@RequestMapping(&quot;/user&quot;)
+public User GetUser(int id) {
+    return userService.getUser(id);
+}
+
+@RequestMapping(&quot;/add&quot;)
+public boolean addUser(@RequestBody User u) {
+    int i= userService.addUser(u);
+    System.out.println(&quot;addUser---------&quot;+i);
+    if(i&gt;0) {
+        return true;
+    }
+    else {
+        return false;
+    }
+}
+
+@RequestMapping(&quot;/edit&quot;)
+public boolean editUser(@RequestBody User u) {
+    int i=userService.editUser(u);
+    System.out.println(&quot;editUser----------&quot;+ i);
+    if(i&gt;0) {
+        return true;
+    }
+    else {
+        return false;
+    }
+}
+
+@RequestMapping(&quot;/delete&quot;)
+public boolean deleteUser(int id) {
+    int i= userService.deleteUser(id);
+    System.out.println(&quot;deleteUser----------&quot;+ i);
+    if(i&gt;0) {
+        return true;
+    }
+    else {
+        return false;
+    }
+}
+</code></pre><p>}</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">6. 在启动类里添加MapperScan注解</span><br></pre></td></tr></table></figure>
+<p>package com.hellojxl.helloMybaits;</p>
+<p>import org.mybatis.spring.annotation.MapperScan;<br>import org.springframework.boot.SpringApplication;<br>import org.springframework.boot.autoconfigure.SpringBootApplication;</p>
+<p>@MapperScan(“com.hellojxl.helloMybaits.Dao”)<br>@SpringBootApplication<br>public class HelloMybaitsApplication {<br>    public static void main(String[] args) {<br>        SpringApplication.run(HelloMybaitsApplication.class, args);<br>    }<br>}<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">7. 关于postgresql的驱动问题，刚开始用的是新建sprintboot时的默认包，然后发现会报错：Method org.postgresql.jdbc4.Jdbc4Connection.isValid(int) is not yet implemented，后来发现maven库里有个别的版本的驱动：postgresql-42.2.4.jar，换成这个就好了，依赖为：</span><br></pre></td></tr></table></figure></p>
+<p><dependency><br>    <groupid>org.postgresql</groupid><br>    <artifactid>postgresql</artifactid><br>    <version>42.2.4</version><br></dependency><br>~~~~</p>
+<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><ul>
+<li>遇到的最多的问题就是：Invalid bound statement (not found)，我这里是忘了加MapperScan，其它的时候是mapper没用对应上，所以包名一定要对</li>
+<li>eclipse没有提示，解决方法是：打开Preferences-&gt;Java-&gt;Editor-&gt;content assist，在右侧最下面的Auto Active中选中 Enable auto activation，Auto activation delay设为200，Auto activation triggers for Java改为.abcdefghijklmnopqrstuvwxyz就可以了  </li>
+</ul>
+<p>本篇还是比较简单的，没有涉及到很复杂的查询和批量处理，以后有机会再写吧，代码已经上传到<a href="https://github.com/jxl922/helloMybaits" target="_blank" rel="noopener">Github</a>上了,直接copy代码就应该可以了，当然确保数据库有相关的表和数据，好了，结束！😄</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    Sean Jin
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://hellojxl.com/2018/08/11/Springboot-Mybatis下的增删查改/" title="Springboot+Mybatis下的增删查改">http://hellojxl.com/2018/08/11/Springboot-Mybatis下的增删查改/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/springboot/" rel="tag"># springboot</a>
+          
+            <a href="/tags/java/" rel="tag"># java</a>
+          
+            <a href="/tags/mybatis/" rel="tag"># mybatis</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/07/27/v2ray安装注意记录/" rel="next" title="v2ray安装注意记录">
+                <i class="fa fa-chevron-left"></i> v2ray安装注意记录
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+      <div id="sidebar-dimmer"></div>
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.png"
+                alt="Sean Jin" />
+            
+              <p class="site-author-name" itemprop="name">Sean Jin</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">18</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:jxl922@outlook.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i></a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://twitter.com/jxl922" target="_blank" title="Twitter">
+                      
+                        <i class="fa fa-fw fa-twitter"></i></a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=16823351&auto=0&height=66"></iframe>
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#开发工具"><span class="nav-number">2.</span> <span class="nav-text">开发工具</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#开始"><span class="nav-number">3.</span> <span class="nav-text">开始</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#总结"><span class="nav-number">4.</span> <span class="nav-text">总结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Sean Jin</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a></div>
+
+<br />
+<span id="busuanzi_container_site_pv">
+    本站总访问量<span id="busuanzi_value_site_pv"></span>次
+</span>
+<span id="busuanzi_container_site_uv">
+  本站访客数<span id="busuanzi_value_site_uv"></span>人次
+</span>
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
