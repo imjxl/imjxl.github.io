@@ -259,6 +259,155 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://hellojxl.com/2018/11/03/html下ul-li横排居中/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Sean Jin">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="hellojxl">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/11/03/html下ul-li横排居中/" itemprop="url">html下ul_li横排居中</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-11-03T20:22:10+08:00">
+                2018-11-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/前端/" itemprop="url" rel="index">
+                    <span itemprop="name">前端</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>####开始  </p>
+<p>好久没写东西了，有点偷懒了，最近一直在研究three.js，目前在研究材质方面的东西，有成果了会分享出来。在做demo的时候遇到html中ul li需要横排居中并且贴近底部的问题，当时没来得及解决，就硬编码进去了，现在解决了，记录一下。  </p>
+<h4 id="方法一：flex布局"><a href="#方法一：flex布局" class="headerlink" title="方法一：flex布局"></a>方法一：flex布局</h4><p>实际工作中不是采用这种方法解决的，毕竟刚接触时间不长，只是看看有没有其它解决方法的时候找到的，下面是参考了网上并修改后的代码：  </p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"utf-8"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">title</span>&gt;</span>demo<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">style</span> <span class="attr">type</span>=<span class="string">"text/css"</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="undefined">    html &#123;</span></span><br><span class="line"><span class="undefined">      width: 100%;</span></span><br><span class="line"><span class="undefined">      height: 100%;</span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="undefined">    body &#123;</span></span><br><span class="line"><span class="undefined">      width: 100%;</span></span><br><span class="line"><span class="undefined">      height: 100%;</span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="undefined">    .container &#123;</span></span><br><span class="line"><span class="undefined">      display: -webkit-box;</span></span><br><span class="line"><span class="undefined">      -webkit-box-orient: vertical;</span></span><br><span class="line"><span class="undefined">      height: 85%;</span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="undefined">    ul &#123;</span></span><br><span class="line"><span class="undefined">      display: flex;</span></span><br><span class="line"><span class="undefined">      flex-flow: row nowrap;</span></span><br><span class="line"><span class="undefined">      justify-content: center;</span></span><br><span class="line"><span class="undefined">      flex-direction: row;</span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="undefined">    ul li &#123;</span></span><br><span class="line"><span class="undefined">      list-style: none;</span></span><br><span class="line"><span class="undefined">      text-align: center;</span></span><br><span class="line"><span class="undefined">      line-height: 30px;</span></span><br><span class="line"><span class="undefined">      padding: 10px;</span></span><br><span class="line"><span class="undefined">      height: 30px;</span></span><br><span class="line"><span class="undefined">      width: 100px;</span></span><br><span class="line"><span class="undefined">      margin: 0 10px;</span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="undefined">  </span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"container"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">footer</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">ul</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">li</span>&gt;</span>列表1<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">li</span>&gt;</span>列表2<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">li</span>&gt;</span>列表3<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">footer</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br><span class="line">~~~  </span><br><span class="line"></span><br><span class="line">具体的用法就不说了，毕竟自己接触时间也不长就不误人子弟了。 </span><br><span class="line"></span><br><span class="line">#### 方法二：CSS3中的calc()  </span><br><span class="line"></span><br><span class="line">这个在我第一次写代码的时候就想css中要是有计算宽高的方法该有多好，结果在看别人的代码时发现还真有，就是calc(),下面是代码：  </span><br><span class="line"></span><br><span class="line">~~~html</span><br><span class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"utf-8"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>demo<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">style</span> <span class="attr">type</span>=<span class="string">"text/css"</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="undefined">        footer &#123;</span></span><br><span class="line"><span class="undefined">            position: absolute;</span></span><br><span class="line"><span class="undefined">            bottom: 30px;</span></span><br><span class="line"><span class="undefined">            width: 360px;</span></span><br><span class="line"><span class="undefined">            left: calc(50% - 180px);</span></span><br><span class="line"><span class="undefined">        &#125;</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined">        ul li &#123;</span></span><br><span class="line"><span class="undefined">            list-style: none;</span></span><br><span class="line"><span class="undefined">            float: left;</span></span><br><span class="line"><span class="undefined">            padding: 30px;</span></span><br><span class="line"><span class="undefined">            text-align: center;</span></span><br><span class="line"><span class="undefined">        &#125;</span></span><br><span class="line"><span class="undefined">    </span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"container"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">footer</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">ul</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">li</span>&gt;</span>列表1<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">li</span>&gt;</span>列表2<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">li</span>&gt;</span>列表3<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">footer</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>因为后面还涉及到计算的地方，所以采用的这种方法，自己感觉还是第二种用的简单点。  </p>
+<h4 id="结束"><a href="#结束" class="headerlink" title="结束"></a>结束</h4><p>早就听说过也一直认为前端水深，还真不是盖的，我想要达到上面的效果不只这两种，再加上浏览器适配，还真是麻烦！好了，又水了一篇🔚。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://hellojxl.com/2018/08/18/记修理Mac的一件小事/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1887,223 +2036,6 @@ RecurringJob.AddOrUpdate&lt;IGoodJob&gt;(&quot;Job&quot;,x=&gt;x.HelloTest(&quot
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://hellojxl.com/2018/04/11/dotnet-core在swagger中添加认证/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Sean Jin">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="hellojxl">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/04/11/dotnet-core在swagger中添加认证/" itemprop="url">dotnet core在swagger中添加认证</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-11T22:24:08+08:00">
-                2018-04-11
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/dotnet-core/" itemprop="url" rel="index">
-                    <span itemprop="name">dotnet core</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <hr>
-<p>2018-04-16更新：经过测试，这么写是可以的，只是每次调用前都要加上：bearer token,可以在命名Filter的时候加上提醒一下，暂时没去想其它更好的方法  </p>
-<p>还有当前如果有多个项目的话，比如这个项目引用了另一个项目的model，默认是不会显示注释的，解决方法是：每个项目单独生成xml文件，然后在include XML文档时同时引入，那么就可以显示了</p>
-<p>Nignx反向代理的情况下，默认会找不到swagger的json文件导致失败，方法是：  </p>
-<pre><code>//加入两个点
-c.SwaggerEndpoint(&quot;../swagger/v1/swagger.json&quot;, &quot;My API V1&quot;);
-</code></pre><hr>
-<p>最近项目中用到swagger进行Api文档说明，之前只是匆匆的测试了一下，这次前端说要看一下就仔细研究了一下，由于项目中增加了jwt认证，当然也要在swagger中体现出来，就网上搜索了一下，虽然文章不少可是不是版本对不上就是用不了，好不容易在这个<a href="https://blog.sluijsveld.com/28/01/2016/CustomSwaggerUIField/" target="_blank" rel="noopener">博客</a>上找到点线索，在此记录一下。</p>
-<h4 id="添加Swagger"><a href="#添加Swagger" class="headerlink" title="添加Swagger"></a>添加Swagger</h4><p>这个很简单，网上教程也多的是，具体流程如下:  </p>
-<pre><code>//添加引用
-using Swashbuckle.AspNetCore.Swagger;
-
-
-//在ConfigureServices中添加
-services.AddSwaggerGen(c =&gt;
-{
-    c.SwaggerDoc(&quot;v1&quot;, new Info { Title = &quot;My API&quot;, Version = &quot;v1&quot; });
-    //添加xml注释说明，下面会说
-    var filePath = Path.Combine(PlatformServices.Default.Application.ApplicationBasePath, &quot;MyApi.xml&quot;);
-    c.IncludeXmlComments(filePath);
-    //添加认证，下面会说
-    c.OperationFilter&lt;AuthorizationHeaderFilter&gt;();
-});
-
-//在Configure中添加
-app.UseSwagger();
-app.UseSwaggerUI(c =&gt;
-{
-    c.SwaggerEndpoint(&quot;/swagger/v1/swagger.json&quot;, &quot;My API V1&quot;);
-});
-
-</code></pre><p>这样默认swagger就可以启动了，当然如果现在真要运行是起不来的，因为还没有生成xml注释文档，下面来添加  </p>
-<h4 id="添加xml文档注释"><a href="#添加xml文档注释" class="headerlink" title="添加xml文档注释"></a>添加xml文档注释</h4><p>这个如果用vs的话很简单，在项目配置里配置一下就好，如果用vs code的话稍微有点麻烦，其实更简单，只是刚开始不知道怎么加而已，只需要在csproj文件中添加下面代码  </p>
-<pre><code>&lt;PropertyGroup&gt;
-    &lt;TargetFramework&gt;netcoreapp2.0&lt;/TargetFramework&gt;
-    //下面这句，注意文件名称
-    &lt;DocumentationFile&gt;bin/Debug/netcoreapp2.0/myApi.xml&lt;/DocumentationFile&gt; 
-  &lt;/PropertyGroup&gt;    
-</code></pre><p>其实也可以添加到这里  </p>
-<pre><code>&lt;PropertyGroup Condition=&quot;&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|AnyCPU&apos;&quot;&gt;
-&lt;DocumentationFile&gt;bin/Debug/netcoreapp2.0/myApi.xml&lt;/DocumentationFile&gt;  
-</code></pre><p>只是我发现有的工程里没有Condition选项，发现添加到TargetFramework下也可以就都写上了，vs code添加注释可以用XML Documentation Comments Support for Visual Studio Code插件，和vs一样，只是有的时候貌似会多加个return，而且一旦要注释，整个工程都要有注释，否则无法运行，暂时没考虑怎么解决，以后再说  </p>
-<h4 id="添加认证选项"><a href="#添加认证选项" class="headerlink" title="添加认证选项"></a>添加认证选项</h4><p>下面说到怎么添加认证了，就是上面那个AuthorizationHeaderFilter，新建一个类，并实现接口IOperationFilter就可以了，代码如下：  </p>
-<pre><code>using System.Collections.Generic;
-using System.Linq;
-using Microsoft.AspNetCore.Mvc.Authorization;
-using Swashbuckle.AspNetCore.Swagger;
-using Swashbuckle.AspNetCore.SwaggerGen;
-
-public class AuthorizationHeaderFilter : IOperationFilter
-{
-    public void Apply(Operation operation, OperationFilterContext context)
-    {
-         var filterPipeline = context.ApiDescription.ActionDescriptor.FilterDescriptors;
-         var isAuthorized = filterPipeline.Select(filterInfo =&gt; filterInfo.Filter).Any(filter =&gt; filter is AuthorizeFilter);
-         var allowAnonymous = filterPipeline.Select(filterInfo =&gt; filterInfo.Filter).Any(filter =&gt; filter is IAllowAnonymousFilter);
-         if (isAuthorized &amp;&amp; !allowAnonymous)
-         {
-             if (operation.Parameters == null)
-             {
-                 operation.Parameters = new List&lt;IParameter&gt;();
-             }
-             operation.Parameters.Add(new NonBodyParameter
-             {
-                    Name = &quot;Authorization&quot;,
-                    In = &quot;header&quot;,
-                    Description = &quot;access token&quot;,
-                    Required = true,
-                    Type = &quot;string&quot;
-              });
-          }
-     }
-} 
-</code></pre><h4 id="结束"><a href="#结束" class="headerlink" title="结束"></a>结束</h4><p>好了，这样启动项目就可以看见swagger中要求填入Authorization的字段了，虽然可以实现但还没具体的测试，明天有时间测试下，可能有错误的地方，如果发现了会改，仅供参考吧🔚</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2160,7 +2092,7 @@ public class AuthorizationHeaderFilter : IOperationFilter
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">15</span>
+                  <span class="site-state-item-count">16</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -2171,7 +2103,7 @@ public class AuthorizationHeaderFilter : IOperationFilter
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-count">10</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -2182,7 +2114,7 @@ public class AuthorizationHeaderFilter : IOperationFilter
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">19</span>
+                  <span class="site-state-item-count">21</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -2235,7 +2167,7 @@ public class AuthorizationHeaderFilter : IOperationFilter
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+        <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
 </script>
 <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
   <span class="with-love">
