@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="hellojxl">
 <meta property="og:description" content="前言自从Cloudflare可以迁移域名了，就陆续将手里的域名迁移了过来，当前这个域名最开始是在腾讯上注册的，当时是部署在Gitpages上，用的CNAME的方式，听说Gitpages可以启用HTTPS的时候就打算启用，然后只能添加2条解析，无法启用，真是腻歪透了。迁移过来之后就又想直接放到自己VPS上。  方式 直接部署hexo服务端，通过git方式直接提交到VPS上。目前没有采用这种方式，首先">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-01-12T08:41:08.110Z">
+<meta property="og:updated_time" content="2019-01-12T09:02:08.906Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="迁移Hexo到VPS">
 <meta name="twitter:description" content="前言自从Cloudflare可以迁移域名了，就陆续将手里的域名迁移了过来，当前这个域名最开始是在腾讯上注册的，当时是部署在Gitpages上，用的CNAME的方式，听说Gitpages可以启用HTTPS的时候就打算启用，然后只能添加2条解析，无法启用，真是腻歪透了。迁移过来之后就又想直接放到自己VPS上。  方式 直接部署hexo服务端，通过git方式直接提交到VPS上。目前没有采用这种方式，首先">
@@ -374,7 +374,7 @@
 <p>然后更改Proxy转发参数，完整转发配置如下：  </p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">location ~ /api/ &#123;</span><br><span class="line">		proxy_redirect  		off;</span><br><span class="line">		proxy_pass      		http://127.0.0.1:5000;</span><br><span class="line">		proxy_http_version      1.1;</span><br><span class="line">		proxy_set_header        Upgrade $http_upgrade;</span><br><span class="line">		proxy_set_header		X-Github-Event	$http_x_github_event;</span><br><span class="line">		proxy_set_header		X-GitHub-Delivery $http_x_github_delivery;</span><br><span class="line">		proxy_set_header		X-Hub-Signature	$http_x_hub_signature;</span><br><span class="line">        proxy_set_header        Host    $http_host;</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
 <p>配置完后在GitHub上添加WebHooks就可以了  </p>
-<h4 id="结束"><a href="#结束" class="headerlink" title="结束"></a>结束</h4><p>虽然代码已经写完了，但是还不知道效果怎么样，所以这篇也是一个测试，看看有没有其它问题，好了，测试开始。  </p>
+<h4 id="结束"><a href="#结束" class="headerlink" title="结束"></a>结束</h4><p>虽然代码已经写完了，但是还不知道效果怎么样，所以这篇也是一个测试，看看有没有其它问题，好了，测试开始。</p>
 
       
     </div>
