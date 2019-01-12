@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="hexo,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="前言自从Cloudflare可以迁移域名了，就陆续将手里的域名迁移了过来，当前这个域名最开始是在腾讯上注册的，当时是部署在Gitpages上，用的CNAME的方式，听说Gitpages可以启用HTTPS的时候就打算启用，然后只能添加2条解析，无法启用，真是腻歪透了。迁移过来之后就又想直接放到自己VPS上。  方式 直接部署hexo服务端，通过git方式直接提交到VPS上。目前没有采用这种方式，首先">
+<meta name="keywords" content="hexo">
+<meta property="og:type" content="article">
+<meta property="og:title" content="迁移Hexo到VPS">
+<meta property="og:url" content="https://hellojxl.com/2019/01/05/迁移Hexo到VPS/index.html">
+<meta property="og:site_name" content="hellojxl">
+<meta property="og:description" content="前言自从Cloudflare可以迁移域名了，就陆续将手里的域名迁移了过来，当前这个域名最开始是在腾讯上注册的，当时是部署在Gitpages上，用的CNAME的方式，听说Gitpages可以启用HTTPS的时候就打算启用，然后只能添加2条解析，无法启用，真是腻歪透了。迁移过来之后就又想直接放到自己VPS上。  方式 直接部署hexo服务端，通过git方式直接提交到VPS上。目前没有采用这种方式，首先">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-01-12T03:51:30.994Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="迁移Hexo到VPS">
+<meta name="twitter:description" content="前言自从Cloudflare可以迁移域名了，就陆续将手里的域名迁移了过来，当前这个域名最开始是在腾讯上注册的，当时是部署在Gitpages上，用的CNAME的方式，听说Gitpages可以启用HTTPS的时候就打算启用，然后只能添加2条解析，无法启用，真是腻歪透了。迁移过来之后就又想直接放到自己VPS上。  方式 直接部署hexo服务端，通过git方式直接提交到VPS上。目前没有采用这种方式，首先">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"hide","offset":12,"b2t":false,"scrollpercent":false,"onmobile":true},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://hellojxl.com/2019/01/05/迁移Hexo到VPS/">
+
+
+
+
+
+  <title>迁移Hexo到VPS | hellojxl</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">hellojxl</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://hellojxl.com/2019/01/05/迁移Hexo到VPS/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Sean Jin">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="hellojxl">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">迁移Hexo到VPS</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-01-05T21:31:10+08:00">
+                2019-01-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/hexo/" itemprop="url" rel="index">
+                    <span itemprop="name">hexo</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span id="busuanzi_container_page_pv">阅读量 <span id="busuanzi_value_page_pv"></span> 次</span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>自从Cloudflare可以迁移域名了，就陆续将手里的域名迁移了过来，当前这个域名最开始是在腾讯上注册的，当时是部署在Gitpages上，用的CNAME的方式，听说Gitpages可以启用HTTPS的时候就打算启用，然后只能添加2条解析，无法启用，真是腻歪透了。迁移过来之后就又想直接放到自己VPS上。 </p>
+<h4 id="方式"><a href="#方式" class="headerlink" title="方式"></a>方式</h4><ul>
+<li><p>直接部署hexo服务端，通过git方式直接提交到VPS上。目前没有采用这种方式，首先VPS在国外，大批量的数据传输害怕被针对；其次网络环境也是个问题，所以不做多介绍这种方式了。</p>
+</li>
+<li><p>依旧提交代码到Github，然后通过git拉取到VPS上。 本质上Github上是已经是html了，所以在VPS上通过nginx直接部署就可以了，感觉这种方式更好。  </p>
+</li>
+</ul>
+<h4 id="部署服务"><a href="#部署服务" class="headerlink" title="部署服务"></a>部署服务</h4><p>1、首先部署git服务到VPS，方便进行git拉取最新数据。<br>2、不能每次都手动拉取代码，所以查了一下GitHub，有Webhooks可以进行调用，可以直接hook push方法，然后自动拉取最新的代码，又看到网上有现成的lua脚本，直接继承到Nginx上就可以了，可惜由于对Nginx不是非常熟悉，又懒的研究，既然是学C#的，就打算用C#研究一下接口调用就完了，发现微软有现成封装好的WebHook，直接引用Microsoft.AspNetCore.WebHooks即可，可惜发现封装的实在是太死了，不仅要定义固定的配置文件格式，连调用方式都是写死的，文档还不太全，最后部署到VPS上后还各种报错，不容易调试，直接就放弃了。<br>3、实在不行那就只能自己动手了，直接用WebApi，唯一的难点是当时没弄明白签名是怎么弄的，后来在stackoverflow.com找到了解决方法，用到的加密算法如下：  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">private byte[] SignWithHmac(byte[] dataToSign, byte[] keyBody)</span><br><span class="line">&#123;</span><br><span class="line">      using (var hmacAlgorithm = new System.Security.Cryptography.HMACSHA1(keyBody))</span><br><span class="line">      &#123;</span><br><span class="line">           return hmacAlgorithm.ComputeHash(dataToSign);</span><br><span class="line">      &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">private string ConvertToHexadecimal(IEnumerable&lt;byte&gt; bytes)</span><br><span class="line">&#123;</span><br><span class="line">      var builder = new StringBuilder();</span><br><span class="line">      foreach (var b in bytes)</span><br><span class="line">      &#123;</span><br><span class="line">          builder.Append(b.ToString(&quot;x2&quot;));</span><br><span class="line">      &#125;</span><br><span class="line">      return builder.ToString();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>完整的校验方法如下：  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">var mac = Request.Headers[&quot;X-Hub-Signature&quot;];</span><br><span class="line">string signature = Request.Headers[&quot;X-Hub-Signature&quot;];</span><br><span class="line">StreamReader reader = new StreamReader(Request.Body);</span><br><span class="line">string json = reader.ReadToEnd();</span><br><span class="line">var hmac = SignWithHmac(UTF8Encoding.UTF8.GetBytes(json), UTF8Encoding.UTF8.GetBytes(_config[&quot;SecretKey&quot;]));</span><br><span class="line">var hmacHex = ConvertToHexadecimal(hmac);</span><br><span class="line">bool isValid = signature.Split(&apos;=&apos;)[1] == hmacHex;</span><br></pre></td></tr></table></figure>
+<p>这只是部分代码，完整代码已经放到<a href="https://github.com/jxl922/CoreHooks" target="_blank" rel="noopener">Github</a>了  </p>
+<p>4、代码写完了，但是Nginx还需要进行一下配置，因为Github是把事件名称放到Header里了，如果Nginx不做配置，是不会转发的,首先更改Nginx.config，增加下面配置</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">underscores_in_headers on;</span><br></pre></td></tr></table></figure>
+<p>然后更改Proxy转发参数，完整转发配置如下：  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">location ~ /api/ &#123;</span><br><span class="line">		proxy_redirect  		off;</span><br><span class="line">		proxy_pass      		http://127.0.0.1:5000;</span><br><span class="line">		proxy_http_version      1.1;</span><br><span class="line">		proxy_set_header        Upgrade $http_upgrade;</span><br><span class="line">		proxy_set_header		X-Github-Event	$http_x_github_event;</span><br><span class="line">		proxy_set_header		X-GitHub-Delivery $http_x_github_delivery;</span><br><span class="line">		proxy_set_header		X-Hub-Signature	$http_x_hub_signature;</span><br><span class="line">        proxy_set_header        Host    $http_host;</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+<p>配置完后在GitHub上添加WebHooks就可以了  </p>
+<h4 id="结束"><a href="#结束" class="headerlink" title="结束"></a>结束</h4><p>虽然代码已经写完了，但是还不知道效果怎么样，所以这篇也是一个测试，看看有没有其它问题，好了，测试开始。  </p>
+<h4 id="测试结果"><a href="#测试结果" class="headerlink" title="测试结果"></a>测试结果</h4><p>发现交互还是有点问题，已经修改，本地测试通过。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    Sean Jin
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://hellojxl.com/2019/01/05/迁移Hexo到VPS/" title="迁移Hexo到VPS">https://hellojxl.com/2019/01/05/迁移Hexo到VPS/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/hexo/" rel="tag"># hexo</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/12/26/禁用向日葵远程软件的开机自动启动/" rel="next" title="禁用向日葵远程软件的开机自动启动">
+                <i class="fa fa-chevron-left"></i> 禁用向日葵远程软件的开机自动启动
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/01/12/关于nvm的使用/" rel="prev" title="关于nvm的使用">
+                关于nvm的使用 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+      <div id="sidebar-dimmer"></div>
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.png" alt="Sean Jin">
+            
+              <p class="site-author-name" itemprop="name">Sean Jin</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">21</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">25</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:jxl922@outlook.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i></a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://twitter.com/jxl922" target="_blank" title="Twitter">
+                      
+                        <i class="fa fa-fw fa-twitter"></i></a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#方式"><span class="nav-number">2.</span> <span class="nav-text">方式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#部署服务"><span class="nav-number">3.</span> <span class="nav-text">部署服务</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#结束"><span class="nav-number">4.</span> <span class="nav-text">结束</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#测试结果"><span class="nav-number">5.</span> <span class="nav-text">测试结果</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Sean Jin</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a></div>
+
+<br>
+<span id="busuanzi_container_site_pv">
+    本站总访问量<span id="busuanzi_value_site_pv"></span>次
+</span>
+<span id="busuanzi_container_site_uv">
+  本站访客数<span id="busuanzi_value_site_uv"></span>人次
+</span>
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
