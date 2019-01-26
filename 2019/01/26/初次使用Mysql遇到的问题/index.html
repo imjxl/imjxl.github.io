@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT">
+  <meta name="keywords" content="dotnet core,mysql,">
 
 
 
@@ -79,17 +79,18 @@
 
 
 
-<meta name="description" content="关于作者作为一个资深不精的C#爱好者、开源拥护者，最近非常喜欢研究分布式、docker和安全方面的东西，可惜刚开始研究还不太深入，但愿能在以后有机会可以学习。   同时也喜欢go和nodejs，虽然对java不感兴趣可惜目前来看不研究也是不行了😅😄 关于本站此前多次想写博客，可惜一直没有坚持下去，这次正好手里有域名就又用起来了，应该会一直更，但可能不够专业，只是自己的一些见解或感受之类的随性文">
-<meta property="og:type" content="website">
-<meta property="og:title" content="关于我">
-<meta property="og:url" content="https://hellojxl.com/about/index.html">
+<meta name="description" content="前言最近一直忙着弄一个博客系统，以防那天node又坏了，那我就直接换了，目前是在之前文章里提到的beetlex blog的基础上进行改造的，主要想修改一下几点：    进行前后端分离，因为我不想改动一点东西就要重新编译。 放弃cookie将，所有的认证方式更改为JWT形式。 前端样式改为类Next的主题。 数据库更改为mysql。 去掉某些不用的组件，像elasticsearch、腾讯云等。">
+<meta name="keywords" content="dotnet core,mysql">
+<meta property="og:type" content="article">
+<meta property="og:title" content="初次使用Mysql遇到的问题">
+<meta property="og:url" content="https://hellojxl.com/2019/01/26/初次使用Mysql遇到的问题/index.html">
 <meta property="og:site_name" content="hellojxl">
-<meta property="og:description" content="关于作者作为一个资深不精的C#爱好者、开源拥护者，最近非常喜欢研究分布式、docker和安全方面的东西，可惜刚开始研究还不太深入，但愿能在以后有机会可以学习。   同时也喜欢go和nodejs，虽然对java不感兴趣可惜目前来看不研究也是不行了😅😄 关于本站此前多次想写博客，可惜一直没有坚持下去，这次正好手里有域名就又用起来了，应该会一直更，但可能不够专业，只是自己的一些见解或感受之类的随性文">
+<meta property="og:description" content="前言最近一直忙着弄一个博客系统，以防那天node又坏了，那我就直接换了，目前是在之前文章里提到的beetlex blog的基础上进行改造的，主要想修改一下几点：    进行前后端分离，因为我不想改动一点东西就要重新编译。 放弃cookie将，所有的认证方式更改为JWT形式。 前端样式改为类Next的主题。 数据库更改为mysql。 去掉某些不用的组件，像elasticsearch、腾讯云等。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-07-27T14:16:16.104Z">
+<meta property="og:updated_time" content="2019-01-26T12:28:33.083Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="关于我">
-<meta name="twitter:description" content="关于作者作为一个资深不精的C#爱好者、开源拥护者，最近非常喜欢研究分布式、docker和安全方面的东西，可惜刚开始研究还不太深入，但愿能在以后有机会可以学习。   同时也喜欢go和nodejs，虽然对java不感兴趣可惜目前来看不研究也是不行了😅😄 关于本站此前多次想写博客，可惜一直没有坚持下去，这次正好手里有域名就又用起来了，应该会一直更，但可能不够专业，只是自己的一些见解或感受之类的随性文">
+<meta name="twitter:title" content="初次使用Mysql遇到的问题">
+<meta name="twitter:description" content="前言最近一直忙着弄一个博客系统，以防那天node又坏了，那我就直接换了，目前是在之前文章里提到的beetlex blog的基础上进行改造的，主要想修改一下几点：    进行前后端分离，因为我不想改动一点东西就要重新编译。 放弃cookie将，所有的认证方式更改为JWT形式。 前端样式改为类Next的主题。 数据库更改为mysql。 去掉某些不用的组件，像elasticsearch、腾讯云等。">
 
 
 
@@ -119,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="https://hellojxl.com/about/">
+  <link rel="canonical" href="https://hellojxl.com/2019/01/26/初次使用Mysql遇到的问题/">
 
 
 
 
 
-  <title>关于我 | hellojxl</title>
+  <title>初次使用Mysql遇到的问题 | hellojxl</title>
   
 
 
@@ -250,39 +251,212 @@
 
   <div id="posts" class="posts-expand">
     
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://hellojxl.com/2019/01/26/初次使用Mysql遇到的问题/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Sean Jin">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="hellojxl">
+    </span>
+
     
-    
-    <div class="post-block page">
       <header class="post-header">
 
-	<h1 class="post-title" itemprop="name headline">关于我</h1>
-
-
-
-</header>
-
-      
-      
-      
-      <div class="post-body">
         
         
-          <h4 id="关于作者"><a href="#关于作者" class="headerlink" title="关于作者"></a>关于作者</h4><p>作为一个资深不精的C#爱好者、开源拥护者，最近非常喜欢研究分布式、docker和安全方面的东西，可惜刚开始研究还不太深入，但愿能在以后有机会可以学习。  </p>
-<p>同时也喜欢go和nodejs，虽然对java不感兴趣可惜目前来看不研究也是不行了😅😄</p>
-<h4 id="关于本站"><a href="#关于本站" class="headerlink" title="关于本站"></a>关于本站</h4><p>此前多次想写博客，可惜一直没有坚持下去，这次正好手里有域名就又用起来了，应该会一直更，但可能不够专业，只是自己的一些见解或感受之类的随性文章。  </p>
-<p>关于文章的版权，可以随意转载，但要著名文章出处及本站连接，目前不会做强制要求，但保留追究其法律责任的权利。</p>
-<h4 id="联系方式"><a href="#联系方式" class="headerlink" title="联系方式"></a>联系方式</h4><p>我的邮箱：<a href="mailto:&#106;&#120;&#x6c;&#57;&#x32;&#x32;&#x40;&#x6f;&#x75;&#116;&#x6c;&#x6f;&#111;&#107;&#46;&#99;&#x6f;&#x6d;" target="_blank" rel="noopener">&#106;&#120;&#x6c;&#57;&#x32;&#x32;&#x40;&#x6f;&#x75;&#116;&#x6c;&#x6f;&#111;&#107;&#46;&#99;&#x6f;&#x6d;</a>  </p>
-<p>我的推特：<a href="https://twitter.com/hellojxl" target="_blank" rel="noopener">Twitter</a></p>
-
+          <h1 class="post-title" itemprop="name headline">初次使用Mysql遇到的问题</h1>
         
-      </div>
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-01-26T15:53:52+08:00">
+                2019-01-26
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/数据库/" itemprop="url" rel="index">
+                    <span itemprop="name">数据库</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span id="busuanzi_container_page_pv">阅读量 <span id="busuanzi_value_page_pv"></span> 次</span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
       
       
+
+      
+        <h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>最近一直忙着弄一个博客系统，以防那天node又坏了，那我就直接换了，目前是在之前文章里提到的beetlex blog的基础上进行改造的，主要想修改一下几点：  </p>
+<ol>
+<li>进行前后端分离，因为我不想改动一点东西就要重新编译。</li>
+<li>放弃cookie将，所有的认证方式更改为JWT形式。</li>
+<li>前端样式改为类Next的主题。</li>
+<li>数据库更改为mysql。</li>
+<li>去掉某些不用的组件，像elasticsearch、腾讯云等。  </li>
+</ol>
+<p>暂时只有这些，当然还有一些迁移过程中出现的bug，目前感觉差不多已经可以用了，不过在Safari下面会报一些错误，正在解决。  </p>
+<h4 id="所谓的问题"><a href="#所谓的问题" class="headerlink" title="所谓的问题"></a>所谓的问题</h4><p>其实也不是第一次用，只是迁移过程中初次遇到的问题：  </p>
+<ol>
+<li><p>DBeaver报无法识别的DateTimeZone的问题。  </p>
+<p>这个其实很简单，只要在设置的时候选择正确的时区即可，起初我以为会自动选择，看来还是没那么智能，还需要手动选择一下。  </p>
+</li>
+<li><p>保存emoji表情时出现的Incorrect string value: ‘\xF0\x9F\x98\xAD”,…’ for column ‘commentContent’ at row ‘rowname’的问题。  </p>
+<p>这个网上查询说因为Utf8编码的问题，需要将编码设置为uft8mb4，我设置的时候记着选择的是utf8，但是不是uft8mb4就忘记了，但是从DBeaver上面看的话编码确实是uft8mb4，应该默认就是，我的异常是从代码里报出来的，是要在连接字符串中也要指定的，就涉及到下面这个问题了。</p>
+</li>
+<li><p>dotnet core连接字符串中设置编码的问题  </p>
+<p>之前配置Java的时候遇到过，但是还没有在C#里配置过，其实只需要加上<em>charset=’utf8mb4’</em> 即可，最开始设置的是utf8，发现还是保存不了emoji，网上说是如果配置为utf8会在服务端自动转换，但是我这里还是不行，需要明确指定。  </p>
+</li>
+</ol>
+<h4 id="结尾"><a href="#结尾" class="headerlink" title="结尾"></a>结尾</h4><p>本来打算安装mariaDB的，结果发现没有Mac版本的，没办法只好装mysql了，另外最近转了部门，公司也要明确转Java，所以研究了一下Spring cloud的服务中心，结果发现运行起来之后注册不了，目前还不知道啥原因，等排除了也要记录一下。</p>
+
       
     </div>
     
     
     
+
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    Sean Jin
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://hellojxl.com/2019/01/26/初次使用Mysql遇到的问题/" title="初次使用Mysql遇到的问题">https://hellojxl.com/2019/01/26/初次使用Mysql遇到的问题/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/dotnet-core/" rel="tag"># dotnet core</a>
+          
+            <a href="/tags/mysql/" rel="tag"># mysql</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/01/12/关于nvm的使用/" rel="next" title="关于nvm的使用">
+                <i class="fa fa-chevron-left"></i> 关于nvm的使用
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
   </div>
 
 
@@ -414,7 +588,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#关于作者"><span class="nav-number">1.</span> <span class="nav-text">关于作者</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#关于本站"><span class="nav-number">2.</span> <span class="nav-text">关于本站</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#联系方式"><span class="nav-number">3.</span> <span class="nav-text">联系方式</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#所谓的问题"><span class="nav-number">2.</span> <span class="nav-text">所谓的问题</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#结尾"><span class="nav-number">3.</span> <span class="nav-text">结尾</span></a></li></ol></div>
             
 
           </div>
