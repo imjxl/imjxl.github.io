@@ -259,6 +259,281 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://hellojxl.com/2018/07/27/v2ray安装注意记录/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Sean Jin">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="hellojxl">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/07/27/v2ray安装注意记录/" itemprop="url">v2ray安装注意记录</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-07-27T21:02:19+08:00">
+                2018-07-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h4 id="原因"><a href="#原因" class="headerlink" title="原因"></a>原因</h4><p>新购了一个国外VPS，肯定要(你懂的)，主机商提供了三种系统，Ubuntu、Debian和Centos，由于某些原因三种系统都轮流安装了一遍，或者说都虐了一遍了，其中经历惨不忍睹啊！  </p>
+<h4 id="相关问题"><a href="#相关问题" class="headerlink" title="相关问题"></a>相关问题</h4><p>不得不说<a href="https://www.v2ray.com" target="_blank" rel="noopener">v2ray</a>的官方文档还是很齐全的，但是由于linux的版本太多过程还是会遇到问题的，所以具体的安装文档还是参照官方文档，我这里只是记录遇到的问题  </p>
+<ul>
+<li>问题一：Centos7下Nginx下无法进行数据转发，报Permission Denied<br>解决方法：可以<a href="https://toutyrater.github.io/advanced/wss_and_web.html" target="_blank" rel="noopener">参考白话配置</a>,不过我这里由于是VPS的问题，SELinux被主机商禁用了，开启不了，只能更换系统</li>
+<li>问题二：Debian下SSL版本低，这个算不上问题，只是我这升级完ssl出现好多问题，果断更换系统，没办法，自己太菜🐶，关键是不明白什么主机商提供的Debian8的ssl协议竟然这么低。</li>
+<li>问题三：Centos6下提示出错：Install daemon fail, please install it manually<br>解决方法：原来是因为不支持centos6，参考<a href="https://www.feiqy.com/v2ray/" target="_blank" rel="noopener">这里</a>，具体如下：<br>新建/etc/init.d/v2ray,并添加下面的配置 </li>
+</ul>
+<pre><code>#!/bin/sh
+#
+# v2ray        Startup script for v2ray
+#
+# chkconfig: - 24 76
+# processname: v2ray
+# pidfile: /var/run/v2ray.pid
+# description: V2Ray proxy services
+#
+
+### BEGIN INIT INFO
+# Provides:          v2ray
+# Required-Start:    $network $local_fs $remote_fs
+# Required-Stop:     $remote_fs
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: V2Ray proxy services
+# Description:       V2Ray proxy services
+### END INIT INFO
+
+DESC=v2ray
+NAME=v2ray
+DAEMON=/usr/bin/v2ray/v2ray
+PIDFILE=/var/run/$NAME.pid
+LOCKFILE=/var/lock/subsys/$NAME
+SCRIPTNAME=/etc/init.d/$NAME
+RETVAL=0
+
+DAEMON_OPTS=&quot;-config /etc/v2ray/config.json&quot;
+
+# Exit if the package is not installed
+[ -x $DAEMON ] || exit 0
+
+# Read configuration variable file if it is present
+[ -r /etc/default/$NAME ] &amp;&amp; . /etc/default/$NAME
+
+# Source function library.
+. /etc/rc.d/init.d/functions
+
+start() {
+  local pids=$(pgrep -f $DAEMON)
+  if [ -n &quot;$pids&quot; ]; then
+    echo &quot;$NAME (pid $pids) is already running&quot;
+    RETVAL=0
+    return 0
+  fi
+
+  echo -n $&quot;Starting $NAME: &quot;
+
+  mkdir -p /var/log/v2ray
+  $DAEMON $DAEMON_OPTS 1&gt;/dev/null 2&gt;&amp;1 &amp;
+  echo $! &gt; $PIDFILE
+
+  sleep 2
+  pgrep -f $DAEMON &gt;/dev/null 2&gt;&amp;1
+  RETVAL=$?
+  if [ $RETVAL -eq 0 ]; then
+    success; echo
+    touch $LOCKFILE
+  else
+    failure; echo
+  fi
+  return $RETVAL
+}
+
+stop() {
+  local pids=$(pgrep -f $DAEMON)
+  if [ -z &quot;$pids&quot; ]; then
+    echo &quot;$NAME is not running&quot;
+    RETVAL=0
+    return 0
+  fi
+
+  echo -n $&quot;Stopping $NAME: &quot;
+  killproc -p ${PIDFILE} ${NAME}
+  RETVAL=$?
+  echo
+  [ $RETVAL = 0 ] &amp;&amp; rm -f ${LOCKFILE} ${PIDFILE}
+}
+
+reload() {
+  echo -n $&quot;Reloading $NAME: &quot;
+  killproc -p ${PIDFILE} ${NAME} -HUP
+  RETVAL=$?
+  echo
+}
+
+rh_status() {
+  status -p ${PIDFILE} ${DAEMON}
+}
+
+# See how we were called.
+case &quot;$1&quot; in
+  start)
+    rh_status &gt;/dev/null 2&gt;&amp;1 &amp;&amp; exit 0
+    start
+    ;;
+  stop)
+    stop
+    ;;
+  status)
+    rh_status
+    RETVAL=$?
+    ;;
+  restart)
+    stop
+    start
+    ;;
+  reload)
+    reload
+  ;;
+  *)
+    echo &quot;Usage: $SCRIPTNAME {start|stop|status|reload|restart}&quot; &gt;&amp;2
+    RETVAL=2
+  ;;
+esac
+exit $RETVAL
+</code></pre><p>增加权限并加入开机启动  </p>
+<pre><code>chmod a+x /etc/init.d/v2ray
+chkconfig v2ray on
+service v2ray start
+</code></pre><h4 id="结束"><a href="#结束" class="headerlink" title="结束"></a>结束</h4><p>哈哈，有点水，为了折腾这个折腾了2天，本来ubuntu挺好的，因为速度有点慢就换成别的系统准备退费，结果😓，好了，吃🍉  </p>
+<h4 id="引用"><a href="#引用" class="headerlink" title="引用"></a>引用</h4><ol>
+<li>扉启博客 <a href="https://www.feiqy.com/v2ray/" target="_blank" rel="noopener">https://www.feiqy.com/v2ray/</a></li>
+</ol>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://hellojxl.com/2018/07/21/关于Nginx启用Https的记录/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -1785,152 +2060,6 @@ public class AuthorizationHeaderFilter : IOperationFilter
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://hellojxl.com/2018/03/29/Dotnet-Core中错误的模型绑定/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Sean Jin">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="hellojxl">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/03/29/Dotnet-Core中错误的模型绑定/" itemprop="url">Dotnet Core中错误的模型绑定</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-29T12:23:06+08:00">
-                2018-03-29
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/dotnet-core/" itemprop="url" rel="index">
-                    <span itemprop="name">dotnet core</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>之前工作碰到一个问题，就是dotnet core中的模型绑定失败了，当时有点忙就没处理，今天想起来就测试了一下，然后发现直接用字段获取是可以的，但是用类去获取就失败了，下面是类似代码:  </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">//model</span><br><span class="line">public clsss OperInfo</span><br><span class="line">&#123;</span><br><span class="line">   public int Id &#123;get;set;&#125;</span><br><span class="line">   public int Numb &#123;get;set;&#125;</span><br><span class="line">   public string info &#123;get;set;&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//action</span><br><span class="line">public IActionResult ModifyInfo(OperInfo info)</span><br><span class="line">&#123;</span><br><span class="line">   //这里info无论如何也获取不到，全为Null</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>也许你一眼就能看出来，模型里的字段info和接受参数中的变量info名称是一样的，这造成了无法接受到传过来的数据，今天仔细看了一下，终于发现是这个原因，记录一下。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1985,7 +2114,7 @@ public class AuthorizationHeaderFilter : IOperationFilter
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">22</span>
+                  <span class="site-state-item-count">23</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
