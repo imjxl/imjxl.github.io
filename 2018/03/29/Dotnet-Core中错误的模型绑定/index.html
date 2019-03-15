@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="之前工作碰到一个问题，就是dotnet core中的模型绑定失败了，当时有点忙就没处理，今天想起来就测试了一下，然后发现直接用字段获取是可以的，但是用类去获取就失败了，下面是类似代码:   12345678910111213//modelpublic clsss OperInfo&amp;#123;   public int Id &amp;#123;get;set;&amp;#125;   public int Num">
+<meta name="description" content="之前工作碰到一个问题，就是dotnet core中的模型绑定失败了，当时有点忙就没处理，今天想起来就测试了一下，然后发现直接用字段获取是可以的，但是用类去获取就失败了，下面是类似代码: 12345678910111213//modelpublic clsss OperInfo&amp;#123;   public int Id &amp;#123;get;set;&amp;#125;   public int Numb">
 <meta name="keywords" content="dotnet core">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Dotnet Core中错误的模型绑定">
 <meta property="og:url" content="https://hellojxl.com/2018/03/29/Dotnet-Core中错误的模型绑定/index.html">
 <meta property="og:site_name" content="hellojxl">
-<meta property="og:description" content="之前工作碰到一个问题，就是dotnet core中的模型绑定失败了，当时有点忙就没处理，今天想起来就测试了一下，然后发现直接用字段获取是可以的，但是用类去获取就失败了，下面是类似代码:   12345678910111213//modelpublic clsss OperInfo&amp;#123;   public int Id &amp;#123;get;set;&amp;#125;   public int Num">
+<meta property="og:description" content="之前工作碰到一个问题，就是dotnet core中的模型绑定失败了，当时有点忙就没处理，今天想起来就测试了一下，然后发现直接用字段获取是可以的，但是用类去获取就失败了，下面是类似代码: 12345678910111213//modelpublic clsss OperInfo&amp;#123;   public int Id &amp;#123;get;set;&amp;#125;   public int Numb">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:updated_time" content="2018-04-04T14:05:09.493Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Dotnet Core中错误的模型绑定">
-<meta name="twitter:description" content="之前工作碰到一个问题，就是dotnet core中的模型绑定失败了，当时有点忙就没处理，今天想起来就测试了一下，然后发现直接用字段获取是可以的，但是用类去获取就失败了，下面是类似代码:   12345678910111213//modelpublic clsss OperInfo&amp;#123;   public int Id &amp;#123;get;set;&amp;#125;   public int Num">
+<meta name="twitter:description" content="之前工作碰到一个问题，就是dotnet core中的模型绑定失败了，当时有点忙就没处理，今天想起来就测试了一下，然后发现直接用字段获取是可以的，但是用类去获取就失败了，下面是类似代码: 12345678910111213//modelpublic clsss OperInfo&amp;#123;   public int Id &amp;#123;get;set;&amp;#125;   public int Numb">
 
 
 
@@ -357,8 +357,8 @@
       
 
       
-        <p>之前工作碰到一个问题，就是dotnet core中的模型绑定失败了，当时有点忙就没处理，今天想起来就测试了一下，然后发现直接用字段获取是可以的，但是用类去获取就失败了，下面是类似代码:  </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">//model</span><br><span class="line">public clsss OperInfo</span><br><span class="line">&#123;</span><br><span class="line">   public int Id &#123;get;set;&#125;</span><br><span class="line">   public int Numb &#123;get;set;&#125;</span><br><span class="line">   public string info &#123;get;set;&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//action</span><br><span class="line">public IActionResult ModifyInfo(OperInfo info)</span><br><span class="line">&#123;</span><br><span class="line">   //这里info无论如何也获取不到，全为Null</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+        <p>之前工作碰到一个问题，就是dotnet core中的模型绑定失败了，当时有点忙就没处理，今天想起来就测试了一下，然后发现直接用字段获取是可以的，但是用类去获取就失败了，下面是类似代码:</p>
+<p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">//model</span><br><span class="line">public clsss OperInfo</span><br><span class="line">&#123;</span><br><span class="line">   public int Id &#123;get;set;&#125;</span><br><span class="line">   public int Numb &#123;get;set;&#125;</span><br><span class="line">   public string info &#123;get;set;&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//action</span><br><span class="line">public IActionResult ModifyInfo(OperInfo info)</span><br><span class="line">&#123;</span><br><span class="line">   //这里info无论如何也获取不到，全为Null</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>也许你一眼就能看出来，模型里的字段info和接受参数中的变量info名称是一样的，这造成了无法接受到传过来的数据，今天仔细看了一下，终于发现是这个原因，记录一下。</p>
 
       

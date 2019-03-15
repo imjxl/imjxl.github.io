@@ -354,12 +354,17 @@
       
         
           
-            <h4 id="原因"><a href="#原因" class="headerlink" title="原因"></a>原因</h4><p>新购了一个国外VPS，肯定要(你懂的)，主机商提供了三种系统，Ubuntu、Debian和Centos，由于某些原因三种系统都轮流安装了一遍，或者说都虐了一遍了，其中经历惨不忍睹啊！  </p>
-<h4 id="相关问题"><a href="#相关问题" class="headerlink" title="相关问题"></a>相关问题</h4><p>不得不说<a href="https://www.v2ray.com" target="_blank" rel="noopener">v2ray</a>的官方文档还是很齐全的，但是由于linux的版本太多过程还是会遇到问题的，所以具体的安装文档还是参照官方文档，我这里只是记录遇到的问题  </p>
+            <h4>原因</h4>
+<p>新购了一个国外VPS，肯定要(你懂的)，主机商提供了三种系统，Ubuntu、Debian和Centos，由于某些原因三种系统都轮流安装了一遍，或者说都虐了一遍了，其中经历惨不忍睹啊！</p>
+<h4>相关问题</h4>
+<p>不得不说<a href="https://www.v2ray.com" target="_blank" rel="noopener">v2ray</a>的官方文档还是很齐全的，但是由于linux的版本太多过程还是会遇到问题的，所以具体的安装文档还是参照官方文档，我这里只是记录遇到的问题</p>
 <ul>
-<li>问题一：Centos7下Nginx下无法进行数据转发，报Permission Denied<br>解决方法：可以<a href="https://toutyrater.github.io/advanced/wss_and_web.html" target="_blank" rel="noopener">参考白话配置</a>,不过我这里由于是VPS的问题，SELinux被主机商禁用了，开启不了，只能更换系统</li>
+<li>问题一：Centos7下Nginx下无法进行数据转发，报Permission Denied<br>
+解决方法：可以<a href="https://toutyrater.github.io/advanced/wss_and_web.html" target="_blank" rel="noopener">参考白话配置</a>,不过我这里由于是VPS的问题，SELinux被主机商禁用了，开启不了，只能更换系统</li>
 <li>问题二：Debian下SSL版本低，这个算不上问题，只是我这升级完ssl出现好多问题，果断更换系统，没办法，自己太菜🐶，关键是不明白什么主机商提供的Debian8的ssl协议竟然这么低。</li>
-<li>问题三：Centos6下提示出错：Install daemon fail, please install it manually<br>解决方法：原来是因为不支持centos6，参考<a href="https://www.feiqy.com/v2ray/" target="_blank" rel="noopener">这里</a>，具体如下：<br>新建/etc/init.d/v2ray,并添加下面的配置 </li>
+<li>问题三：Centos6下提示出错：Install daemon fail, please install it manually<br>
+解决方法：原来是因为不支持centos6，参考<a href="https://www.feiqy.com/v2ray/" target="_blank" rel="noopener">这里</a>，具体如下：
+新建/etc/init.d/v2ray,并添加下面的配置</li>
 </ul>
 <pre><code>#!/bin/sh
 #
@@ -370,7 +375,7 @@
 # pidfile: /var/run/v2ray.pid
 # description: V2Ray proxy services
 #
-
+ 
 ### BEGIN INIT INFO
 # Provides:          v2ray
 # Required-Start:    $network $local_fs $remote_fs
@@ -380,7 +385,7 @@
 # Short-Description: V2Ray proxy services
 # Description:       V2Ray proxy services
 ### END INIT INFO
-
+ 
 DESC=v2ray
 NAME=v2ray
 DAEMON=/usr/bin/v2ray/v2ray
@@ -388,18 +393,18 @@ PIDFILE=/var/run/$NAME.pid
 LOCKFILE=/var/lock/subsys/$NAME
 SCRIPTNAME=/etc/init.d/$NAME
 RETVAL=0
-
+ 
 DAEMON_OPTS=&quot;-config /etc/v2ray/config.json&quot;
-
+ 
 # Exit if the package is not installed
 [ -x $DAEMON ] || exit 0
-
+ 
 # Read configuration variable file if it is present
 [ -r /etc/default/$NAME ] &amp;&amp; . /etc/default/$NAME
-
+ 
 # Source function library.
 . /etc/rc.d/init.d/functions
-
+ 
 start() {
   local pids=$(pgrep -f $DAEMON)
   if [ -n &quot;$pids&quot; ]; then
@@ -407,13 +412,13 @@ start() {
     RETVAL=0
     return 0
   fi
-
+ 
   echo -n $&quot;Starting $NAME: &quot;
-
+ 
   mkdir -p /var/log/v2ray
   $DAEMON $DAEMON_OPTS 1&gt;/dev/null 2&gt;&amp;1 &amp;
   echo $! &gt; $PIDFILE
-
+ 
   sleep 2
   pgrep -f $DAEMON &gt;/dev/null 2&gt;&amp;1
   RETVAL=$?
@@ -425,7 +430,7 @@ start() {
   fi
   return $RETVAL
 }
-
+ 
 stop() {
   local pids=$(pgrep -f $DAEMON)
   if [ -z &quot;$pids&quot; ]; then
@@ -433,25 +438,25 @@ stop() {
     RETVAL=0
     return 0
   fi
-
+ 
   echo -n $&quot;Stopping $NAME: &quot;
   killproc -p ${PIDFILE} ${NAME}
   RETVAL=$?
   echo
   [ $RETVAL = 0 ] &amp;&amp; rm -f ${LOCKFILE} ${PIDFILE}
 }
-
+ 
 reload() {
   echo -n $&quot;Reloading $NAME: &quot;
   killproc -p ${PIDFILE} ${NAME} -HUP
   RETVAL=$?
   echo
 }
-
+ 
 rh_status() {
   status -p ${PIDFILE} ${DAEMON}
 }
-
+ 
 # See how we were called.
 case &quot;$1&quot; in
   start)
@@ -478,12 +483,16 @@ case &quot;$1&quot; in
   ;;
 esac
 exit $RETVAL
-</code></pre><p>增加权限并加入开机启动  </p>
+</code></pre>
+<p>增加权限并加入开机启动</p>
 <pre><code>chmod a+x /etc/init.d/v2ray
 chkconfig v2ray on
 service v2ray start
-</code></pre><h4 id="结束"><a href="#结束" class="headerlink" title="结束"></a>结束</h4><p>哈哈，有点水，为了折腾这个折腾了2天，本来ubuntu挺好的，因为速度有点慢就换成别的系统准备退费，结果😓，好了，吃🍉  </p>
-<h4 id="引用"><a href="#引用" class="headerlink" title="引用"></a>引用</h4><ol>
+</code></pre>
+<h4>结束</h4>
+<p>哈哈，有点水，为了折腾这个折腾了2天，本来ubuntu挺好的，因为速度有点慢就换成别的系统准备退费，结果😓，好了，吃🍉</p>
+<h4>引用</h4>
+<ol>
 <li>扉启博客 <a href="https://www.feiqy.com/v2ray/" target="_blank" rel="noopener">https://www.feiqy.com/v2ray/</a></li>
 </ol>
 
@@ -629,29 +638,33 @@ service v2ray start
       
         
           
-            <h4 id="记录原因"><a href="#记录原因" class="headerlink" title="记录原因"></a>记录原因</h4><p>之前也部署过，结果上次因为买了一个新的VPS，打算部署<a href="https://www.v2ray.com" target="_blank" rel="noopener">v2ray</a>的时候，遇到点问题，感觉还是要记录下来，因为是自己用所以就直接用Let’s Encrypt部署吧，因为可以自动续期，90天也无所谓。  </p>
-<h4 id="安装部署"><a href="#安装部署" class="headerlink" title="安装部署"></a>安装部署</h4><p>啥也不说，直接上<a href="https://certbot.eff.org/" target="_blank" rel="noopener">certbot</a>,详细的可以参考官方文档，这里只记录简单的部署  </p>
+            <h4>记录原因</h4>
+<p>之前也部署过，结果上次因为买了一个新的VPS，打算部署<a href="https://www.v2ray.com" target="_blank" rel="noopener">v2ray</a>的时候，遇到点问题，感觉还是要记录下来，因为是自己用所以就直接用Let's Encrypt部署吧，因为可以自动续期，90天也无所谓。</p>
+<h4>安装部署</h4>
+<p>啥也不说，直接上<a href="https://certbot.eff.org/" target="_blank" rel="noopener">certbot</a>,详细的可以参考官方文档，这里只记录简单的部署</p>
 <ul>
-<li>安装前提<br>因为certbot基于python，所以系统需要先安装Python 2.7 or 3.4+以上的版本</li>
-<li>下载certbot  </li>
+<li>安装前提<br>
+因为certbot基于python，所以系统需要先安装Python 2.7 or 3.4+以上的版本</li>
+<li>下载certbot</li>
 </ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># wget https://dl.eff.org/certbot-auto //下载</span><br><span class="line"># chmod a+x ./certbot-auto  //修改权限</span><br><span class="line"># ./certbot-auto --help  //验证是否成功</span><br></pre></td></tr></table></figure>
+<p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># wget https://dl.eff.org/certbot-auto //下载</span><br><span class="line"># chmod a+x ./certbot-auto  //修改权限</span><br><span class="line"># ./certbot-auto --help  //验证是否成功</span><br></pre></td></tr></table></figure></p>
 <ul>
-<li>开始部署  </li>
+<li>开始部署</li>
 </ul>
 <p>首先要看nginx的根目录在什么位置，有的在/var/www/html下，有的在/usr/share/nginx/html下。</p>
-<p>然后配置nginx读取certbot产生的文本文件  </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">location ~ /.well-known/acme-challenge/ &#123;</span><br><span class="line">	allow	all;</span><br><span class="line">	root /usr/share/nginx/html;</span><br><span class="line">	default_type	&quot;text/plain&quot;;</span><br><span class="line">&#125;</span><br><span class="line">location = /.well-known/acme-challenge/ &#123;</span><br><span class="line">	return 404;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>运行nginx -s reload重新加载配置  </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./certbot-auto certonly --webroot -w /usr/share/nginx/html/ -d your.domain.com</span><br></pre></td></tr></table></figure>
-<p>指定webroot和域名，只要能够访问就成功了，切记一次最多五次，否则会被限制，当时因为地址弄错了，等了一个星期…  </p>
-<p>发放证书了还需要配置nginx启用  </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">server &#123;</span><br><span class="line">	listen	80;</span><br><span class="line">	server_name	www.domain.com domain.com;</span><br><span class="line">	return	301	$scheme:https://www.$host$request_uri;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">server &#123;</span><br><span class="line">    listen       443	ssl http2;</span><br><span class="line">    ssl	on;</span><br><span class="line">    server_name  your.domain.com;</span><br><span class="line">    add_header Strict-Transport-Security &quot;max-age=63072000; includeSubdomains; preload&quot;;</span><br><span class="line">    ssl_certificate	/etc/letsencrypt/live/your.domain.com/fullchain.pem;</span><br><span class="line">    ssl_certificate_key	 /etc/letsencrypt/live/your.domain.com/privkey.pem;</span><br><span class="line">    ssl_trusted_certificate	/etc/letsencrypt/live/your.domain.com/chain.pem;</span><br><span class="line">    ssl_protocols	TLSV1.1	TLSV1.2;</span><br><span class="line">    ssl_prefer_server_ciphers	on;</span><br><span class="line">    ssl_ciphers	AES256+EECDH:AES256+EDH:!aNULL;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>这里遇到一个问题就是网上好多配置的ssl_certificate是fullchain.pem，结果浏览器上都会报不信任错误，后来发现原来是访问地址的问题，这里涉及到裸域的问题，默认配置的可能是<a href="http://www.example.com，如果我直接访问example.com那么浏览器就会报域名不匹配的问题，因为签名的时候是带www的，所以需要301重定向到www上就可以了。" target="_blank" rel="noopener">www.example.com，如果我直接访问example.com那么浏览器就会报域名不匹配的问题，因为签名的时候是带www的，所以需要301重定向到www上就可以了。</a> </p>
-<p>接下来就是自动续期了，很简单  </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./certbot-auto renew --quiet</span><br></pre></td></tr></table></figure>
-<p>因为我是在centos7上执行的，不同的系统命令可能不太一样，精力有限没办法一一测试，一定要注意。  </p>
-<h4 id="结尾"><a href="#结尾" class="headerlink" title="结尾"></a>结尾</h4><p>部署完之后可以用<a href="https://www.ssllabs.com/ssltest/" target="_blank" rel="noopener">SSL Labs</a>服务进行测试看看得多少分，也挺好玩的😄，之前知道git pages也启用https之后，一直想启用，结果发现腾讯的dns记录只能添加三条，再多就得加钱，快到期的时候一定要迁出去，目前打算迁到namesilo，国内真是各种受限😖</p>
+<p>然后配置nginx读取certbot产生的文本文件</p>
+<p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">location ~ /.well-known/acme-challenge/ &#123;</span><br><span class="line">	allow	all;</span><br><span class="line">	root /usr/share/nginx/html;</span><br><span class="line">	default_type	&quot;text/plain&quot;;</span><br><span class="line">&#125;</span><br><span class="line">location = /.well-known/acme-challenge/ &#123;</span><br><span class="line">	return 404;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>运行nginx -s reload重新加载配置</p>
+<p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./certbot-auto certonly --webroot -w /usr/share/nginx/html/ -d your.domain.com</span><br></pre></td></tr></table></figure></p>
+<p>指定webroot和域名，只要能够访问就成功了，切记一次最多五次，否则会被限制，当时因为地址弄错了，等了一个星期...</p>
+<p>发放证书了还需要配置nginx启用</p>
+<p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">server &#123;</span><br><span class="line">	listen	80;</span><br><span class="line">	server_name	www.domain.com domain.com;</span><br><span class="line">	return	301	$scheme:https://www.$host$request_uri;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">server &#123;</span><br><span class="line">    listen       443	ssl http2;</span><br><span class="line">    ssl	on;</span><br><span class="line">    server_name  your.domain.com;</span><br><span class="line">    add_header Strict-Transport-Security &quot;max-age=63072000; includeSubdomains; preload&quot;;</span><br><span class="line">    ssl_certificate	/etc/letsencrypt/live/your.domain.com/fullchain.pem;</span><br><span class="line">    ssl_certificate_key	 /etc/letsencrypt/live/your.domain.com/privkey.pem;</span><br><span class="line">    ssl_trusted_certificate	/etc/letsencrypt/live/your.domain.com/chain.pem;</span><br><span class="line">    ssl_protocols	TLSV1.1	TLSV1.2;</span><br><span class="line">    ssl_prefer_server_ciphers	on;</span><br><span class="line">    ssl_ciphers	AES256+EECDH:AES256+EDH:!aNULL;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>这里遇到一个问题就是网上好多配置的ssl_certificate是fullchain.pem，结果浏览器上都会报不信任错误，后来发现原来是访问地址的问题，这里涉及到裸域的问题，默认配置的可能是www.example.com，如果我直接访问example.com那么浏览器就会报域名不匹配的问题，因为签名的时候是带www的，所以需要301重定向到www上就可以了。</p>
+<p>接下来就是自动续期了，很简单</p>
+<p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./certbot-auto renew --quiet</span><br></pre></td></tr></table></figure></p>
+<p>因为我是在centos7上执行的，不同的系统命令可能不太一样，精力有限没办法一一测试，一定要注意。</p>
+<h4>结尾</h4>
+<p>部署完之后可以用<a href="https://www.ssllabs.com/ssltest/" target="_blank" rel="noopener">SSL Labs</a>服务进行测试看看得多少分，也挺好玩的😄，之前知道git pages也启用https之后，一直想启用，结果发现腾讯的dns记录只能添加三条，再多就得加钱，快到期的时候一定要迁出去，目前打算迁到namesilo，国内真是各种受限😖</p>
 
           
         
@@ -795,37 +808,46 @@ service v2ray start
       
         
           
-            <h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>由于公司配的E460笔记本经常死机，不清楚是不是win10的问题，同时由于win10是家庭版无法使用Docker，所以打算换一下系统看看有没有改善，并且不想装双系统，所以用虚拟机代替，下面就是整个折腾的过程，虽然最终以失败而告终。  </p>
-<h4 id="1-选择宿主主机系统"><a href="#1-选择宿主主机系统" class="headerlink" title="1.选择宿主主机系统"></a>1.选择宿主主机系统</h4><ul>
-<li><p>以win10为宿主主机，虚拟linux，但是由于win10系统下大概率会死机，所以不想采用这种方案   </p>
+            <h4>前言</h4>
+<p>由于公司配的E460笔记本经常死机，不清楚是不是win10的问题，同时由于win10是家庭版无法使用Docker，所以打算换一下系统看看有没有改善，并且不想装双系统，所以用虚拟机代替，下面就是整个折腾的过程，虽然最终以失败而告终。</p>
+<h4>1.选择宿主主机系统</h4>
+<ul>
+<li>
+<p>以win10为宿主主机，虚拟linux，但是由于win10系统下大概率会死机，所以不想采用这种方案</p>
 </li>
-<li><p>以linux为宿主主机，虚拟Windows，可能会消耗资源多一些，不过还可以承受。所以打算采用这种方式。  </p>
+<li>
+<p>以linux为宿主主机，虚拟Windows，可能会消耗资源多一些，不过还可以承受。所以打算采用这种方式。</p>
 </li>
 </ul>
-<h4 id="2-选择Linux发行版本"><a href="#2-选择Linux发行版本" class="headerlink" title="2.选择Linux发行版本"></a>2.选择Linux发行版本</h4><p>已经好长时间没有折腾linux桌面系统了，最早折腾过ubuntu,debian和suse，后来就一直Windows和Mac。刚开始想装ubuntu，毕竟之前安装过，熟悉一点，所以下的ubuntu的镜像用vmware安装，但是到了分区界面死活分不了区，遂想起来deepin，下完之后可以正常安装，不过进了系统之后那是一个卡，跟之前想的完全不一样，然后又换，就找到了Manjaro，基于arch的发行版，之前也听过arch，不过没接触过，但是看好评不错就选用了Manjaro。  </p>
-<h4 id="3-虚拟机体验"><a href="#3-虚拟机体验" class="headerlink" title="3.虚拟机体验"></a>3.虚拟机体验</h4><p>因为Mac买的Vmware Fusion用的还可以，就开始用的vmware player安装，顺便把该装的软件都装了一下，完事之后感觉非常不错，后来因为Vmware Player的版权的原因打算用virtual box代替，结果迁移半天都没成功，引导的时候总是提示找不到硬盘，最后Vmware Workstation都用上了依旧失败，迁移什么的果然是骗人的🤦‍♂️，只好又用virtual box重装了一遍，完了之后发现注销的时候竟然不卡了！！！  </p>
-<h4 id="4-真机安装"><a href="#4-真机安装" class="headerlink" title="4.真机安装"></a>4.真机安装</h4><p>虚拟机感觉不错就真机安装吧，其实心里挺担心的，毕竟是工作用，刻盘用的rufus，dd模式，备份整个系统盘，打算全部抹盘，插入U盘开始，没有进入引导？好吧，更改bios设置，可以进入了，结果安装的过程中出现：[drm:atom_op_jump [amdgpu]]<em>ERROR</em> atombios stuck in loop for more than 5secs aborting，应该是amd显卡驱动的问题，google也没查到好的解决办法，以失败而告终😅  </p>
-<h4 id="5-Manjaro配置记录"><a href="#5-Manjaro配置记录" class="headerlink" title="5.Manjaro配置记录"></a>5.Manjaro配置记录</h4><p>网上有好多，自己只是借鉴并记录一下，备用  </p>
+<h4>2.选择Linux发行版本</h4>
+<p>已经好长时间没有折腾linux桌面系统了，最早折腾过ubuntu,debian和suse，后来就一直Windows和Mac。刚开始想装ubuntu，毕竟之前安装过，熟悉一点，所以下的ubuntu的镜像用vmware安装，但是到了分区界面死活分不了区，遂想起来deepin，下完之后可以正常安装，不过进了系统之后那是一个卡，跟之前想的完全不一样，然后又换，就找到了Manjaro，基于arch的发行版，之前也听过arch，不过没接触过，但是看好评不错就选用了Manjaro。</p>
+<h4>3.虚拟机体验</h4>
+<p>因为Mac买的Vmware Fusion用的还可以，就开始用的vmware player安装，顺便把该装的软件都装了一下，完事之后感觉非常不错，后来因为Vmware Player的版权的原因打算用virtual box代替，结果迁移半天都没成功，引导的时候总是提示找不到硬盘，最后Vmware Workstation都用上了依旧失败，迁移什么的果然是骗人的🤦‍♂️，只好又用virtual box重装了一遍，完了之后发现注销的时候竟然不卡了！！！</p>
+<h4>4.真机安装</h4>
+<p>虚拟机感觉不错就真机安装吧，其实心里挺担心的，毕竟是工作用，刻盘用的rufus，dd模式，备份整个系统盘，打算全部抹盘，插入U盘开始，没有进入引导？好吧，更改bios设置，可以进入了，结果安装的过程中出现：[drm:atom_op_jump [amdgpu]]<em>ERROR</em> atombios stuck in loop for more than 5secs aborting，应该是amd显卡驱动的问题，google也没查到好的解决办法，以失败而告终😅</p>
+<h4>5.Manjaro配置记录</h4>
+<p>网上有好多，自己只是借鉴并记录一下，备用</p>
 <ul>
 <li>更改国内源</li>
 </ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ sudo pacman-mirrors -i -c China  //改为国内源</span><br><span class="line">$ sudo pacman -Syy  //更新数据源</span><br></pre></td></tr></table></figure>
+<p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ sudo pacman-mirrors -i -c China  //改为国内源</span><br><span class="line">$ sudo pacman -Syy  //更新数据源</span><br></pre></td></tr></table></figure></p>
 <ul>
-<li>设置 archlinuxcn 源，修改 /etc/pacman.conf，最后添加  </li>
+<li>设置 archlinuxcn 源，修改 /etc/pacman.conf，最后添加</li>
 </ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[archlinuxcn]</span><br><span class="line">SigLevel = Optional TrustedOnly</span><br><span class="line">Server = https://mirrors.tuna.tsinghua.edu.cn/archlinuxcn/$arch  //添加清华源  </span><br><span class="line">// 更新</span><br><span class="line">$ sudo pacman -Syy</span><br></pre></td></tr></table></figure>
+<p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[archlinuxcn]</span><br><span class="line">SigLevel = Optional TrustedOnly</span><br><span class="line">Server = https://mirrors.tuna.tsinghua.edu.cn/archlinuxcn/$arch  //添加清华源  </span><br><span class="line">// 更新</span><br><span class="line">$ sudo pacman -Syy</span><br></pre></td></tr></table></figure></p>
 <ul>
-<li>设置AUR国内源并安装 </li>
+<li>设置AUR国内源并安装</li>
 </ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ sudo pacman -S  yaourt </span><br><span class="line"></span><br><span class="line">修改 /etc/yaourtrc，去掉 # AURURL 的注释，修改为:</span><br><span class="line">AURURL=”https://aur.tuna.tsinghua.edu.cn”</span><br></pre></td></tr></table></figure>
+<p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ sudo pacman -S  yaourt </span><br><span class="line"></span><br><span class="line">修改 /etc/yaourtrc，去掉 # AURURL 的注释，修改为:</span><br><span class="line">AURURL=”https://aur.tuna.tsinghua.edu.cn”</span><br></pre></td></tr></table></figure></p>
 <ul>
-<li>安装搜狗输入法  </li>
+<li>安装搜狗输入法</li>
 </ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">sudo pacman -S fcitx-im</span><br><span class="line">sudo pacman -S fcitx-configtool </span><br><span class="line">sudo pacman -S fcitx-sogoupinyin  </span><br><span class="line"></span><br><span class="line">//增加配置文件</span><br><span class="line">$ sudo nano ~/.xprofile //没有新建并添加一下代码</span><br><span class="line"></span><br><span class="line">export GTK_IM_MODULE=fcitx </span><br><span class="line">export QT_IM_MODULE=fcitx </span><br><span class="line">export XMODIFIERS=”@im=fcitx”</span><br><span class="line"></span><br><span class="line">//保存后注销，我这里总是出问题，所以没用搜狗，用的默认的</span><br></pre></td></tr></table></figure>
+<p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">sudo pacman -S fcitx-im</span><br><span class="line">sudo pacman -S fcitx-configtool </span><br><span class="line">sudo pacman -S fcitx-sogoupinyin  </span><br><span class="line"></span><br><span class="line">//增加配置文件</span><br><span class="line">$ sudo nano ~/.xprofile //没有新建并添加一下代码</span><br><span class="line"></span><br><span class="line">export GTK_IM_MODULE=fcitx </span><br><span class="line">export QT_IM_MODULE=fcitx </span><br><span class="line">export XMODIFIERS=”@im=fcitx”</span><br><span class="line"></span><br><span class="line">//保存后注销，我这里总是出问题，所以没用搜狗，用的默认的</span><br></pre></td></tr></table></figure></p>
 <ul>
-<li>其它软件大部分都可以用pacman就可以了，不赘述了，顺便说下sublime3的安装，官方教程很好可就是https被墙了，用http就可以了  </li>
+<li>其它软件大部分都可以用pacman就可以了，不赘述了，顺便说下sublime3的安装，官方教程很好可就是https被墙了，用http就可以了</li>
 </ul>
-<h4 id="结束"><a href="#结束" class="headerlink" title="结束"></a>结束</h4><p>浪费了一个周末安装这些东西，结果还是失败了，果然老了，不爱折腾了，睡觉了😪。</p>
+<h4>结束</h4>
+<p>浪费了一个周末安装这些东西，结果还是失败了，果然老了，不爱折腾了，睡觉了😪。</p>
 
           
         
@@ -969,7 +991,7 @@ service v2ray start
       
         
           
-            <p>最近项目中要执行后台任务，所以找了一下相关库，刚开始用的是<a href="https://www.nuget.org/packages/Pomelo.AspNetCore.TimedJob/2.0.0-rtm-10046" target="_blank" rel="noopener">TimedJob</a>，用起来很简单，本身提供依赖注入,代码如下：  </p>
+            <p>最近项目中要执行后台任务，所以找了一下相关库，刚开始用的是<a href="https://www.nuget.org/packages/Pomelo.AspNetCore.TimedJob/2.0.0-rtm-10046" target="_blank" rel="noopener">TimedJob</a>，用起来很简单，本身提供依赖注入,代码如下：</p>
 <pre><code>
 //先在ConfigureServices添加
 app.AddTimedJob();  
@@ -978,13 +1000,13 @@ app.UseTimedJob();
 //定义一个类继承接口Job
 public Class MyJob:Job
 {
-    private IConfigure _configure;
-    //注入配置文件
-    public MyJob(IConfigure configure)
-    {
-        _configure=configure;
-    }
-    [Invoke(Begin = &quot;2018-11-29 23:00:00&quot;, Interval = 1000 * 3600 * 24, SkipWhileExecuting =true)]
+	private IConfigure _configure;
+	//注入配置文件
+	public MyJob(IConfigure configure)
+	{
+		_configure=configure;
+	}
+	[Invoke(Begin = &quot;2018-11-29 23:00:00&quot;, Interval = 1000 * 3600 * 24, SkipWhileExecuting =true)]
      public void Run()
      {
           //Job要执行的逻辑代码
@@ -992,12 +1014,13 @@ public Class MyJob:Job
      }
 }  
 
-</code></pre><p>整个用法还是很简单的，如果只是一些简单任务可以采用这种方式，只是如果想通过UI控制的话，这种方式做的工作有点多，所以接下来就要说到<a href="https://www.hangfire.io" target="_blank" rel="noopener">Hangfire</a>了,这个用起来就更简单了，而且自带UI，可以直接在UI上进行任务触发，用法跟TimedJob差不多，同时由于Hangfire需要保存任务，需要数据库支持，第三方插件也支持Redis，由于项目正好用Sql Server，再加上任务不是很复杂就直接用数据库了  </p>
+</code></pre>
+<p>整个用法还是很简单的，如果只是一些简单任务可以采用这种方式，只是如果想通过UI控制的话，这种方式做的工作有点多，所以接下来就要说到<a href="https://www.hangfire.io" target="_blank" rel="noopener">Hangfire</a>了,这个用起来就更简单了，而且自带UI，可以直接在UI上进行任务触发，用法跟TimedJob差不多，同时由于Hangfire需要保存任务，需要数据库支持，第三方插件也支持Redis，由于项目正好用Sql Server，再加上任务不是很复杂就直接用数据库了</p>
 <pre><code>
 //添加Hangfire，此处用的是PostgreSql
 services.AddHangfire(
-    config=&gt;{
-    config.UsePostgreSqlStorage(&quot;ConnectionString&quot;);
+	config=&gt;{
+	config.UsePostgreSqlStorage(&quot;ConnectionString&quot;);
  });  
  //使用Hangfire
  app.UseHangfireServer();
@@ -1005,12 +1028,13 @@ services.AddHangfire(
  DashboardOptions options=new DashboardOptions();
  options.Authorization=new []{new MyAuthorization()};
  app.UseHangfireDashboard(&quot;/Job&quot;,options);
-
+ 
  //添加任务
 RecurringJob.AddOrUpdate(&quot;MyJob&quot;,x=&gt;x.HelloTest(&quot;Hello World&quot;),Cron.Minutely);
-</code></pre><p>这里有两个问题需要解决一下   </p>
+</code></pre>
+<p>这里有两个问题需要解决一下</p>
 <ul>
-<li>依赖注入，这个通过以下方式实现  </li>
+<li>依赖注入，这个通过以下方式实现</li>
 </ul>
 <pre><code>//先定义接口
 public interface IGoodJob
@@ -1034,10 +1058,12 @@ public class MyJob : IGoodJob
 services.AddSingleton&lt;IGoodJob,MyJob&gt;();
 //在最后调用
 RecurringJob.AddOrUpdate&lt;IGoodJob&gt;(&quot;Job&quot;,x=&gt;x.HelloTest(&quot;good&quot;),Cron.Minutely);
-</code></pre><ul>
-<li>自定义认证，由于当前项目用的是JWT认证，当时参考了<a href="https://discuss.hangfire.io/t/using-bearer-auth-token/2166/3" target="_blank" rel="noopener">这里</a>,就是Hangfire的论坛，由于增加认证之后，每次面板刷新数据都会进行认证，所以仿照这个地址将Token放到Cookie里，每次验证的时候判断一下，而且还要判断token是否过期，代码先不贴了，需要验证  </li>
+</code></pre>
+<ul>
+<li>自定义认证，由于当前项目用的是JWT认证，当时参考了<a href="https://discuss.hangfire.io/t/using-bearer-auth-token/2166/3" target="_blank" rel="noopener">这里</a>,就是Hangfire的论坛，由于增加认证之后，每次面板刷新数据都会进行认证，所以仿照这个地址将Token放到Cookie里，每次验证的时候判断一下，而且还要判断token是否过期，代码先不贴了，需要验证</li>
 </ul>
-<h4 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h4><p>其实不只这两个，这里只是把自己用到的记录一下，其他的还有Quartz.NET，FluentScheduler等，今天看公众号发现2.1里面也自带了IHostedService接口，具体用法还是参考官方文档吧，好了，洗漱睡觉了😪</p>
+<h4>最后</h4>
+<p>其实不只这两个，这里只是把自己用到的记录一下，其他的还有Quartz.NET，FluentScheduler等，今天看公众号发现2.1里面也自带了IHostedService接口，具体用法还是参考官方文档吧，好了，洗漱睡觉了😪</p>
 
           
         
@@ -1181,18 +1207,21 @@ RecurringJob.AddOrUpdate&lt;IGoodJob&gt;(&quot;Job&quot;,x=&gt;x.HelloTest(&quot
       
         
           
-            <p>感觉好久没写了，那就简单说一下最近工作中所用到的Nginx和Supervisor吧，虽然网上也一搜一大把，就当自己做下总结吧  </p>
-<h4 id="Nginx的使用"><a href="#Nginx的使用" class="headerlink" title="Nginx的使用"></a>Nginx的使用</h4><p>工作中用的是centos，安装简单的用yum直接安装的，还可以直接开机启动，下面简单说说路径匹配的问题，项目刚开始的是用的是后缀名进行匹配，规则如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">location ~*\.(gif|png|jpg|jpeg|bmp)$ &#123;</span><br><span class="line">	default_type	&apos;application/octet-stream&apos;;</span><br><span class="line">	root		/home/Images/;</span><br><span class="line">	expires		1d;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>如果项目中只需要匹配一种类型的图片用这种模式就可以了，另外这种匹配比location要精确，所以默认最终会匹配这种类型，比如想访问swagger的图片，结果就因为这个原因访问不了，可以尝试加^~进行处理并且要放到这个之前，但是因为这个项目中分好几种类型的图片，需要单独分开访问，所以最终全是用location进行匹配的，而且变简单了  </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">location ~* /logo/ &#123;</span><br><span class="line">		root		/;</span><br><span class="line">		rewrite		/logo/(.*)$ /home/logo/Images/$1 break;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+            <p>感觉好久没写了，那就简单说一下最近工作中所用到的Nginx和Supervisor吧，虽然网上也一搜一大把，就当自己做下总结吧</p>
+<h4>Nginx的使用</h4>
+<p>工作中用的是centos，安装简单的用yum直接安装的，还可以直接开机启动，下面简单说说路径匹配的问题，项目刚开始的是用的是后缀名进行匹配，规则如下：</p>
+<p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">location ~*\.(gif|png|jpg|jpeg|bmp)$ &#123;</span><br><span class="line">	default_type	&apos;application/octet-stream&apos;;</span><br><span class="line">	root		/home/Images/;</span><br><span class="line">	expires		1d;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>如果项目中只需要匹配一种类型的图片用这种模式就可以了，另外这种匹配比location要精确，所以默认最终会匹配这种类型，比如想访问swagger的图片，结果就因为这个原因访问不了，可以尝试加^~进行处理并且要放到这个之前，但是因为这个项目中分好几种类型的图片，需要单独分开访问，所以最终全是用location进行匹配的，而且变简单了</p>
+<p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">location ~* /logo/ &#123;</span><br><span class="line">		root		/;</span><br><span class="line">		rewrite		/logo/(.*)$ /home/logo/Images/$1 break;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>还有次不知道什么原因web目录的权限突然变了，造成403 forbidden了，查看nginx日志也是权限被拒绝，通过chmod -R 777 *还是不行，搜索网上发现需要重启nginx，简单reload是没用的，这里记录下</p>
-<h4 id="Supervisor的使用"><a href="#Supervisor的使用" class="headerlink" title="Supervisor的使用"></a>Supervisor的使用</h4><p>下面说说Supervisor的用法，刚开始折腾了半天都不起作用，因为[include]前面的;忘记删掉了，当时是直接写在下面了，不管怎么说倒是起作用了，配置如下：  </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">[program:redis]</span><br><span class="line">command=redis-server</span><br><span class="line">directory=/usr/local/bin/</span><br><span class="line">user=user</span><br><span class="line">autostart=true</span><br><span class="line">autorestart=true</span><br><span class="line">startsecs=2</span><br><span class="line"></span><br><span class="line">[program:TestApi]</span><br><span class="line">command=dotnet TestApi.dll</span><br><span class="line">directory=/home/project/TestApi/</span><br><span class="line">stderr_logfile=/var/log/museumApi.error.log</span><br><span class="line">stdout_logfile=/var/log/museumApi.stdout.log</span><br><span class="line">environment=ASPNETCORE_ENVIRONMNET=Production</span><br><span class="line">user=user</span><br><span class="line">autostart=true</span><br><span class="line">autorestart=true</span><br><span class="line">startsecs=2</span><br></pre></td></tr></table></figure>
-<p>还有web管理界面，配置如下：    </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[inet_http_server]         ; inet (TCP) server disabled by default</span><br><span class="line">port=0.0.0.0:9001        ; ip_address:port specifier, *:port for all iface</span><br><span class="line">username=admin              ; default is no username (open server)</span><br><span class="line">password=123123               ; default is no password (open server)</span><br></pre></td></tr></table></figure>
+<h4>Supervisor的使用</h4>
+<p>下面说说Supervisor的用法，刚开始折腾了半天都不起作用，因为[include]前面的;忘记删掉了，当时是直接写在下面了，不管怎么说倒是起作用了，配置如下：</p>
+<p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">[program:redis]</span><br><span class="line">command=redis-server</span><br><span class="line">directory=/usr/local/bin/</span><br><span class="line">user=user</span><br><span class="line">autostart=true</span><br><span class="line">autorestart=true</span><br><span class="line">startsecs=2</span><br><span class="line"></span><br><span class="line">[program:TestApi]</span><br><span class="line">command=dotnet TestApi.dll</span><br><span class="line">directory=/home/project/TestApi/</span><br><span class="line">stderr_logfile=/var/log/museumApi.error.log</span><br><span class="line">stdout_logfile=/var/log/museumApi.stdout.log</span><br><span class="line">environment=ASPNETCORE_ENVIRONMNET=Production</span><br><span class="line">user=user</span><br><span class="line">autostart=true</span><br><span class="line">autorestart=true</span><br><span class="line">startsecs=2</span><br></pre></td></tr></table></figure></p>
+<p>还有web管理界面，配置如下：</p>
+<p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[inet_http_server]         ; inet (TCP) server disabled by default</span><br><span class="line">port=0.0.0.0:9001        ; ip_address:port specifier, *:port for all iface</span><br><span class="line">username=admin              ; default is no username (open server)</span><br><span class="line">password=123123               ; default is no password (open server)</span><br></pre></td></tr></table></figure></p>
 <p>不过不建议在生产环境下用，不安全！</p>
-<h4 id="结尾"><a href="#结尾" class="headerlink" title="结尾"></a>结尾</h4><p>最近一直在用Linux部署，感觉还不错，另外想使用一下CI工具，可找来找去要么是在线的，要么是Java下的，本人有点偏执，不想同时在一个服务器上安装两种SDK，.net下的就一个CruiseControl.NET，貌似还不支持Linux，感觉甚是悲哀啊，没办法，谁让你之前不跨平台呢，打算自己写个简单点的工具，就这样吧👿</p>
+<h4>结尾</h4>
+<p>最近一直在用Linux部署，感觉还不错，另外想使用一下CI工具，可找来找去要么是在线的，要么是Java下的，本人有点偏执，不想同时在一个服务器上安装两种SDK，.net下的就一个CruiseControl.NET，貌似还不支持Linux，感觉甚是悲哀啊，没办法，谁让你之前不跨平台呢，打算自己写个简单点的工具，就这样吧👿</p>
 
           
         
@@ -1336,28 +1365,34 @@ RecurringJob.AddOrUpdate&lt;IGoodJob&gt;(&quot;Job&quot;,x=&gt;x.HelloTest(&quot
       
         
           
-            <h4 id="实现目标"><a href="#实现目标" class="headerlink" title="实现目标"></a>实现目标</h4><p>由于只是测试，所以只要当前目标只要用Springboot+mybatis启动成功即可，只当自己的学习，数据库用的是postgresql，目前网上的mysql居多，自己学习肯定要有点区别</p>
-<h4 id="原因"><a href="#原因" class="headerlink" title="原因"></a>原因</h4><p>目前公司一直在转java，而且年前那会招.net确实不太好招，就算以后自己离职也好进行交接，就当为自己留条后路</p>
-<h4 id="具体实现"><a href="#具体实现" class="headerlink" title="具体实现"></a>具体实现</h4><p>之前偶尔也测试过，有时候成功，有时候失败，虽然sprintboot已经封装的很好了，可惜对我这个门外汉还是有点摸不着门路，其实只是不熟悉而已，而且之前其实是没做过这方面的东西的，之前客户端居多，dotnet core也是一上来就学，确实也少了许多包袱，但愿Java也是，言归正传：  </p>
+            <h4>实现目标</h4>
+<p>由于只是测试，所以只要当前目标只要用Springboot+mybatis启动成功即可，只当自己的学习，数据库用的是postgresql，目前网上的mysql居多，自己学习肯定要有点区别</p>
+<h4>原因</h4>
+<p>目前公司一直在转java，而且年前那会招.net确实不太好招，就算以后自己离职也好进行交接，就当为自己留条后路</p>
+<h4>具体实现</h4>
+<p>之前偶尔也测试过，有时候成功，有时候失败，虽然sprintboot已经封装的很好了，可惜对我这个门外汉还是有点摸不着门路，其实只是不熟悉而已，而且之前其实是没做过这方面的东西的，之前客户端居多，dotnet core也是一上来就学，确实也少了许多包袱，但愿Java也是，言归正传：</p>
 <ul>
-<li>构建脚手架，去<a href="https://start.spring.io" target="_blank" rel="noopener">启动页</a>进行构建，目前选择Web中的Web，Jersey，SQl中的MyBatis，Maven还是Gradle都可以，根据自己情况选择  </li>
+<li>构建脚手架，去<a href="https://start.spring.io" target="_blank" rel="noopener">启动页</a>进行构建，目前选择Web中的Web，Jersey，SQl中的MyBatis，Maven还是Gradle都可以，根据自己情况选择</li>
 <li>导入工程，进行构建，我这里选的intellJ IDEA社区版，免费嘛，eclipse也可以，根据自己习惯，我这里选择Maven工程，选择jdk版本，接下来就是自动构建了</li>
-<li>新建控制器  </li>
+<li>新建控制器</li>
 </ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">//增加注解</span><br><span class="line">@RestController</span><br><span class="line">public class HelloController &#123;</span><br><span class="line">    //增加对应关系</span><br><span class="line">    @RequestMapping(value=&quot;/hello&quot;)</span><br><span class="line">    public String Hello()&#123;</span><br><span class="line">        return  &quot;good&quot;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">//增加注解</span><br><span class="line">@RestController</span><br><span class="line">public class HelloController &#123;</span><br><span class="line">    //增加对应关系</span><br><span class="line">    @RequestMapping(value=&quot;/hello&quot;)</span><br><span class="line">    public String Hello()&#123;</span><br><span class="line">        return  &quot;good&quot;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <ul>
-<li>修改application.properties文件，增加数据库配置  </li>
+<li>修改application.properties文件，增加数据库配置</li>
 </ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">//配置数据库url</span><br><span class="line">spring.datasource.url=jdbc:postgresql://localhost:5432/xxx?useUnicode=true&amp;characterEncoding=utf8</span><br><span class="line">//用户名</span><br><span class="line">spring.datasource.username=xxx</span><br><span class="line">//密码</span><br><span class="line">spring.datasource.password=xx</span><br><span class="line">驱动</span><br><span class="line">spring.datasource.driverClassName=org.postgresql.Driver</span><br><span class="line">//实体位置，当前还不涉及到，所以没用到</span><br><span class="line">mybatis.typeAliasesPackage=com.hellojxl.helloMybaits.boot_feature.entity</span><br><span class="line">//映射的xml所在位置</span><br><span class="line">mybatis.mapperLocations=classpath:mapper/*.xml</span><br></pre></td></tr></table></figure>
+<p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">//配置数据库url</span><br><span class="line">spring.datasource.url=jdbc:postgresql://localhost:5432/xxx?useUnicode=true&amp;characterEncoding=utf8</span><br><span class="line">//用户名</span><br><span class="line">spring.datasource.username=xxx</span><br><span class="line">//密码</span><br><span class="line">spring.datasource.password=xx</span><br><span class="line">驱动</span><br><span class="line">spring.datasource.driverClassName=org.postgresql.Driver</span><br><span class="line">//实体位置，当前还不涉及到，所以没用到</span><br><span class="line">mybatis.typeAliasesPackage=com.hellojxl.helloMybaits.boot_feature.entity</span><br><span class="line">//映射的xml所在位置</span><br><span class="line">mybatis.mapperLocations=classpath:mapper/*.xml</span><br></pre></td></tr></table></figure></p>
 <ul>
-<li>调出Maven工程窗口，方法是：View-&gt;Tool Window-&gt;Maven Projects，选中spring-boot，右键spring-boot-&gt;run进行启动，当初用这个还有点懵逼😅  </li>
+<li>调出Maven工程窗口，方法是：View-&gt;Tool Window-&gt;Maven Projects，选中spring-boot，右键spring-boot-&gt;run进行启动，当初用这个还有点懵逼😅</li>
 </ul>
-<h4 id="出现的问题"><a href="#出现的问题" class="headerlink" title="出现的问题"></a>出现的问题</h4><ul>
-<li>异常：Spring Boot - Error creating bean with name ‘dataSource’ defined in class path resource<br>解决方法：驱动配置出错，首先没有加载postgresql驱动，在pom文件中增加：  </li>
+<h4>出现的问题</h4>
+<ul>
+<li>异常：Spring Boot - Error creating bean with name 'dataSource' defined in class path resource<br>
+解决方法：驱动配置出错，首先没有加载postgresql驱动，在pom文件中增加：</li>
 </ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">			&lt;groupId&gt;postgresql&lt;/groupId&gt;</span><br><span class="line">			&lt;artifactId&gt;postgresql&lt;/artifactId&gt;</span><br><span class="line">			&lt;version&gt;9.1-901-1.jdbc4&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
-<p>然后是数据库配置出错，驱动配置的是mysql的，自己复制粘贴的锅  </p>
-<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p>这个就当自己开始学习Java的总结吧，下次准备进行数据的操作，再然后就是打算把当前项目移植一下，好了，洗漱睡觉了😪</p>
+<p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">			&lt;groupId&gt;postgresql&lt;/groupId&gt;</span><br><span class="line">			&lt;artifactId&gt;postgresql&lt;/artifactId&gt;</span><br><span class="line">			&lt;version&gt;9.1-901-1.jdbc4&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure></p>
+<p>然后是数据库配置出错，驱动配置的是mysql的，自己复制粘贴的锅</p>
+<h4>总结</h4>
+<p>这个就当自己开始学习Java的总结吧，下次准备进行数据的操作，再然后就是打算把当前项目移植一下，好了，洗漱睡觉了😪</p>
 
           
         
@@ -1501,20 +1536,27 @@ RecurringJob.AddOrUpdate&lt;IGoodJob&gt;(&quot;Job&quot;,x=&gt;x.HelloTest(&quot
       
         
           
-            <h4 id="迁移原因"><a href="#迁移原因" class="headerlink" title="迁移原因"></a>迁移原因</h4><p>由于接受的是之前项目组开发的项目的，项目是由本人从.net framework迁移至dotnet core的，目前用到Predicate，发现各种异常，加之时间比较紧而且dapperextensions貌似还没有完全迁移到dotnet core，最后考虑再三打算放弃dapper(其实dapper本身来说还是很好用的，只是dapperextensions现在来说不太好用)，看了看发现了SqlSugar，经过测试发现，如果忽略SqlSugar的orm特性，完全可以无缝迁移过去，而且由于国人开发的原因，文档还算齐全，发现国人的库还是比较靠谱的😊，给国人点个👍</p>
-<h4 id="迁移过程"><a href="#迁移过程" class="headerlink" title="迁移过程"></a>迁移过程</h4><p>具体细节就不多说了，只写自己目前用到的特性  </p>
+            <h4>迁移原因</h4>
+<p>由于接受的是之前项目组开发的项目的，项目是由本人从.net framework迁移至dotnet core的，目前用到Predicate，发现各种异常，加之时间比较紧而且dapperextensions貌似还没有完全迁移到dotnet core，最后考虑再三打算放弃dapper(其实dapper本身来说还是很好用的，只是dapperextensions现在来说不太好用)，看了看发现了SqlSugar，经过测试发现，如果忽略SqlSugar的orm特性，完全可以无缝迁移过去，而且由于国人开发的原因，文档还算齐全，发现国人的库还是比较靠谱的😊，给国人点个👍</p>
+<h4>迁移过程</h4>
+<p>具体细节就不多说了，只写自己目前用到的特性</p>
 <ul>
-<li><p>sql语句查询，这个不必说，因为dapper主要是操作sql语句，由于项目中变动不能太大，不然非得疯了不可，实际迁移过程中还是很方便的  </p>
+<li>
+<p>sql语句查询，这个不必说，因为dapper主要是操作sql语句，由于项目中变动不能太大，不然非得疯了不可，实际迁移过程中还是很方便的</p>
 </li>
-<li><p>实体及表结构操作，更改对应表名的功能dapper也有，但发现dapperextensions完全需要再重新做一遍对应的操作，而且会有异常问题，很是麻烦，这个在sqlSugar中就很简单</p>
+<li>
+<p>实体及表结构操作，更改对应表名的功能dapper也有，但发现dapperextensions完全需要再重新做一遍对应的操作，而且会有异常问题，很是麻烦，这个在sqlSugar中就很简单</p>
 </li>
-<li><p>条件查询系统，项目迁移对主要原因就是因为dapperextensions的Predicate系统貌似完全处于瘫痪状态，自己又没有时间去修改，迁移到SqlSugar之后用的很是舒心，而且语法上也差别不大  </p>
+<li>
+<p>条件查询系统，项目迁移对主要原因就是因为dapperextensions的Predicate系统貌似完全处于瘫痪状态，自己又没有时间去修改，迁移到SqlSugar之后用的很是舒心，而且语法上也差别不大</p>
 </li>
-<li><p>分页功能，这本是一个常用的功能，都有提供，不多说。  </p>
+<li>
+<p>分页功能，这本是一个常用的功能，都有提供，不多说。</p>
 </li>
 </ul>
 <p>由于SqlSugar本身就是ORM，所以可以省好多事，而且也像文档介绍的那样Lambda的解析也非常完善</p>
-<h4 id="迁移结果"><a href="#迁移结果" class="headerlink" title="迁移结果"></a>迁移结果</h4><p>目前已经完成迁移，正在进行开发，目前还没有什么坑，并发性还没有测试，等项目完成了来个测试，看看结果如果，也希望能多多支持国人的项目<a href="http://www.codeisbug.com/Doc/8/1121" target="_blank" rel="noopener">SqlSugar4文档地址</a>，<a href="https://github.com/sunkaixuan/sqlsugar" target="_blank" rel="noopener">GitHub地址</a></p>
+<h4>迁移结果</h4>
+<p>目前已经完成迁移，正在进行开发，目前还没有什么坑，并发性还没有测试，等项目完成了来个测试，看看结果如果，也希望能多多支持国人的项目<a href="http://www.codeisbug.com/Doc/8/1121" target="_blank" rel="noopener">SqlSugar4文档地址</a>，<a href="https://github.com/sunkaixuan/sqlsugar" target="_blank" rel="noopener">GitHub地址</a></p>
 
           
         
@@ -1659,14 +1701,16 @@ RecurringJob.AddOrUpdate&lt;IGoodJob&gt;(&quot;Job&quot;,x=&gt;x.HelloTest(&quot
         
           
             <hr>
-<p>2018-04-16更新：经过测试，这么写是可以的，只是每次调用前都要加上：bearer token,可以在命名Filter的时候加上提醒一下，暂时没去想其它更好的方法  </p>
+<p>2018-04-16更新：经过测试，这么写是可以的，只是每次调用前都要加上：bearer token,可以在命名Filter的时候加上提醒一下，暂时没去想其它更好的方法</p>
 <p>还有当前如果有多个项目的话，比如这个项目引用了另一个项目的model，默认是不会显示注释的，解决方法是：每个项目单独生成xml文件，然后在include XML文档时同时引入，那么就可以显示了</p>
-<p>Nignx反向代理的情况下，默认会找不到swagger的json文件导致失败，方法是：  </p>
+<p>Nignx反向代理的情况下，默认会找不到swagger的json文件导致失败，方法是：</p>
 <pre><code>//加入两个点
 c.SwaggerEndpoint(&quot;../swagger/v1/swagger.json&quot;, &quot;My API V1&quot;);
-</code></pre><hr>
+</code></pre>
+<hr>
 <p>最近项目中用到swagger进行Api文档说明，之前只是匆匆的测试了一下，这次前端说要看一下就仔细研究了一下，由于项目中增加了jwt认证，当然也要在swagger中体现出来，就网上搜索了一下，虽然文章不少可是不是版本对不上就是用不了，好不容易在这个<a href="https://blog.sluijsveld.com/28/01/2016/CustomSwaggerUIField/" target="_blank" rel="noopener">博客</a>上找到点线索，在此记录一下。</p>
-<h4 id="添加Swagger"><a href="#添加Swagger" class="headerlink" title="添加Swagger"></a>添加Swagger</h4><p>这个很简单，网上教程也多的是，具体流程如下:  </p>
+<h4>添加Swagger</h4>
+<p>这个很简单，网上教程也多的是，具体流程如下:</p>
 <pre><code>//添加引用
 using Swashbuckle.AspNetCore.Swagger;
 
@@ -1689,18 +1733,23 @@ app.UseSwaggerUI(c =&gt;
     c.SwaggerEndpoint(&quot;/swagger/v1/swagger.json&quot;, &quot;My API V1&quot;);
 });
 
-</code></pre><p>这样默认swagger就可以启动了，当然如果现在真要运行是起不来的，因为还没有生成xml注释文档，下面来添加  </p>
-<h4 id="添加xml文档注释"><a href="#添加xml文档注释" class="headerlink" title="添加xml文档注释"></a>添加xml文档注释</h4><p>这个如果用vs的话很简单，在项目配置里配置一下就好，如果用vs code的话稍微有点麻烦，其实更简单，只是刚开始不知道怎么加而已，只需要在csproj文件中添加下面代码  </p>
+</code></pre>
+<p>这样默认swagger就可以启动了，当然如果现在真要运行是起不来的，因为还没有生成xml注释文档，下面来添加</p>
+<h4>添加xml文档注释</h4>
+<p>这个如果用vs的话很简单，在项目配置里配置一下就好，如果用vs code的话稍微有点麻烦，其实更简单，只是刚开始不知道怎么加而已，只需要在csproj文件中添加下面代码</p>
 <pre><code>&lt;PropertyGroup&gt;
     &lt;TargetFramework&gt;netcoreapp2.0&lt;/TargetFramework&gt;
     //下面这句，注意文件名称
     &lt;DocumentationFile&gt;bin/Debug/netcoreapp2.0/myApi.xml&lt;/DocumentationFile&gt; 
   &lt;/PropertyGroup&gt;    
-</code></pre><p>其实也可以添加到这里  </p>
-<pre><code>&lt;PropertyGroup Condition=&quot;&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|AnyCPU&apos;&quot;&gt;
+</code></pre>
+<p>其实也可以添加到这里</p>
+<pre><code>&lt;PropertyGroup Condition=&quot;'$(Configuration)|$(Platform)'=='Debug|AnyCPU'&quot;&gt;
 &lt;DocumentationFile&gt;bin/Debug/netcoreapp2.0/myApi.xml&lt;/DocumentationFile&gt;  
-</code></pre><p>只是我发现有的工程里没有Condition选项，发现添加到TargetFramework下也可以就都写上了，vs code添加注释可以用XML Documentation Comments Support for Visual Studio Code插件，和vs一样，只是有的时候貌似会多加个return，而且一旦要注释，整个工程都要有注释，否则无法运行，暂时没考虑怎么解决，以后再说  </p>
-<h4 id="添加认证选项"><a href="#添加认证选项" class="headerlink" title="添加认证选项"></a>添加认证选项</h4><p>下面说到怎么添加认证了，就是上面那个AuthorizationHeaderFilter，新建一个类，并实现接口IOperationFilter就可以了，代码如下：  </p>
+</code></pre>
+<p>只是我发现有的工程里没有Condition选项，发现添加到TargetFramework下也可以就都写上了，vs code添加注释可以用XML Documentation Comments Support for Visual Studio Code插件，和vs一样，只是有的时候貌似会多加个return，而且一旦要注释，整个工程都要有注释，否则无法运行，暂时没考虑怎么解决，以后再说</p>
+<h4>添加认证选项</h4>
+<p>下面说到怎么添加认证了，就是上面那个AuthorizationHeaderFilter，新建一个类，并实现接口IOperationFilter就可以了，代码如下：</p>
 <pre><code>using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc.Authorization;
@@ -1731,7 +1780,9 @@ public class AuthorizationHeaderFilter : IOperationFilter
           }
      }
 } 
-</code></pre><h4 id="结束"><a href="#结束" class="headerlink" title="结束"></a>结束</h4><p>好了，这样启动项目就可以看见swagger中要求填入Authorization的字段了，虽然可以实现但还没具体的测试，明天有时间测试下，可能有错误的地方，如果发现了会改，仅供参考吧🔚</p>
+</code></pre>
+<h4>结束</h4>
+<p>好了，这样启动项目就可以看见swagger中要求填入Authorization的字段了，虽然可以实现但还没具体的测试，明天有时间测试下，可能有错误的地方，如果发现了会改，仅供参考吧🔚</p>
 
           
         
@@ -1876,9 +1927,18 @@ public class AuthorizationHeaderFilter : IOperationFilter
         
           
             <p>好久没写东西了，感觉不能再这样下去了，赶紧补一补，正好今天边查数据库边写Api，突然想为何不都在vscode中干活呢，然后就搜了搜，还真有这样的插件，就是sqltools，其实之前最早是sublime上找的，貌似是一个开发者，但是没配置成功，今天在vscode里配置成功了，就此记录下</p>
-<h5 id="sqltools的安装"><a href="#sqltools的安装" class="headerlink" title="sqltools的安装"></a>sqltools的安装</h5><p>这个很简单，如果方便呢直接在vscode的插件里搜索sqltools，或者用命令安装，貌似呼出控制台的快捷键不一样，Windows上是：F1，Mac上是：Shift+Command+P，或许是跟我设置的快捷键有关，因为本人之前比较喜欢sublime(现在也用)，输入命令：ext install sqltools就可以了</p>
-<h4 id="sqltools的配置"><a href="#sqltools的配置" class="headerlink" title="sqltools的配置"></a>sqltools的配置</h4><p>之前在sublime中没配置成功，按网上的教程好像不起作用，这次花了点时间具体研究了vscode的，具体是：<br>1.新建连接<br>用命令很简单，呼出命令窗口，输入：sqltools management:setup就会提示有提示新建连接，按提示输入所需要的字段即可，或者在配置文件中添加一个新连接，安装完时会有例子，仿照着放到配置文件里的“sqltools.connections”里就好了<br>2.连接数据库<br>同样输入命令：sqltools tools:connect就会连接，如果有多个数据库会提示让进行选择，同样也可以在配置文件里设置默认连接数据库<br>3.执行查询<br>连接成功后会在左下角显示所有的表，此时写查询语句时就会出现自动提示，非常好用，写完之后选中语句按Ctrl+E键两次就可以执行了，具体的用法可以看插件说明</p>
-<h4 id="结尾"><a href="#结尾" class="headerlink" title="结尾"></a>结尾</h4><p>插件虽然不错，可是总觉得有点不适应，但是拿来应应急总是好的，此外还推荐个插件：background，可以添加背景图片，也可以自定义，好了，就这样吧😊。</p>
+<h5>sqltools的安装</h5>
+<p>这个很简单，如果方便呢直接在vscode的插件里搜索sqltools，或者用命令安装，貌似呼出控制台的快捷键不一样，Windows上是：F1，Mac上是：Shift+Command+P，或许是跟我设置的快捷键有关，因为本人之前比较喜欢sublime(现在也用)，输入命令：ext install sqltools就可以了</p>
+<h4>sqltools的配置</h4>
+<p>之前在sublime中没配置成功，按网上的教程好像不起作用，这次花了点时间具体研究了vscode的，具体是：<br>
+1.新建连接<br>
+用命令很简单，呼出命令窗口，输入：sqltools management:setup就会提示有提示新建连接，按提示输入所需要的字段即可，或者在配置文件中添加一个新连接，安装完时会有例子，仿照着放到配置文件里的“sqltools.connections”里就好了<br>
+2.连接数据库<br>
+同样输入命令：sqltools tools:connect就会连接，如果有多个数据库会提示让进行选择，同样也可以在配置文件里设置默认连接数据库<br>
+3.执行查询<br>
+连接成功后会在左下角显示所有的表，此时写查询语句时就会出现自动提示，非常好用，写完之后选中语句按Ctrl+E键两次就可以执行了，具体的用法可以看插件说明</p>
+<h4>结尾</h4>
+<p>插件虽然不错，可是总觉得有点不适应，但是拿来应应急总是好的，此外还推荐个插件：background，可以添加背景图片，也可以自定义，好了，就这样吧😊。</p>
 
           
         
@@ -2024,7 +2084,8 @@ public class AuthorizationHeaderFilter : IOperationFilter
           
             <p>最近打算开始用vscode写代码，之前用过一段时间，感觉不怎么好用，最近又用了用，感觉好用很多，今天打开一个项目发现调试不了其它项目，同时调试中一直在打印启用了just my code，所以就搜怎么禁用，当时还没搜到，后来偶然在微软的网站上查到可以在launch.json下添加：</p>
 <pre><code>&quot;just my code&quot;:false
-</code></pre><p>就可以禁用just my code了，试用下来感觉已经不比vs差了，还有智能提示，感觉很智能，对了顺便说一下，可以装一下由开发者jchannon开发的C# Extensions，非常好用！</p>
+</code></pre>
+<p>就可以禁用just my code了，试用下来感觉已经不比vs差了，还有智能提示，感觉很智能，对了顺便说一下，可以装一下由开发者jchannon开发的C# Extensions，非常好用！</p>
 
           
         

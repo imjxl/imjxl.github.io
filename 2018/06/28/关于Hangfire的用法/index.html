@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="最近项目中要执行后台任务，所以找了一下相关库，刚开始用的是TimedJob，用起来很简单，本身提供依赖注入,代码如下：    //先在ConfigureServices添加 app.AddTimedJob();   //然后在Configure中使用 app.UseTimedJob(); //定义一个类继承接口Job public Class MyJob:Job {     private ICo">
+<meta name="description" content="最近项目中要执行后台任务，所以找了一下相关库，刚开始用的是TimedJob，用起来很简单，本身提供依赖注入,代码如下：  //先在ConfigureServices添加 app.AddTimedJob();   //然后在Configure中使用 app.UseTimedJob(); //定义一个类继承接口Job public Class MyJob:Job { 	private IConfigu">
 <meta name="keywords" content="c#,dotnet core">
 <meta property="og:type" content="article">
 <meta property="og:title" content="关于Hangfire的用法">
 <meta property="og:url" content="https://hellojxl.com/2018/06/28/关于Hangfire的用法/index.html">
 <meta property="og:site_name" content="hellojxl">
-<meta property="og:description" content="最近项目中要执行后台任务，所以找了一下相关库，刚开始用的是TimedJob，用起来很简单，本身提供依赖注入,代码如下：    //先在ConfigureServices添加 app.AddTimedJob();   //然后在Configure中使用 app.UseTimedJob(); //定义一个类继承接口Job public Class MyJob:Job {     private ICo">
+<meta property="og:description" content="最近项目中要执行后台任务，所以找了一下相关库，刚开始用的是TimedJob，用起来很简单，本身提供依赖注入,代码如下：  //先在ConfigureServices添加 app.AddTimedJob();   //然后在Configure中使用 app.UseTimedJob(); //定义一个类继承接口Job public Class MyJob:Job { 	private IConfigu">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:updated_time" content="2018-06-28T15:16:57.527Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="关于Hangfire的用法">
-<meta name="twitter:description" content="最近项目中要执行后台任务，所以找了一下相关库，刚开始用的是TimedJob，用起来很简单，本身提供依赖注入,代码如下：    //先在ConfigureServices添加 app.AddTimedJob();   //然后在Configure中使用 app.UseTimedJob(); //定义一个类继承接口Job public Class MyJob:Job {     private ICo">
+<meta name="twitter:description" content="最近项目中要执行后台任务，所以找了一下相关库，刚开始用的是TimedJob，用起来很简单，本身提供依赖注入,代码如下：  //先在ConfigureServices添加 app.AddTimedJob();   //然后在Configure中使用 app.UseTimedJob(); //定义一个类继承接口Job public Class MyJob:Job { 	private IConfigu">
 
 
 
@@ -357,7 +357,7 @@
       
 
       
-        <p>最近项目中要执行后台任务，所以找了一下相关库，刚开始用的是<a href="https://www.nuget.org/packages/Pomelo.AspNetCore.TimedJob/2.0.0-rtm-10046" target="_blank" rel="noopener">TimedJob</a>，用起来很简单，本身提供依赖注入,代码如下：  </p>
+        <p>最近项目中要执行后台任务，所以找了一下相关库，刚开始用的是<a href="https://www.nuget.org/packages/Pomelo.AspNetCore.TimedJob/2.0.0-rtm-10046" target="_blank" rel="noopener">TimedJob</a>，用起来很简单，本身提供依赖注入,代码如下：</p>
 <pre><code>
 //先在ConfigureServices添加
 app.AddTimedJob();  
@@ -366,13 +366,13 @@ app.UseTimedJob();
 //定义一个类继承接口Job
 public Class MyJob:Job
 {
-    private IConfigure _configure;
-    //注入配置文件
-    public MyJob(IConfigure configure)
-    {
-        _configure=configure;
-    }
-    [Invoke(Begin = &quot;2018-11-29 23:00:00&quot;, Interval = 1000 * 3600 * 24, SkipWhileExecuting =true)]
+	private IConfigure _configure;
+	//注入配置文件
+	public MyJob(IConfigure configure)
+	{
+		_configure=configure;
+	}
+	[Invoke(Begin = &quot;2018-11-29 23:00:00&quot;, Interval = 1000 * 3600 * 24, SkipWhileExecuting =true)]
      public void Run()
      {
           //Job要执行的逻辑代码
@@ -380,12 +380,13 @@ public Class MyJob:Job
      }
 }  
 
-</code></pre><p>整个用法还是很简单的，如果只是一些简单任务可以采用这种方式，只是如果想通过UI控制的话，这种方式做的工作有点多，所以接下来就要说到<a href="https://www.hangfire.io" target="_blank" rel="noopener">Hangfire</a>了,这个用起来就更简单了，而且自带UI，可以直接在UI上进行任务触发，用法跟TimedJob差不多，同时由于Hangfire需要保存任务，需要数据库支持，第三方插件也支持Redis，由于项目正好用Sql Server，再加上任务不是很复杂就直接用数据库了  </p>
+</code></pre>
+<p>整个用法还是很简单的，如果只是一些简单任务可以采用这种方式，只是如果想通过UI控制的话，这种方式做的工作有点多，所以接下来就要说到<a href="https://www.hangfire.io" target="_blank" rel="noopener">Hangfire</a>了,这个用起来就更简单了，而且自带UI，可以直接在UI上进行任务触发，用法跟TimedJob差不多，同时由于Hangfire需要保存任务，需要数据库支持，第三方插件也支持Redis，由于项目正好用Sql Server，再加上任务不是很复杂就直接用数据库了</p>
 <pre><code>
 //添加Hangfire，此处用的是PostgreSql
 services.AddHangfire(
-    config=&gt;{
-    config.UsePostgreSqlStorage(&quot;ConnectionString&quot;);
+	config=&gt;{
+	config.UsePostgreSqlStorage(&quot;ConnectionString&quot;);
  });  
  //使用Hangfire
  app.UseHangfireServer();
@@ -393,12 +394,13 @@ services.AddHangfire(
  DashboardOptions options=new DashboardOptions();
  options.Authorization=new []{new MyAuthorization()};
  app.UseHangfireDashboard(&quot;/Job&quot;,options);
-
+ 
  //添加任务
 RecurringJob.AddOrUpdate(&quot;MyJob&quot;,x=&gt;x.HelloTest(&quot;Hello World&quot;),Cron.Minutely);
-</code></pre><p>这里有两个问题需要解决一下   </p>
+</code></pre>
+<p>这里有两个问题需要解决一下</p>
 <ul>
-<li>依赖注入，这个通过以下方式实现  </li>
+<li>依赖注入，这个通过以下方式实现</li>
 </ul>
 <pre><code>//先定义接口
 public interface IGoodJob
@@ -422,10 +424,12 @@ public class MyJob : IGoodJob
 services.AddSingleton&lt;IGoodJob,MyJob&gt;();
 //在最后调用
 RecurringJob.AddOrUpdate&lt;IGoodJob&gt;(&quot;Job&quot;,x=&gt;x.HelloTest(&quot;good&quot;),Cron.Minutely);
-</code></pre><ul>
-<li>自定义认证，由于当前项目用的是JWT认证，当时参考了<a href="https://discuss.hangfire.io/t/using-bearer-auth-token/2166/3" target="_blank" rel="noopener">这里</a>,就是Hangfire的论坛，由于增加认证之后，每次面板刷新数据都会进行认证，所以仿照这个地址将Token放到Cookie里，每次验证的时候判断一下，而且还要判断token是否过期，代码先不贴了，需要验证  </li>
+</code></pre>
+<ul>
+<li>自定义认证，由于当前项目用的是JWT认证，当时参考了<a href="https://discuss.hangfire.io/t/using-bearer-auth-token/2166/3" target="_blank" rel="noopener">这里</a>,就是Hangfire的论坛，由于增加认证之后，每次面板刷新数据都会进行认证，所以仿照这个地址将Token放到Cookie里，每次验证的时候判断一下，而且还要判断token是否过期，代码先不贴了，需要验证</li>
 </ul>
-<h4 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h4><p>其实不只这两个，这里只是把自己用到的记录一下，其他的还有Quartz.NET，FluentScheduler等，今天看公众号发现2.1里面也自带了IHostedService接口，具体用法还是参考官方文档吧，好了，洗漱睡觉了😪</p>
+<h4>最后</h4>
+<p>其实不只这两个，这里只是把自己用到的记录一下，其他的还有Quartz.NET，FluentScheduler等，今天看公众号发现2.1里面也自带了IHostedService接口，具体用法还是参考官方文档吧，好了，洗漱睡觉了😪</p>
 
       
     </div>
@@ -639,7 +643,7 @@ RecurringJob.AddOrUpdate&lt;IGoodJob&gt;(&quot;Job&quot;,x=&gt;x.HelloTest(&quot
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#最后"><span class="nav-number">1.</span> <span class="nav-text">最后</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#undefined"><span class="nav-number">1.</span> <span class="nav-text">最后</span></a></li></ol></div>
             
 
           </div>
