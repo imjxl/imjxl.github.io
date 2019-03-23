@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="记录原因 之前也部署过，结果上次因为买了一个新的VPS，打算部署v2ray的时候，遇到点问题，感觉还是要记录下来，因为是自己用所以就直接用Let&apos;s Encrypt部署吧，因为可以自动续期，90天也无所谓。 安装部署 啥也不说，直接上certbot,详细的可以参考官方文档，这里只记录简单的部署  安装前提 因为certbot基于python，所以系统需要先安装Python 2.7 or 3.4+以">
+<meta name="description" content="记录原因之前也部署过，结果上次因为买了一个新的VPS，打算部署v2ray的时候，遇到点问题，感觉还是要记录下来，因为是自己用所以就直接用Let’s Encrypt部署吧，因为可以自动续期，90天也无所谓。   安装部署啥也不说，直接上certbot,详细的可以参考官方文档，这里只记录简单的部署    安装前提因为certbot基于python，所以系统需要先安装Python 2.7 or 3.4+">
 <meta name="keywords" content="Nginx,Let&#39;s Encrypt">
 <meta property="og:type" content="article">
 <meta property="og:title" content="关于Nginx启用Https的记录">
 <meta property="og:url" content="https://hellojxl.com/2018/07/21/关于Nginx启用Https的记录/index.html">
 <meta property="og:site_name" content="hellojxl">
-<meta property="og:description" content="记录原因 之前也部署过，结果上次因为买了一个新的VPS，打算部署v2ray的时候，遇到点问题，感觉还是要记录下来，因为是自己用所以就直接用Let&apos;s Encrypt部署吧，因为可以自动续期，90天也无所谓。 安装部署 啥也不说，直接上certbot,详细的可以参考官方文档，这里只记录简单的部署  安装前提 因为certbot基于python，所以系统需要先安装Python 2.7 or 3.4+以">
+<meta property="og:description" content="记录原因之前也部署过，结果上次因为买了一个新的VPS，打算部署v2ray的时候，遇到点问题，感觉还是要记录下来，因为是自己用所以就直接用Let’s Encrypt部署吧，因为可以自动续期，90天也无所谓。   安装部署啥也不说，直接上certbot,详细的可以参考官方文档，这里只记录简单的部署    安装前提因为certbot基于python，所以系统需要先安装Python 2.7 or 3.4+">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:updated_time" content="2018-08-05T14:20:34.370Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="关于Nginx启用Https的记录">
-<meta name="twitter:description" content="记录原因 之前也部署过，结果上次因为买了一个新的VPS，打算部署v2ray的时候，遇到点问题，感觉还是要记录下来，因为是自己用所以就直接用Let&apos;s Encrypt部署吧，因为可以自动续期，90天也无所谓。 安装部署 啥也不说，直接上certbot,详细的可以参考官方文档，这里只记录简单的部署  安装前提 因为certbot基于python，所以系统需要先安装Python 2.7 or 3.4+以">
+<meta name="twitter:description" content="记录原因之前也部署过，结果上次因为买了一个新的VPS，打算部署v2ray的时候，遇到点问题，感觉还是要记录下来，因为是自己用所以就直接用Let’s Encrypt部署吧，因为可以自动续期，90天也无所谓。   安装部署啥也不说，直接上certbot,详细的可以参考官方文档，这里只记录简单的部署    安装前提因为certbot基于python，所以系统需要先安装Python 2.7 or 3.4+">
 
 
 
@@ -357,33 +357,29 @@
       
 
       
-        <h4>记录原因</h4>
-<p>之前也部署过，结果上次因为买了一个新的VPS，打算部署<a href="https://www.v2ray.com" target="_blank" rel="noopener">v2ray</a>的时候，遇到点问题，感觉还是要记录下来，因为是自己用所以就直接用Let's Encrypt部署吧，因为可以自动续期，90天也无所谓。</p>
-<h4>安装部署</h4>
-<p>啥也不说，直接上<a href="https://certbot.eff.org/" target="_blank" rel="noopener">certbot</a>,详细的可以参考官方文档，这里只记录简单的部署</p>
+        <h4 id="记录原因"><a href="#记录原因" class="headerlink" title="记录原因"></a>记录原因</h4><p>之前也部署过，结果上次因为买了一个新的VPS，打算部署<a href="https://www.v2ray.com" target="_blank" rel="noopener">v2ray</a>的时候，遇到点问题，感觉还是要记录下来，因为是自己用所以就直接用Let’s Encrypt部署吧，因为可以自动续期，90天也无所谓。  </p>
+<h4 id="安装部署"><a href="#安装部署" class="headerlink" title="安装部署"></a>安装部署</h4><p>啥也不说，直接上<a href="https://certbot.eff.org/" target="_blank" rel="noopener">certbot</a>,详细的可以参考官方文档，这里只记录简单的部署  </p>
 <ul>
-<li>安装前提<br>
-因为certbot基于python，所以系统需要先安装Python 2.7 or 3.4+以上的版本</li>
-<li>下载certbot</li>
+<li>安装前提<br>因为certbot基于python，所以系统需要先安装Python 2.7 or 3.4+以上的版本</li>
+<li>下载certbot  </li>
 </ul>
-<p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># wget https://dl.eff.org/certbot-auto //下载</span><br><span class="line"># chmod a+x ./certbot-auto  //修改权限</span><br><span class="line"># ./certbot-auto --help  //验证是否成功</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># wget https://dl.eff.org/certbot-auto //下载</span><br><span class="line"># chmod a+x ./certbot-auto  //修改权限</span><br><span class="line"># ./certbot-auto --help  //验证是否成功</span><br></pre></td></tr></table></figure>
 <ul>
-<li>开始部署</li>
+<li>开始部署  </li>
 </ul>
 <p>首先要看nginx的根目录在什么位置，有的在/var/www/html下，有的在/usr/share/nginx/html下。</p>
-<p>然后配置nginx读取certbot产生的文本文件</p>
-<p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">location ~ /.well-known/acme-challenge/ &#123;</span><br><span class="line">	allow	all;</span><br><span class="line">	root /usr/share/nginx/html;</span><br><span class="line">	default_type	&quot;text/plain&quot;;</span><br><span class="line">&#125;</span><br><span class="line">location = /.well-known/acme-challenge/ &#123;</span><br><span class="line">	return 404;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>运行nginx -s reload重新加载配置</p>
-<p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./certbot-auto certonly --webroot -w /usr/share/nginx/html/ -d your.domain.com</span><br></pre></td></tr></table></figure></p>
-<p>指定webroot和域名，只要能够访问就成功了，切记一次最多五次，否则会被限制，当时因为地址弄错了，等了一个星期...</p>
-<p>发放证书了还需要配置nginx启用</p>
-<p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">server &#123;</span><br><span class="line">	listen	80;</span><br><span class="line">	server_name	www.domain.com domain.com;</span><br><span class="line">	return	301	$scheme:https://www.$host$request_uri;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">server &#123;</span><br><span class="line">    listen       443	ssl http2;</span><br><span class="line">    ssl	on;</span><br><span class="line">    server_name  your.domain.com;</span><br><span class="line">    add_header Strict-Transport-Security &quot;max-age=63072000; includeSubdomains; preload&quot;;</span><br><span class="line">    ssl_certificate	/etc/letsencrypt/live/your.domain.com/fullchain.pem;</span><br><span class="line">    ssl_certificate_key	 /etc/letsencrypt/live/your.domain.com/privkey.pem;</span><br><span class="line">    ssl_trusted_certificate	/etc/letsencrypt/live/your.domain.com/chain.pem;</span><br><span class="line">    ssl_protocols	TLSV1.1	TLSV1.2;</span><br><span class="line">    ssl_prefer_server_ciphers	on;</span><br><span class="line">    ssl_ciphers	AES256+EECDH:AES256+EDH:!aNULL;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>这里遇到一个问题就是网上好多配置的ssl_certificate是fullchain.pem，结果浏览器上都会报不信任错误，后来发现原来是访问地址的问题，这里涉及到裸域的问题，默认配置的可能是www.example.com，如果我直接访问example.com那么浏览器就会报域名不匹配的问题，因为签名的时候是带www的，所以需要301重定向到www上就可以了。</p>
-<p>接下来就是自动续期了，很简单</p>
-<p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./certbot-auto renew --quiet</span><br></pre></td></tr></table></figure></p>
-<p>因为我是在centos7上执行的，不同的系统命令可能不太一样，精力有限没办法一一测试，一定要注意。</p>
-<h4>结尾</h4>
-<p>部署完之后可以用<a href="https://www.ssllabs.com/ssltest/" target="_blank" rel="noopener">SSL Labs</a>服务进行测试看看得多少分，也挺好玩的😄，之前知道git pages也启用https之后，一直想启用，结果发现腾讯的dns记录只能添加三条，再多就得加钱，快到期的时候一定要迁出去，目前打算迁到namesilo，国内真是各种受限😖</p>
+<p>然后配置nginx读取certbot产生的文本文件  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">location ~ /.well-known/acme-challenge/ &#123;</span><br><span class="line">	allow	all;</span><br><span class="line">	root /usr/share/nginx/html;</span><br><span class="line">	default_type	&quot;text/plain&quot;;</span><br><span class="line">&#125;</span><br><span class="line">location = /.well-known/acme-challenge/ &#123;</span><br><span class="line">	return 404;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>运行nginx -s reload重新加载配置  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./certbot-auto certonly --webroot -w /usr/share/nginx/html/ -d your.domain.com</span><br></pre></td></tr></table></figure>
+<p>指定webroot和域名，只要能够访问就成功了，切记一次最多五次，否则会被限制，当时因为地址弄错了，等了一个星期…  </p>
+<p>发放证书了还需要配置nginx启用  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">server &#123;</span><br><span class="line">	listen	80;</span><br><span class="line">	server_name	www.domain.com domain.com;</span><br><span class="line">	return	301	$scheme:https://www.$host$request_uri;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">server &#123;</span><br><span class="line">    listen       443	ssl http2;</span><br><span class="line">    ssl	on;</span><br><span class="line">    server_name  your.domain.com;</span><br><span class="line">    add_header Strict-Transport-Security &quot;max-age=63072000; includeSubdomains; preload&quot;;</span><br><span class="line">    ssl_certificate	/etc/letsencrypt/live/your.domain.com/fullchain.pem;</span><br><span class="line">    ssl_certificate_key	 /etc/letsencrypt/live/your.domain.com/privkey.pem;</span><br><span class="line">    ssl_trusted_certificate	/etc/letsencrypt/live/your.domain.com/chain.pem;</span><br><span class="line">    ssl_protocols	TLSV1.1	TLSV1.2;</span><br><span class="line">    ssl_prefer_server_ciphers	on;</span><br><span class="line">    ssl_ciphers	AES256+EECDH:AES256+EDH:!aNULL;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这里遇到一个问题就是网上好多配置的ssl_certificate是fullchain.pem，结果浏览器上都会报不信任错误，后来发现原来是访问地址的问题，这里涉及到裸域的问题，默认配置的可能是<a href="http://www.example.com，如果我直接访问example.com那么浏览器就会报域名不匹配的问题，因为签名的时候是带www的，所以需要301重定向到www上就可以了。" target="_blank" rel="noopener">www.example.com，如果我直接访问example.com那么浏览器就会报域名不匹配的问题，因为签名的时候是带www的，所以需要301重定向到www上就可以了。</a> </p>
+<p>接下来就是自动续期了，很简单  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./certbot-auto renew --quiet</span><br></pre></td></tr></table></figure>
+<p>因为我是在centos7上执行的，不同的系统命令可能不太一样，精力有限没办法一一测试，一定要注意。  </p>
+<h4 id="结尾"><a href="#结尾" class="headerlink" title="结尾"></a>结尾</h4><p>部署完之后可以用<a href="https://www.ssllabs.com/ssltest/" target="_blank" rel="noopener">SSL Labs</a>服务进行测试看看得多少分，也挺好玩的😄，之前知道git pages也启用https之后，一直想启用，结果发现腾讯的dns记录只能添加三条，再多就得加钱，快到期的时候一定要迁出去，目前打算迁到namesilo，国内真是各种受限😖</p>
 
       
     </div>
@@ -527,7 +523,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">23</span>
+                  <span class="site-state-item-count">24</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -549,7 +545,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">26</span>
+                  <span class="site-state-item-count">27</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -597,7 +593,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#undefined"><span class="nav-number">1.</span> <span class="nav-text">记录原因</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#undefined"><span class="nav-number">2.</span> <span class="nav-text">安装部署</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#undefined"><span class="nav-number">3.</span> <span class="nav-text">结尾</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#记录原因"><span class="nav-number">1.</span> <span class="nav-text">记录原因</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#安装部署"><span class="nav-number">2.</span> <span class="nav-text">安装部署</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#结尾"><span class="nav-number">3.</span> <span class="nav-text">结尾</span></a></li></ol></div>
             
 
           </div>

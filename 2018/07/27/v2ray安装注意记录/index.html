@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="原因 新购了一个国外VPS，肯定要(你懂的)，主机商提供了三种系统，Ubuntu、Debian和Centos，由于某些原因三种系统都轮流安装了一遍，或者说都虐了一遍了，其中经历惨不忍睹啊！ 相关问题 不得不说v2ray的官方文档还是很齐全的，但是由于linux的版本太多过程还是会遇到问题的，所以具体的安装文档还是参照官方文档，我这里只是记录遇到的问题  问题一：Centos7下Nginx下无法进行">
+<meta name="description" content="原因新购了一个国外VPS，肯定要(你懂的)，主机商提供了三种系统，Ubuntu、Debian和Centos，由于某些原因三种系统都轮流安装了一遍，或者说都虐了一遍了，其中经历惨不忍睹啊！   相关问题不得不说v2ray的官方文档还是很齐全的，但是由于linux的版本太多过程还是会遇到问题的，所以具体的安装文档还是参照官方文档，我这里只是记录遇到的问题    问题一：Centos7下Nginx下无法">
 <meta name="keywords" content="linux,vps">
 <meta property="og:type" content="article">
 <meta property="og:title" content="v2ray安装注意记录">
 <meta property="og:url" content="https://hellojxl.com/2018/07/27/v2ray安装注意记录/index.html">
 <meta property="og:site_name" content="hellojxl">
-<meta property="og:description" content="原因 新购了一个国外VPS，肯定要(你懂的)，主机商提供了三种系统，Ubuntu、Debian和Centos，由于某些原因三种系统都轮流安装了一遍，或者说都虐了一遍了，其中经历惨不忍睹啊！ 相关问题 不得不说v2ray的官方文档还是很齐全的，但是由于linux的版本太多过程还是会遇到问题的，所以具体的安装文档还是参照官方文档，我这里只是记录遇到的问题  问题一：Centos7下Nginx下无法进行">
+<meta property="og:description" content="原因新购了一个国外VPS，肯定要(你懂的)，主机商提供了三种系统，Ubuntu、Debian和Centos，由于某些原因三种系统都轮流安装了一遍，或者说都虐了一遍了，其中经历惨不忍睹啊！   相关问题不得不说v2ray的官方文档还是很齐全的，但是由于linux的版本太多过程还是会遇到问题的，所以具体的安装文档还是参照官方文档，我这里只是记录遇到的问题    问题一：Centos7下Nginx下无法">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:updated_time" content="2018-07-27T14:13:37.823Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="v2ray安装注意记录">
-<meta name="twitter:description" content="原因 新购了一个国外VPS，肯定要(你懂的)，主机商提供了三种系统，Ubuntu、Debian和Centos，由于某些原因三种系统都轮流安装了一遍，或者说都虐了一遍了，其中经历惨不忍睹啊！ 相关问题 不得不说v2ray的官方文档还是很齐全的，但是由于linux的版本太多过程还是会遇到问题的，所以具体的安装文档还是参照官方文档，我这里只是记录遇到的问题  问题一：Centos7下Nginx下无法进行">
+<meta name="twitter:description" content="原因新购了一个国外VPS，肯定要(你懂的)，主机商提供了三种系统，Ubuntu、Debian和Centos，由于某些原因三种系统都轮流安装了一遍，或者说都虐了一遍了，其中经历惨不忍睹啊！   相关问题不得不说v2ray的官方文档还是很齐全的，但是由于linux的版本太多过程还是会遇到问题的，所以具体的安装文档还是参照官方文档，我这里只是记录遇到的问题    问题一：Centos7下Nginx下无法">
 
 
 
@@ -357,17 +357,12 @@
       
 
       
-        <h4>原因</h4>
-<p>新购了一个国外VPS，肯定要(你懂的)，主机商提供了三种系统，Ubuntu、Debian和Centos，由于某些原因三种系统都轮流安装了一遍，或者说都虐了一遍了，其中经历惨不忍睹啊！</p>
-<h4>相关问题</h4>
-<p>不得不说<a href="https://www.v2ray.com" target="_blank" rel="noopener">v2ray</a>的官方文档还是很齐全的，但是由于linux的版本太多过程还是会遇到问题的，所以具体的安装文档还是参照官方文档，我这里只是记录遇到的问题</p>
+        <h4 id="原因"><a href="#原因" class="headerlink" title="原因"></a>原因</h4><p>新购了一个国外VPS，肯定要(你懂的)，主机商提供了三种系统，Ubuntu、Debian和Centos，由于某些原因三种系统都轮流安装了一遍，或者说都虐了一遍了，其中经历惨不忍睹啊！  </p>
+<h4 id="相关问题"><a href="#相关问题" class="headerlink" title="相关问题"></a>相关问题</h4><p>不得不说<a href="https://www.v2ray.com" target="_blank" rel="noopener">v2ray</a>的官方文档还是很齐全的，但是由于linux的版本太多过程还是会遇到问题的，所以具体的安装文档还是参照官方文档，我这里只是记录遇到的问题  </p>
 <ul>
-<li>问题一：Centos7下Nginx下无法进行数据转发，报Permission Denied<br>
-解决方法：可以<a href="https://toutyrater.github.io/advanced/wss_and_web.html" target="_blank" rel="noopener">参考白话配置</a>,不过我这里由于是VPS的问题，SELinux被主机商禁用了，开启不了，只能更换系统</li>
+<li>问题一：Centos7下Nginx下无法进行数据转发，报Permission Denied<br>解决方法：可以<a href="https://toutyrater.github.io/advanced/wss_and_web.html" target="_blank" rel="noopener">参考白话配置</a>,不过我这里由于是VPS的问题，SELinux被主机商禁用了，开启不了，只能更换系统</li>
 <li>问题二：Debian下SSL版本低，这个算不上问题，只是我这升级完ssl出现好多问题，果断更换系统，没办法，自己太菜🐶，关键是不明白什么主机商提供的Debian8的ssl协议竟然这么低。</li>
-<li>问题三：Centos6下提示出错：Install daemon fail, please install it manually<br>
-解决方法：原来是因为不支持centos6，参考<a href="https://www.feiqy.com/v2ray/" target="_blank" rel="noopener">这里</a>，具体如下：
-新建/etc/init.d/v2ray,并添加下面的配置</li>
+<li>问题三：Centos6下提示出错：Install daemon fail, please install it manually<br>解决方法：原来是因为不支持centos6，参考<a href="https://www.feiqy.com/v2ray/" target="_blank" rel="noopener">这里</a>，具体如下：<br>新建/etc/init.d/v2ray,并添加下面的配置 </li>
 </ul>
 <pre><code>#!/bin/sh
 #
@@ -378,7 +373,7 @@
 # pidfile: /var/run/v2ray.pid
 # description: V2Ray proxy services
 #
- 
+
 ### BEGIN INIT INFO
 # Provides:          v2ray
 # Required-Start:    $network $local_fs $remote_fs
@@ -388,7 +383,7 @@
 # Short-Description: V2Ray proxy services
 # Description:       V2Ray proxy services
 ### END INIT INFO
- 
+
 DESC=v2ray
 NAME=v2ray
 DAEMON=/usr/bin/v2ray/v2ray
@@ -396,18 +391,18 @@ PIDFILE=/var/run/$NAME.pid
 LOCKFILE=/var/lock/subsys/$NAME
 SCRIPTNAME=/etc/init.d/$NAME
 RETVAL=0
- 
+
 DAEMON_OPTS=&quot;-config /etc/v2ray/config.json&quot;
- 
+
 # Exit if the package is not installed
 [ -x $DAEMON ] || exit 0
- 
+
 # Read configuration variable file if it is present
 [ -r /etc/default/$NAME ] &amp;&amp; . /etc/default/$NAME
- 
+
 # Source function library.
 . /etc/rc.d/init.d/functions
- 
+
 start() {
   local pids=$(pgrep -f $DAEMON)
   if [ -n &quot;$pids&quot; ]; then
@@ -415,13 +410,13 @@ start() {
     RETVAL=0
     return 0
   fi
- 
+
   echo -n $&quot;Starting $NAME: &quot;
- 
+
   mkdir -p /var/log/v2ray
   $DAEMON $DAEMON_OPTS 1&gt;/dev/null 2&gt;&amp;1 &amp;
   echo $! &gt; $PIDFILE
- 
+
   sleep 2
   pgrep -f $DAEMON &gt;/dev/null 2&gt;&amp;1
   RETVAL=$?
@@ -433,7 +428,7 @@ start() {
   fi
   return $RETVAL
 }
- 
+
 stop() {
   local pids=$(pgrep -f $DAEMON)
   if [ -z &quot;$pids&quot; ]; then
@@ -441,25 +436,25 @@ stop() {
     RETVAL=0
     return 0
   fi
- 
+
   echo -n $&quot;Stopping $NAME: &quot;
   killproc -p ${PIDFILE} ${NAME}
   RETVAL=$?
   echo
   [ $RETVAL = 0 ] &amp;&amp; rm -f ${LOCKFILE} ${PIDFILE}
 }
- 
+
 reload() {
   echo -n $&quot;Reloading $NAME: &quot;
   killproc -p ${PIDFILE} ${NAME} -HUP
   RETVAL=$?
   echo
 }
- 
+
 rh_status() {
   status -p ${PIDFILE} ${DAEMON}
 }
- 
+
 # See how we were called.
 case &quot;$1&quot; in
   start)
@@ -486,16 +481,12 @@ case &quot;$1&quot; in
   ;;
 esac
 exit $RETVAL
-</code></pre>
-<p>增加权限并加入开机启动</p>
+</code></pre><p>增加权限并加入开机启动  </p>
 <pre><code>chmod a+x /etc/init.d/v2ray
 chkconfig v2ray on
 service v2ray start
-</code></pre>
-<h4>结束</h4>
-<p>哈哈，有点水，为了折腾这个折腾了2天，本来ubuntu挺好的，因为速度有点慢就换成别的系统准备退费，结果😓，好了，吃🍉</p>
-<h4>引用</h4>
-<ol>
+</code></pre><h4 id="结束"><a href="#结束" class="headerlink" title="结束"></a>结束</h4><p>哈哈，有点水，为了折腾这个折腾了2天，本来ubuntu挺好的，因为速度有点慢就换成别的系统准备退费，结果😓，好了，吃🍉  </p>
+<h4 id="引用"><a href="#引用" class="headerlink" title="引用"></a>引用</h4><ol>
 <li>扉启博客 <a href="https://www.feiqy.com/v2ray/" target="_blank" rel="noopener">https://www.feiqy.com/v2ray/</a></li>
 </ol>
 
@@ -641,7 +632,7 @@ service v2ray start
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">23</span>
+                  <span class="site-state-item-count">24</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -663,7 +654,7 @@ service v2ray start
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">26</span>
+                  <span class="site-state-item-count">27</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -711,7 +702,7 @@ service v2ray start
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#undefined"><span class="nav-number">1.</span> <span class="nav-text">原因</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#undefined"><span class="nav-number">2.</span> <span class="nav-text">相关问题</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#undefined"><span class="nav-number">3.</span> <span class="nav-text">结束</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#undefined"><span class="nav-number">4.</span> <span class="nav-text">引用</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#原因"><span class="nav-number">1.</span> <span class="nav-text">原因</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#相关问题"><span class="nav-number">2.</span> <span class="nav-text">相关问题</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#结束"><span class="nav-number">3.</span> <span class="nav-text">结束</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#引用"><span class="nav-number">4.</span> <span class="nav-text">引用</span></a></li></ol></div>
             
 
           </div>

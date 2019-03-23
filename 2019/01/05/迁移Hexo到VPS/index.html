@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="前言 自从Cloudflare可以迁移域名了，就陆续将手里的域名迁移了过来，当前这个域名最开始是在腾讯上注册的，当时是部署在Gitpages上，用的CNAME的方式，听说Gitpages可以启用HTTPS的时候就打算启用，然后只能添加2条解析，无法启用，真是腻歪透了。迁移过来之后就又想直接放到自己VPS上。 方式   直接部署hexo服务端，通过git方式直接提交到VPS上。目前没有采用这种方式，">
+<meta name="description" content="前言自从Cloudflare可以迁移域名了，就陆续将手里的域名迁移了过来，当前这个域名最开始是在腾讯上注册的，当时是部署在Gitpages上，用的CNAME的方式，听说Gitpages可以启用HTTPS的时候就打算启用，然后只能添加2条解析，无法启用，真是腻歪透了。迁移过来之后就又想直接放到自己VPS上。  方式 直接部署hexo服务端，通过git方式直接提交到VPS上。目前没有采用这种方式，首先">
 <meta name="keywords" content="hexo">
 <meta property="og:type" content="article">
 <meta property="og:title" content="迁移Hexo到VPS">
 <meta property="og:url" content="https://hellojxl.com/2019/01/05/迁移Hexo到VPS/index.html">
 <meta property="og:site_name" content="hellojxl">
-<meta property="og:description" content="前言 自从Cloudflare可以迁移域名了，就陆续将手里的域名迁移了过来，当前这个域名最开始是在腾讯上注册的，当时是部署在Gitpages上，用的CNAME的方式，听说Gitpages可以启用HTTPS的时候就打算启用，然后只能添加2条解析，无法启用，真是腻歪透了。迁移过来之后就又想直接放到自己VPS上。 方式   直接部署hexo服务端，通过git方式直接提交到VPS上。目前没有采用这种方式，">
+<meta property="og:description" content="前言自从Cloudflare可以迁移域名了，就陆续将手里的域名迁移了过来，当前这个域名最开始是在腾讯上注册的，当时是部署在Gitpages上，用的CNAME的方式，听说Gitpages可以启用HTTPS的时候就打算启用，然后只能添加2条解析，无法启用，真是腻歪透了。迁移过来之后就又想直接放到自己VPS上。  方式 直接部署hexo服务端，通过git方式直接提交到VPS上。目前没有采用这种方式，首先">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:updated_time" content="2019-01-12T09:02:08.906Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="迁移Hexo到VPS">
-<meta name="twitter:description" content="前言 自从Cloudflare可以迁移域名了，就陆续将手里的域名迁移了过来，当前这个域名最开始是在腾讯上注册的，当时是部署在Gitpages上，用的CNAME的方式，听说Gitpages可以启用HTTPS的时候就打算启用，然后只能添加2条解析，无法启用，真是腻歪透了。迁移过来之后就又想直接放到自己VPS上。 方式   直接部署hexo服务端，通过git方式直接提交到VPS上。目前没有采用这种方式，">
+<meta name="twitter:description" content="前言自从Cloudflare可以迁移域名了，就陆续将手里的域名迁移了过来，当前这个域名最开始是在腾讯上注册的，当时是部署在Gitpages上，用的CNAME的方式，听说Gitpages可以启用HTTPS的时候就打算启用，然后只能添加2条解析，无法启用，真是腻歪透了。迁移过来之后就又想直接放到自己VPS上。  方式 直接部署hexo服务端，通过git方式直接提交到VPS上。目前没有采用这种方式，首先">
 
 
 
@@ -357,32 +357,24 @@
       
 
       
-        <h4>前言</h4>
-<p>自从Cloudflare可以迁移域名了，就陆续将手里的域名迁移了过来，当前这个域名最开始是在腾讯上注册的，当时是部署在Gitpages上，用的CNAME的方式，听说Gitpages可以启用HTTPS的时候就打算启用，然后只能添加2条解析，无法启用，真是腻歪透了。迁移过来之后就又想直接放到自己VPS上。</p>
-<h4>方式</h4>
-<ul>
-<li>
-<p>直接部署hexo服务端，通过git方式直接提交到VPS上。目前没有采用这种方式，首先VPS在国外，大批量的数据传输害怕被针对；其次网络环境也是个问题，所以不做多介绍这种方式了。</p>
+        <h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>自从Cloudflare可以迁移域名了，就陆续将手里的域名迁移了过来，当前这个域名最开始是在腾讯上注册的，当时是部署在Gitpages上，用的CNAME的方式，听说Gitpages可以启用HTTPS的时候就打算启用，然后只能添加2条解析，无法启用，真是腻歪透了。迁移过来之后就又想直接放到自己VPS上。 </p>
+<h4 id="方式"><a href="#方式" class="headerlink" title="方式"></a>方式</h4><ul>
+<li><p>直接部署hexo服务端，通过git方式直接提交到VPS上。目前没有采用这种方式，首先VPS在国外，大批量的数据传输害怕被针对；其次网络环境也是个问题，所以不做多介绍这种方式了。</p>
 </li>
-<li>
-<p>依旧提交代码到Github，然后通过git拉取到VPS上。 本质上Github上是已经是html了，所以在VPS上通过nginx直接部署就可以了，感觉这种方式更好。</p>
+<li><p>依旧提交代码到Github，然后通过git拉取到VPS上。 本质上Github上是已经是html了，所以在VPS上通过nginx直接部署就可以了，感觉这种方式更好。  </p>
 </li>
 </ul>
-<h4>部署服务</h4>
-<p>1、首先部署git服务到VPS，方便进行git拉取最新数据。<br>
-2、不能每次都手动拉取代码，所以查了一下GitHub，有Webhooks可以进行调用，可以直接hook push方法，然后自动拉取最新的代码，又看到网上有现成的lua脚本，直接继承到Nginx上就可以了，可惜由于对Nginx不是非常熟悉，又懒的研究，既然是学C#的，就打算用C#研究一下接口调用就完了，发现微软有现成封装好的WebHook，直接引用Microsoft.AspNetCore.WebHooks即可，可惜发现封装的实在是太死了，不仅要定义固定的配置文件格式，连调用方式都是写死的，文档还不太全，最后部署到VPS上后还各种报错，不容易调试，直接就放弃了。<br>
-3、实在不行那就只能自己动手了，直接用WebApi，唯一的难点是当时没弄明白签名是怎么弄的，后来在stackoverflow.com找到了解决方法，用到的加密算法如下：</p>
-<p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">private byte[] SignWithHmac(byte[] dataToSign, byte[] keyBody)</span><br><span class="line">&#123;</span><br><span class="line">      using (var hmacAlgorithm = new System.Security.Cryptography.HMACSHA1(keyBody))</span><br><span class="line">      &#123;</span><br><span class="line">           return hmacAlgorithm.ComputeHash(dataToSign);</span><br><span class="line">      &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">private string ConvertToHexadecimal(IEnumerable&lt;byte&gt; bytes)</span><br><span class="line">&#123;</span><br><span class="line">      var builder = new StringBuilder();</span><br><span class="line">      foreach (var b in bytes)</span><br><span class="line">      &#123;</span><br><span class="line">          builder.Append(b.ToString(&quot;x2&quot;));</span><br><span class="line">      &#125;</span><br><span class="line">      return builder.ToString();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>完整的校验方法如下：</p>
-<p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">var mac = Request.Headers[&quot;X-Hub-Signature&quot;];</span><br><span class="line">string signature = Request.Headers[&quot;X-Hub-Signature&quot;];</span><br><span class="line">StreamReader reader = new StreamReader(Request.Body);</span><br><span class="line">string json = reader.ReadToEnd();</span><br><span class="line">var hmac = SignWithHmac(UTF8Encoding.UTF8.GetBytes(json), UTF8Encoding.UTF8.GetBytes(_config[&quot;SecretKey&quot;]));</span><br><span class="line">var hmacHex = ConvertToHexadecimal(hmac);</span><br><span class="line">bool isValid = signature.Split(&apos;=&apos;)[1] == hmacHex;</span><br></pre></td></tr></table></figure></p>
-<p>这只是部分代码，完整代码已经放到<a href="https://github.com/jxl922/CoreHooks" target="_blank" rel="noopener">Github</a>了</p>
+<h4 id="部署服务"><a href="#部署服务" class="headerlink" title="部署服务"></a>部署服务</h4><p>1、首先部署git服务到VPS，方便进行git拉取最新数据。<br>2、不能每次都手动拉取代码，所以查了一下GitHub，有Webhooks可以进行调用，可以直接hook push方法，然后自动拉取最新的代码，又看到网上有现成的lua脚本，直接继承到Nginx上就可以了，可惜由于对Nginx不是非常熟悉，又懒的研究，既然是学C#的，就打算用C#研究一下接口调用就完了，发现微软有现成封装好的WebHook，直接引用Microsoft.AspNetCore.WebHooks即可，可惜发现封装的实在是太死了，不仅要定义固定的配置文件格式，连调用方式都是写死的，文档还不太全，最后部署到VPS上后还各种报错，不容易调试，直接就放弃了。<br>3、实在不行那就只能自己动手了，直接用WebApi，唯一的难点是当时没弄明白签名是怎么弄的，后来在stackoverflow.com找到了解决方法，用到的加密算法如下：  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">private byte[] SignWithHmac(byte[] dataToSign, byte[] keyBody)</span><br><span class="line">&#123;</span><br><span class="line">      using (var hmacAlgorithm = new System.Security.Cryptography.HMACSHA1(keyBody))</span><br><span class="line">      &#123;</span><br><span class="line">           return hmacAlgorithm.ComputeHash(dataToSign);</span><br><span class="line">      &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">private string ConvertToHexadecimal(IEnumerable&lt;byte&gt; bytes)</span><br><span class="line">&#123;</span><br><span class="line">      var builder = new StringBuilder();</span><br><span class="line">      foreach (var b in bytes)</span><br><span class="line">      &#123;</span><br><span class="line">          builder.Append(b.ToString(&quot;x2&quot;));</span><br><span class="line">      &#125;</span><br><span class="line">      return builder.ToString();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>完整的校验方法如下：  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">var mac = Request.Headers[&quot;X-Hub-Signature&quot;];</span><br><span class="line">string signature = Request.Headers[&quot;X-Hub-Signature&quot;];</span><br><span class="line">StreamReader reader = new StreamReader(Request.Body);</span><br><span class="line">string json = reader.ReadToEnd();</span><br><span class="line">var hmac = SignWithHmac(UTF8Encoding.UTF8.GetBytes(json), UTF8Encoding.UTF8.GetBytes(_config[&quot;SecretKey&quot;]));</span><br><span class="line">var hmacHex = ConvertToHexadecimal(hmac);</span><br><span class="line">bool isValid = signature.Split(&apos;=&apos;)[1] == hmacHex;</span><br></pre></td></tr></table></figure>
+<p>这只是部分代码，完整代码已经放到<a href="https://github.com/jxl922/CoreHooks" target="_blank" rel="noopener">Github</a>了  </p>
 <p>4、代码写完了，但是Nginx还需要进行一下配置，因为Github是把事件名称放到Header里了，如果Nginx不做配置，是不会转发的,首先更改Nginx.config，增加下面配置</p>
-<p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">underscores_in_headers on;</span><br></pre></td></tr></table></figure></p>
-<p>然后更改Proxy转发参数，完整转发配置如下：</p>
-<p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">location ~ /api/ &#123;</span><br><span class="line">		proxy_redirect  		off;</span><br><span class="line">		proxy_pass      		http://127.0.0.1:5000;</span><br><span class="line">		proxy_http_version      1.1;</span><br><span class="line">		proxy_set_header        Upgrade $http_upgrade;</span><br><span class="line">		proxy_set_header		X-Github-Event	$http_x_github_event;</span><br><span class="line">		proxy_set_header		X-GitHub-Delivery $http_x_github_delivery;</span><br><span class="line">		proxy_set_header		X-Hub-Signature	$http_x_hub_signature;</span><br><span class="line">        proxy_set_header        Host    $http_host;</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure></p>
-<p>配置完后在GitHub上添加WebHooks就可以了</p>
-<h4>结束</h4>
-<p>虽然代码已经写完了，但是还不知道效果怎么样，所以这篇也是一个测试，看看有没有其它问题，好了，测试开始。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">underscores_in_headers on;</span><br></pre></td></tr></table></figure>
+<p>然后更改Proxy转发参数，完整转发配置如下：  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">location ~ /api/ &#123;</span><br><span class="line">		proxy_redirect  		off;</span><br><span class="line">		proxy_pass      		http://127.0.0.1:5000;</span><br><span class="line">		proxy_http_version      1.1;</span><br><span class="line">		proxy_set_header        Upgrade $http_upgrade;</span><br><span class="line">		proxy_set_header		X-Github-Event	$http_x_github_event;</span><br><span class="line">		proxy_set_header		X-GitHub-Delivery $http_x_github_delivery;</span><br><span class="line">		proxy_set_header		X-Hub-Signature	$http_x_hub_signature;</span><br><span class="line">        proxy_set_header        Host    $http_host;</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+<p>配置完后在GitHub上添加WebHooks就可以了  </p>
+<h4 id="结束"><a href="#结束" class="headerlink" title="结束"></a>结束</h4><p>虽然代码已经写完了，但是还不知道效果怎么样，所以这篇也是一个测试，看看有没有其它问题，好了，测试开始。</p>
 
       
     </div>
@@ -524,7 +516,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">23</span>
+                  <span class="site-state-item-count">24</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -546,7 +538,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">26</span>
+                  <span class="site-state-item-count">27</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -594,7 +586,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#undefined"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#undefined"><span class="nav-number">2.</span> <span class="nav-text">方式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#undefined"><span class="nav-number">3.</span> <span class="nav-text">部署服务</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#undefined"><span class="nav-number">4.</span> <span class="nav-text">结束</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#方式"><span class="nav-number">2.</span> <span class="nav-text">方式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#部署服务"><span class="nav-number">3.</span> <span class="nav-text">部署服务</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#结束"><span class="nav-number">4.</span> <span class="nav-text">结束</span></a></li></ol></div>
             
 
           </div>

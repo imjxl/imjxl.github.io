@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="实现目标 由于只是测试，所以只要当前目标只要用Springboot+mybatis启动成功即可，只当自己的学习，数据库用的是postgresql，目前网上的mysql居多，自己学习肯定要有点区别 原因 目前公司一直在转java，而且年前那会招.net确实不太好招，就算以后自己离职也好进行交接，就当为自己留条后路 具体实现 之前偶尔也测试过，有时候成功，有时候失败，虽然sprintboot已经封装的">
+<meta name="description" content="实现目标由于只是测试，所以只要当前目标只要用Springboot+mybatis启动成功即可，只当自己的学习，数据库用的是postgresql，目前网上的mysql居多，自己学习肯定要有点区别 原因目前公司一直在转java，而且年前那会招.net确实不太好招，就算以后自己离职也好进行交接，就当为自己留条后路 具体实现之前偶尔也测试过，有时候成功，有时候失败，虽然sprintboot已经封装的很好了">
 <meta name="keywords" content="springboot,java,mybatis">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Springboot+Mybatis测试成功">
 <meta property="og:url" content="https://hellojxl.com/2018/04/24/Springboot-Mybatis测试成功/index.html">
 <meta property="og:site_name" content="hellojxl">
-<meta property="og:description" content="实现目标 由于只是测试，所以只要当前目标只要用Springboot+mybatis启动成功即可，只当自己的学习，数据库用的是postgresql，目前网上的mysql居多，自己学习肯定要有点区别 原因 目前公司一直在转java，而且年前那会招.net确实不太好招，就算以后自己离职也好进行交接，就当为自己留条后路 具体实现 之前偶尔也测试过，有时候成功，有时候失败，虽然sprintboot已经封装的">
+<meta property="og:description" content="实现目标由于只是测试，所以只要当前目标只要用Springboot+mybatis启动成功即可，只当自己的学习，数据库用的是postgresql，目前网上的mysql居多，自己学习肯定要有点区别 原因目前公司一直在转java，而且年前那会招.net确实不太好招，就算以后自己离职也好进行交接，就当为自己留条后路 具体实现之前偶尔也测试过，有时候成功，有时候失败，虽然sprintboot已经封装的很好了">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:updated_time" content="2018-04-24T16:18:13.082Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Springboot+Mybatis测试成功">
-<meta name="twitter:description" content="实现目标 由于只是测试，所以只要当前目标只要用Springboot+mybatis启动成功即可，只当自己的学习，数据库用的是postgresql，目前网上的mysql居多，自己学习肯定要有点区别 原因 目前公司一直在转java，而且年前那会招.net确实不太好招，就算以后自己离职也好进行交接，就当为自己留条后路 具体实现 之前偶尔也测试过，有时候成功，有时候失败，虽然sprintboot已经封装的">
+<meta name="twitter:description" content="实现目标由于只是测试，所以只要当前目标只要用Springboot+mybatis启动成功即可，只当自己的学习，数据库用的是postgresql，目前网上的mysql居多，自己学习肯定要有点区别 原因目前公司一直在转java，而且年前那会招.net确实不太好招，就算以后自己离职也好进行交接，就当为自己留条后路 具体实现之前偶尔也测试过，有时候成功，有时候失败，虽然sprintboot已经封装的很好了">
 
 
 
@@ -357,34 +357,28 @@
       
 
       
-        <h4>实现目标</h4>
-<p>由于只是测试，所以只要当前目标只要用Springboot+mybatis启动成功即可，只当自己的学习，数据库用的是postgresql，目前网上的mysql居多，自己学习肯定要有点区别</p>
-<h4>原因</h4>
-<p>目前公司一直在转java，而且年前那会招.net确实不太好招，就算以后自己离职也好进行交接，就当为自己留条后路</p>
-<h4>具体实现</h4>
-<p>之前偶尔也测试过，有时候成功，有时候失败，虽然sprintboot已经封装的很好了，可惜对我这个门外汉还是有点摸不着门路，其实只是不熟悉而已，而且之前其实是没做过这方面的东西的，之前客户端居多，dotnet core也是一上来就学，确实也少了许多包袱，但愿Java也是，言归正传：</p>
+        <h4 id="实现目标"><a href="#实现目标" class="headerlink" title="实现目标"></a>实现目标</h4><p>由于只是测试，所以只要当前目标只要用Springboot+mybatis启动成功即可，只当自己的学习，数据库用的是postgresql，目前网上的mysql居多，自己学习肯定要有点区别</p>
+<h4 id="原因"><a href="#原因" class="headerlink" title="原因"></a>原因</h4><p>目前公司一直在转java，而且年前那会招.net确实不太好招，就算以后自己离职也好进行交接，就当为自己留条后路</p>
+<h4 id="具体实现"><a href="#具体实现" class="headerlink" title="具体实现"></a>具体实现</h4><p>之前偶尔也测试过，有时候成功，有时候失败，虽然sprintboot已经封装的很好了，可惜对我这个门外汉还是有点摸不着门路，其实只是不熟悉而已，而且之前其实是没做过这方面的东西的，之前客户端居多，dotnet core也是一上来就学，确实也少了许多包袱，但愿Java也是，言归正传：  </p>
 <ul>
-<li>构建脚手架，去<a href="https://start.spring.io" target="_blank" rel="noopener">启动页</a>进行构建，目前选择Web中的Web，Jersey，SQl中的MyBatis，Maven还是Gradle都可以，根据自己情况选择</li>
+<li>构建脚手架，去<a href="https://start.spring.io" target="_blank" rel="noopener">启动页</a>进行构建，目前选择Web中的Web，Jersey，SQl中的MyBatis，Maven还是Gradle都可以，根据自己情况选择  </li>
 <li>导入工程，进行构建，我这里选的intellJ IDEA社区版，免费嘛，eclipse也可以，根据自己习惯，我这里选择Maven工程，选择jdk版本，接下来就是自动构建了</li>
-<li>新建控制器</li>
+<li>新建控制器  </li>
 </ul>
-<p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">//增加注解</span><br><span class="line">@RestController</span><br><span class="line">public class HelloController &#123;</span><br><span class="line">    //增加对应关系</span><br><span class="line">    @RequestMapping(value=&quot;/hello&quot;)</span><br><span class="line">    public String Hello()&#123;</span><br><span class="line">        return  &quot;good&quot;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">//增加注解</span><br><span class="line">@RestController</span><br><span class="line">public class HelloController &#123;</span><br><span class="line">    //增加对应关系</span><br><span class="line">    @RequestMapping(value=&quot;/hello&quot;)</span><br><span class="line">    public String Hello()&#123;</span><br><span class="line">        return  &quot;good&quot;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <ul>
-<li>修改application.properties文件，增加数据库配置</li>
+<li>修改application.properties文件，增加数据库配置  </li>
 </ul>
-<p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">//配置数据库url</span><br><span class="line">spring.datasource.url=jdbc:postgresql://localhost:5432/xxx?useUnicode=true&amp;characterEncoding=utf8</span><br><span class="line">//用户名</span><br><span class="line">spring.datasource.username=xxx</span><br><span class="line">//密码</span><br><span class="line">spring.datasource.password=xx</span><br><span class="line">驱动</span><br><span class="line">spring.datasource.driverClassName=org.postgresql.Driver</span><br><span class="line">//实体位置，当前还不涉及到，所以没用到</span><br><span class="line">mybatis.typeAliasesPackage=com.hellojxl.helloMybaits.boot_feature.entity</span><br><span class="line">//映射的xml所在位置</span><br><span class="line">mybatis.mapperLocations=classpath:mapper/*.xml</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">//配置数据库url</span><br><span class="line">spring.datasource.url=jdbc:postgresql://localhost:5432/xxx?useUnicode=true&amp;characterEncoding=utf8</span><br><span class="line">//用户名</span><br><span class="line">spring.datasource.username=xxx</span><br><span class="line">//密码</span><br><span class="line">spring.datasource.password=xx</span><br><span class="line">驱动</span><br><span class="line">spring.datasource.driverClassName=org.postgresql.Driver</span><br><span class="line">//实体位置，当前还不涉及到，所以没用到</span><br><span class="line">mybatis.typeAliasesPackage=com.hellojxl.helloMybaits.boot_feature.entity</span><br><span class="line">//映射的xml所在位置</span><br><span class="line">mybatis.mapperLocations=classpath:mapper/*.xml</span><br></pre></td></tr></table></figure>
 <ul>
-<li>调出Maven工程窗口，方法是：View-&gt;Tool Window-&gt;Maven Projects，选中spring-boot，右键spring-boot-&gt;run进行启动，当初用这个还有点懵逼😅</li>
+<li>调出Maven工程窗口，方法是：View-&gt;Tool Window-&gt;Maven Projects，选中spring-boot，右键spring-boot-&gt;run进行启动，当初用这个还有点懵逼😅  </li>
 </ul>
-<h4>出现的问题</h4>
-<ul>
-<li>异常：Spring Boot - Error creating bean with name 'dataSource' defined in class path resource<br>
-解决方法：驱动配置出错，首先没有加载postgresql驱动，在pom文件中增加：</li>
+<h4 id="出现的问题"><a href="#出现的问题" class="headerlink" title="出现的问题"></a>出现的问题</h4><ul>
+<li>异常：Spring Boot - Error creating bean with name ‘dataSource’ defined in class path resource<br>解决方法：驱动配置出错，首先没有加载postgresql驱动，在pom文件中增加：  </li>
 </ul>
-<p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">			&lt;groupId&gt;postgresql&lt;/groupId&gt;</span><br><span class="line">			&lt;artifactId&gt;postgresql&lt;/artifactId&gt;</span><br><span class="line">			&lt;version&gt;9.1-901-1.jdbc4&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure></p>
-<p>然后是数据库配置出错，驱动配置的是mysql的，自己复制粘贴的锅</p>
-<h4>总结</h4>
-<p>这个就当自己开始学习Java的总结吧，下次准备进行数据的操作，再然后就是打算把当前项目移植一下，好了，洗漱睡觉了😪</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">			&lt;groupId&gt;postgresql&lt;/groupId&gt;</span><br><span class="line">			&lt;artifactId&gt;postgresql&lt;/artifactId&gt;</span><br><span class="line">			&lt;version&gt;9.1-901-1.jdbc4&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
+<p>然后是数据库配置出错，驱动配置的是mysql的，自己复制粘贴的锅  </p>
+<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p>这个就当自己开始学习Java的总结吧，下次准备进行数据的操作，再然后就是打算把当前项目移植一下，好了，洗漱睡觉了😪</p>
 
       
     </div>
@@ -530,7 +524,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">23</span>
+                  <span class="site-state-item-count">24</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -552,7 +546,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">26</span>
+                  <span class="site-state-item-count">27</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -600,7 +594,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#undefined"><span class="nav-number">1.</span> <span class="nav-text">实现目标</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#undefined"><span class="nav-number">2.</span> <span class="nav-text">原因</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#undefined"><span class="nav-number">3.</span> <span class="nav-text">具体实现</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#undefined"><span class="nav-number">4.</span> <span class="nav-text">出现的问题</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#undefined"><span class="nav-number">5.</span> <span class="nav-text">总结</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#实现目标"><span class="nav-number">1.</span> <span class="nav-text">实现目标</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#原因"><span class="nav-number">2.</span> <span class="nav-text">原因</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#具体实现"><span class="nav-number">3.</span> <span class="nav-text">具体实现</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#出现的问题"><span class="nav-number">4.</span> <span class="nav-text">出现的问题</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#总结"><span class="nav-number">5.</span> <span class="nav-text">总结</span></a></li></ol></div>
             
 
           </div>

@@ -259,6 +259,181 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://hellojxl.com/2019/03/23/学习Linux下cron服务/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Sean Jin">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="hellojxl">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/03/23/学习Linux下cron服务/" itemprop="url">学习Linux下cron服务</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-23T14:38:10+08:00">
+                2019-03-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h4 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h4><p>最近let’s encrypt不定时的推送证书到期的邮件，同时也在工作中用到了Hangfire的任务管理，本身是基于类似cron的crontab的开源类库，因此就简单学习了解了一下。</p>
+<h4 id="Cron时间格式"><a href="#Cron时间格式" class="headerlink" title="Cron时间格式"></a>Cron时间格式</h4><p>格式本身就是字符串，以5或6个空格隔开，最后可以加年(可以为空)，没有年的定义如下：  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">* * * * * *</span><br><span class="line">- - - - - -</span><br><span class="line">| | | | | |</span><br><span class="line">| | | | | +--- day of week (0 - 6) (Sunday=0)</span><br><span class="line">| | | | +----- month (1 - 12)</span><br><span class="line">| | | +------- day of month (1 - 31)</span><br><span class="line">| | +--------- hour (0 - 23)</span><br><span class="line">| +----------- min (0 - 59)</span><br><span class="line">+------------- sec (0 - 59)</span><br></pre></td></tr></table></figure>
+<p>每一个域可出现的字符如下(摘自百度)： </p>
+<p>Seconds:可出现”, - * /“四个字符，有效范围为0-59的整数  </p>
+<p>Minutes:可出现”, - * /“四个字符，有效范围为0-59的整数 </p>
+<p>Hours:可出现”, - * /“四个字符，有效范围为0-23的整数 </p>
+<p>DayofMonth:可出现”, - * / ? L W C”八个字符，有效范围为0-31的整数 </p>
+<p>Month:可出现”, - * /“四个字符，有效范围为1-12的整数或JAN-DEc </p>
+<p>DayofWeek:可出现”, - * / ? L C #”八个字符，有效范围为1-7的整数或SUN-SAT两个范围。1表示星期天，2表示星期一， 依次类推。 </p>
+<p>Year:可出现”, - * /“四个字符，有效范围为1970-2099年 </p>
+<p>每一个域都使用数字，但还可以出现如下特殊字符，它们的含义是： </p>
+<p>(1)*：表示匹配该域的任意值，假如在Minutes域使用*, 即表示每分钟都会触发事件。 </p>
+<p>(2)?:只能用在DayofMonth和DayofWeek两个域。它也匹配域的任意值，但实际不会。因为DayofMonth和DayofWeek会相互影响。例如想在每月的20日触发调度，不管20日到底是星期几，则只能使用如下写法： 13 13 15 20 <em> ?, 其中最后一位只能用？，而不能使用\</em>，如果使用*表示不管星期几都会触发，实际上并不是这样。 </p>
+<p>(3)-:表示范围，例如在Minutes域使用5-20，表示从5分到20分钟每分钟触发一次 </p>
+<p>(4)/：表示起始时间开始触发，然后每隔固定时间触发一次，例如在Minutes域使用5/20,则意味着5分钟触发一次，而25，45等分别触发一次. </p>
+<p>(5),:表示列出枚举值值。例如：在Minutes域使用5,20，则意味着在第5和第20分钟分别触发一次。 </p>
+<p>(6)L:表示最后，只能出现在DayofWeek和DayofMonth域，如果在DayofWeek域使用5L,意味着在最后的一个星期四触发。 </p>
+<p>(7)W:表示有效工作日(周一到周五),只能出现在DayofMonth域，系统将在离指定日期的最近的有效工作日触发事件。例如：在 DayofMonth使用5W，如果5日是星期六，则将在最近的工作日：星期五，即4日触发。如果5日是星期天，则在6日(周一)触发；如果5日在星期一到星期五中的一天，则就在5日触发。另外一点，W的最近寻找不会跨过月份。 </p>
+<p>(8)LW:这两个字符可以连用，表示在某个月最后一个工作日，即最后一个非周六周末的日期。 </p>
+<p>(9)#:用于确定每个月第几个星期几，只能出现在DayofMonth域。例如在4#2，表示某月的第二个星期三。 </p>
+<h4 id="cron的使用"><a href="#cron的使用" class="headerlink" title="cron的使用"></a>cron的使用</h4><p>1、安装，大部分情况下都是系统自带，不过我也遇到没有的，debian系下直接sudo apt-get install cron既可，centos下是yum install vixie-cron crontabs。  </p>
+<p>2、使用，安装是cron，这只是一个软件或者服务，真正用到的是crontab，需要用crontab去编写配置文件，如果只是当前用户，可以直接用如下的命令：  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">//编写配置</span><br><span class="line">crontab -e </span><br><span class="line">//查看当前用户的配置文件</span><br><span class="line">crontab -l</span><br></pre></td></tr></table></figure>
+<p>如果要指定用户可以如下命令：  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">//针对root用户编写配置</span><br><span class="line">crontab -u root -e</span><br><span class="line">//查看root的用户配置</span><br><span class="line">crontab -u root -l</span><br></pre></td></tr></table></figure>
+<p>唯一需要注意的是选择编辑器的问题，默认会提示选择编辑器，输入自己喜欢用的编辑器编号，不过我在某次使用时直接提示： </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">no crontab for root - using an empty one</span><br><span class="line">888</span><br></pre></td></tr></table></figure>
+<p>输入任何命令也不管用，网上看说是Ctrl+Z可以退出，后来在选择编辑器的时候才发现用的是ed编辑器，完全不会用，只能重新选择编辑器，命令是：  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">//选择编辑器</span><br><span class="line">select-editor</span><br></pre></td></tr></table></figure>
+<p>不过发现在centos 7上好像不能用，debian下没问题。  </p>
+<h4 id="结束"><a href="#结束" class="headerlink" title="结束"></a>结束</h4><p>目前由于命令还不是太熟悉，就不举🌰了，网上好多教程。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://hellojxl.com/2019/02/11/C-调用C-出现的内存异常/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -357,27 +532,24 @@
             <hr>
 <p>补充：</p>
 <p>当时测试的时候是在控制台里测试的，但是放在Unity里依然会崩溃，后来对比了一下网上的一些Demo，发现原来C++的指针里少了点代码：</p>
-<p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">//回调函数</span><br><span class="line">typedef void(__stdcall *callback)(int result, char *message);</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">//回调函数</span><br><span class="line">typedef void(__stdcall *callback)(int result, char *message);</span><br></pre></td></tr></table></figure>
 <p>就是说需要加上__stdcall修饰，具体的说明见<a href="https://docs.microsoft.com/en-us/cpp/cpp/stdcall?view=vs-2017" target="_blank" rel="noopener">微软官方</a>。</p>
 <hr>
-<h4>问题</h4>
-<p>年前由另一个同事负责写了套SDK，由于当初只是给VR资源集成的，所以只制作了64位，后来其它公司问是否有32位的，就只好自己来生成了，所有的都是基于C++写的，主要基于libcurl和openssl，编译libcurl时稍微费了点事，完成后发现用C#调用x86的时候会报：“尝试读取或写入受保护的内存，这通常指示其他内存已损坏”，当时以为是自己编译的libcurl有问题，正好也是最后一天，折腾到下班也没解决，干脆就放弃了。</p>
-<h4>解决</h4>
-<p>今天是第一天上班，公司来的人也不多，想起这件事来就打算再处理一下，各种编译之后发现整个过程还是会提交到的，只有等到返回值的时候才会报上面的错误，网上查也说这个错就跟C#中“未将对象引用到实例”是一样的，由于已经有几年没处理这种问题了，也没弄懂这个意思，而且当时编码好像还不太一样，然后在统一了编码之后发现了<strong><em>CallingConvention</em></strong>，下面先简单说一下C++的函数</p>
-<p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">//回调函数</span><br><span class="line">typedef void(*callback)(int result, char *message);</span><br><span class="line">//函数定义</span><br><span class="line">int test(char *msg, callback fuc);</span><br><span class="line"></span><br><span class="line">//实现</span><br><span class="line">int test(char *msg, callback fuc)</span><br><span class="line">&#123;</span><br><span class="line">    return do(msg,fuc);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>其实就是一个函数，带一个参数和一个回调指针，C#的调用也非常简单</p>
-<p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[DllImport(&quot;testdll&quot;)]</span><br><span class="line">public static extern int test(string msg,CallBackDelegate fuc);</span><br><span class="line"></span><br><span class="line">//新定义的委托</span><br><span class="line">public delegate void CallBackDelegate(int result, string ResultMessage);</span><br></pre></td></tr></table></figure></p>
-<p>这是一开始的调用方式，64位下是正常的，但是一切换到32位下就会在调用时提示“尝试读取或写入受保护的内存，这通常指示其他内存已损坏”这样的错误，解决方式如下：</p>
-<p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[DllImport(&quot;testdll&quot;,CallingConvention= CallingConvention.Cdecl)]</span><br><span class="line">public static extern int test(string msg,CallBackDelegate fuc);</span><br><span class="line"></span><br><span class="line">//新定义的委托</span><br><span class="line">[UnmanagedFunctionPointer(CallingConvention.Cdecl)]</span><br><span class="line">public delegate void CallBackDelegate(int result, string ResultMessage);</span><br></pre></td></tr></table></figure></p>
-<p>这样再调用就不会有任何问题了，后来简单查了一下CallingConvention的含义：</p>
+<h4 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h4><p>年前由另一个同事负责写了套SDK，由于当初只是给VR资源集成的，所以只制作了64位，后来其它公司问是否有32位的，就只好自己来生成了，所有的都是基于C++写的，主要基于libcurl和openssl，编译libcurl时稍微费了点事，完成后发现用C#调用x86的时候会报：“尝试读取或写入受保护的内存，这通常指示其他内存已损坏”，当时以为是自己编译的libcurl有问题，正好也是最后一天，折腾到下班也没解决，干脆就放弃了。  </p>
+<h4 id="解决"><a href="#解决" class="headerlink" title="解决"></a>解决</h4><p>今天是第一天上班，公司来的人也不多，想起这件事来就打算再处理一下，各种编译之后发现整个过程还是会提交到的，只有等到返回值的时候才会报上面的错误，网上查也说这个错就跟C#中“未将对象引用到实例”是一样的，由于已经有几年没处理这种问题了，也没弄懂这个意思，而且当时编码好像还不太一样，然后在统一了编码之后发现了<strong><em>CallingConvention</em></strong>，下面先简单说一下C++的函数  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">//回调函数</span><br><span class="line">typedef void(*callback)(int result, char *message);</span><br><span class="line">//函数定义</span><br><span class="line">int test(char *msg, callback fuc);</span><br><span class="line"></span><br><span class="line">//实现</span><br><span class="line">int test(char *msg, callback fuc)</span><br><span class="line">&#123;</span><br><span class="line">    return do(msg,fuc);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>其实就是一个函数，带一个参数和一个回调指针，C#的调用也非常简单  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[DllImport(&quot;testdll&quot;)]</span><br><span class="line">public static extern int test(string msg,CallBackDelegate fuc);</span><br><span class="line"></span><br><span class="line">//新定义的委托</span><br><span class="line">public delegate void CallBackDelegate(int result, string ResultMessage);</span><br></pre></td></tr></table></figure>
+<p>这是一开始的调用方式，64位下是正常的，但是一切换到32位下就会在调用时提示“尝试读取或写入受保护的内存，这通常指示其他内存已损坏”这样的错误，解决方式如下：  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[DllImport(&quot;testdll&quot;,CallingConvention= CallingConvention.Cdecl)]</span><br><span class="line">public static extern int test(string msg,CallBackDelegate fuc);</span><br><span class="line"></span><br><span class="line">//新定义的委托</span><br><span class="line">[UnmanagedFunctionPointer(CallingConvention.Cdecl)]</span><br><span class="line">public delegate void CallBackDelegate(int result, string ResultMessage);</span><br></pre></td></tr></table></figure>
+<p>这样再调用就不会有任何问题了，后来简单查了一下CallingConvention的含义：  </p>
 <p>Cdecl：由调用者清理栈资源。非常适合用在可变参数的函数调用上，例如printf.</p>
 <p>FastCall： Calling convention不支持。</p>
 <p>StdCall：由被调用者清理栈资源。这是调用native函数时默认的方式。</p>
 <p>ThisCall：第一个参数是this指针，会被存储在ECX寄存器里，而其它的参数会被压栈。这种方式通常用在调用未托管的DLL的方法或类。</p>
-<p>Winapi：实际上并不是一个calling convention，实际上会被默认的平台的calling convention替代。例如window上调用，会替换成StdCall，Windows CE.NET上则被替换成Cdecl.</p>
-<p>初步怀疑是由于c++里面执行到do函数时释放掉了回调fuc造成return不了？可是无法解释64位下没有问题，看来在调用时最好把所有的属性都明确了才好，应该可以防止出现不同结果的问题。</p>
-<h4>结束</h4>
-<p>这是农历19年的第一篇水文，哈哈哈……，大家新年快乐！🎉🎉🎉</p>
+<p>Winapi：实际上并不是一个calling convention，实际上会被默认的平台的calling convention替代。例如window上调用，会替换成StdCall，Windows CE.NET上则被替换成Cdecl.  </p>
+<p>初步怀疑是由于c++里面执行到do函数时释放掉了回调fuc造成return不了？可是无法解释64位下没有问题，看来在调用时最好把所有的属性都明确了才好，应该可以防止出现不同结果的问题。  </p>
+<h4 id="结束"><a href="#结束" class="headerlink" title="结束"></a>结束</h4><p>这是农历19年的第一篇水文，哈哈哈……，大家新年快乐！🎉🎉🎉</p>
 
           
         
@@ -521,32 +693,28 @@
       
         
           
-            <h4>前言</h4>
-<p>最近一直忙着弄一个博客系统，以防那天node又坏了，那我就直接换了，目前是在之前文章里提到的beetlex blog的基础上进行改造的，主要想修改一下几点：</p>
+            <h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>最近一直忙着弄一个博客系统，以防那天node又坏了，那我就直接换了，目前是在之前文章里提到的beetlex blog的基础上进行改造的，主要想修改一下几点：  </p>
 <ol>
 <li>进行前后端分离，因为我不想改动一点东西就要重新编译。</li>
 <li>放弃cookie将，所有的认证方式更改为JWT形式。</li>
 <li>前端样式改为类Next的主题。</li>
 <li>数据库更改为mysql。</li>
-<li>去掉某些不用的组件，像elasticsearch、腾讯云等。</li>
+<li>去掉某些不用的组件，像elasticsearch、腾讯云等。  </li>
 </ol>
-<p>暂时只有这些，当然还有一些迁移过程中出现的bug，目前感觉差不多已经可以用了，不过在Safari下面会报一些错误，正在解决。</p>
-<h4>所谓的问题</h4>
-<p>其实也不是第一次用，只是迁移过程中初次遇到的问题：</p>
+<p>暂时只有这些，当然还有一些迁移过程中出现的bug，目前感觉差不多已经可以用了，不过在Safari下面会报一些错误，正在解决。  </p>
+<h4 id="所谓的问题"><a href="#所谓的问题" class="headerlink" title="所谓的问题"></a>所谓的问题</h4><p>其实也不是第一次用，只是迁移过程中初次遇到的问题：  </p>
 <ol>
-<li>DBeaver报无法识别的DateTimeZone的问题。</li>
-</ol>
-<p>这个其实很简单，只要在设置的时候选择正确的时区即可，起初我以为会自动选择，看来还是没那么智能，还需要手动选择一下。</p>
-<ol start="2">
-<li>保存emoji表情时出现的Incorrect string value: '\xF0\x9F\x98\xAD&quot;,...' for column 'commentContent' at row ‘rowname’的问题。</li>
-</ol>
+<li><p>DBeaver报无法识别的DateTimeZone的问题。  </p>
+<p>这个其实很简单，只要在设置的时候选择正确的时区即可，起初我以为会自动选择，看来还是没那么智能，还需要手动选择一下。  </p>
+</li>
+<li><p>保存emoji表情时出现的Incorrect string value: ‘\xF0\x9F\x98\xAD”,…’ for column ‘commentContent’ at row ‘rowname’的问题。  </p>
 <p>这个网上查询说因为Utf8编码的问题，需要将编码设置为uft8mb4，我设置的时候记着选择的是utf8，但是不是uft8mb4就忘记了，但是从DBeaver上面看的话编码确实是uft8mb4，应该默认就是，我的异常是从代码里报出来的，是要在连接字符串中也要指定的，就涉及到下面这个问题了。</p>
-<ol start="3">
-<li>dotnet core连接字符串中设置编码的问题</li>
+</li>
+<li><p>dotnet core连接字符串中设置编码的问题  </p>
+<p>之前配置Java的时候遇到过，但是还没有在C#里配置过，其实只需要加上<em>charset=’utf8mb4’</em> 即可，最开始设置的是utf8，发现还是保存不了emoji，网上说是如果配置为utf8会在服务端自动转换，但是我这里还是不行，需要明确指定。  </p>
+</li>
 </ol>
-<p>之前配置Java的时候遇到过，但是还没有在C#里配置过，其实只需要加上<em>charset='utf8mb4'</em> 即可，最开始设置的是utf8，发现还是保存不了emoji，网上说是如果配置为utf8会在服务端自动转换，但是我这里还是不行，需要明确指定。</p>
-<h4>结尾</h4>
-<p>本来打算安装mariaDB的，结果发现没有Mac版本的，没办法只好装mysql了，另外最近转了部门，公司也要明确转Java，所以研究了一下Spring cloud的服务中心，结果发现运行起来之后注册不了，目前还不知道啥原因，等排除了也要记录一下。</p>
+<h4 id="结尾"><a href="#结尾" class="headerlink" title="结尾"></a>结尾</h4><p>本来打算安装mariaDB的，结果发现没有Mac版本的，没办法只好装mysql了，另外最近转了部门，公司也要明确转Java，所以研究了一下Spring cloud的服务中心，结果发现运行起来之后注册不了，目前还不知道啥原因，等排除了也要记录一下。</p>
 
           
         
@@ -690,17 +858,13 @@
       
         
           
-            <h4>关于nvm</h4>
-<p>nvm是一个nodejs的版本管理工具，可以在多个node.js的版本之间进行切换。</p>
-<h4>原因</h4>
-<p>一不小心升级了旧MBP上node版本，hexo直接GG，心中真是一万个草泥马崩腾而过，顿时就不想用hexo了，烦的不行。偶然发现了nvm，虽说有n包管理工具，但是感觉不好用，于是直接尝试了一下，很顺畅，心里立马就舒心了。</p>
-<h4>nvm的安装和使用</h4>
-<p>nvm的github是<a href="https://github.com/creationix/nvm" target="_blank" rel="noopener">这里</a>，总体来说还是非常简单的，Mac下直接用：</p>
-<p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.34.0/install.sh | bash</span><br></pre></td></tr></table></figure></p>
-<p>进行安装，但是如果如果发现没有nvm的命令的话需要在执行<code>touch ~/.bash_profile</code>后重新执行上面的命令就可以了。</p>
-<p>用法也很简单<code>nvm install node</code>就可以了，这样会安装最新、稳定的node版本，但是我在安装过程中发现hexo目前还无法在node v11版本下使用，所以最好安装LTS版本，命令是<code>nvm install --lts</code>，默认好像是使用最新的版本，我当时在安装最新版本后直接用了<code>nvm use node</code>，后来发现不能用了之后才安装的lts版本，查资料说是use只会在当前终端中生效，如果想默认一个其它版本可以用<code>nvm alias default node版本</code>，比如我装的最新版本是11.x，LTS版本是10.x的，那么可以用<code>nvm alias default 10</code>即可。</p>
-<h4>结束</h4>
-<p>当时接连因为node版本的问题，都想自己弄了，找到了一个基于dotnet core版的博客<a href="https://github.com/IKende/XBlog" target="_blank" rel="noopener">XBlog</a>,貌似好几个开源博客都叫这名的，这个博客是基于作者自己封装的ORM，完全用不惯，自己已经魔改成sqlsugar了，不过前端样式还在整改中，还有一些其它用不惯的地方，慢慢改着吧，等自己满意了再发出来，就酱了。</p>
+            <h4 id="关于nvm"><a href="#关于nvm" class="headerlink" title="关于nvm"></a>关于nvm</h4><p>nvm是一个nodejs的版本管理工具，可以在多个node.js的版本之间进行切换。  </p>
+<h4 id="原因"><a href="#原因" class="headerlink" title="原因"></a>原因</h4><p>一不小心升级了旧MBP上node版本，hexo直接GG，心中真是一万个草泥马崩腾而过，顿时就不想用hexo了，烦的不行。偶然发现了nvm，虽说有n包管理工具，但是感觉不好用，于是直接尝试了一下，很顺畅，心里立马就舒心了。  </p>
+<h4 id="nvm的安装和使用"><a href="#nvm的安装和使用" class="headerlink" title="nvm的安装和使用"></a>nvm的安装和使用</h4><p>nvm的github是<a href="https://github.com/creationix/nvm" target="_blank" rel="noopener">这里</a>，总体来说还是非常简单的，Mac下直接用： </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.34.0/install.sh | bash</span><br></pre></td></tr></table></figure>
+<p>进行安装，但是如果如果发现没有nvm的命令的话需要在执行<code>touch ~/.bash_profile</code>后重新执行上面的命令就可以了。  </p>
+<p>用法也很简单<code>nvm install node</code>就可以了，这样会安装最新、稳定的node版本，但是我在安装过程中发现hexo目前还无法在node v11版本下使用，所以最好安装LTS版本，命令是<code>nvm install --lts</code>，默认好像是使用最新的版本，我当时在安装最新版本后直接用了<code>nvm use node</code>，后来发现不能用了之后才安装的lts版本，查资料说是use只会在当前终端中生效，如果想默认一个其它版本可以用<code>nvm alias default node版本</code>，比如我装的最新版本是11.x，LTS版本是10.x的，那么可以用<code>nvm alias default 10</code>即可。  </p>
+<h4 id="结束"><a href="#结束" class="headerlink" title="结束"></a>结束</h4><p>当时接连因为node版本的问题，都想自己弄了，找到了一个基于dotnet core版的博客<a href="https://github.com/IKende/XBlog" target="_blank" rel="noopener">XBlog</a>,貌似好几个开源博客都叫这名的，这个博客是基于作者自己封装的ORM，完全用不惯，自己已经魔改成sqlsugar了，不过前端样式还在整改中，还有一些其它用不惯的地方，慢慢改着吧，等自己满意了再发出来，就酱了。</p>
 
           
         
@@ -844,32 +1008,24 @@
       
         
           
-            <h4>前言</h4>
-<p>自从Cloudflare可以迁移域名了，就陆续将手里的域名迁移了过来，当前这个域名最开始是在腾讯上注册的，当时是部署在Gitpages上，用的CNAME的方式，听说Gitpages可以启用HTTPS的时候就打算启用，然后只能添加2条解析，无法启用，真是腻歪透了。迁移过来之后就又想直接放到自己VPS上。</p>
-<h4>方式</h4>
-<ul>
-<li>
-<p>直接部署hexo服务端，通过git方式直接提交到VPS上。目前没有采用这种方式，首先VPS在国外，大批量的数据传输害怕被针对；其次网络环境也是个问题，所以不做多介绍这种方式了。</p>
+            <h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>自从Cloudflare可以迁移域名了，就陆续将手里的域名迁移了过来，当前这个域名最开始是在腾讯上注册的，当时是部署在Gitpages上，用的CNAME的方式，听说Gitpages可以启用HTTPS的时候就打算启用，然后只能添加2条解析，无法启用，真是腻歪透了。迁移过来之后就又想直接放到自己VPS上。 </p>
+<h4 id="方式"><a href="#方式" class="headerlink" title="方式"></a>方式</h4><ul>
+<li><p>直接部署hexo服务端，通过git方式直接提交到VPS上。目前没有采用这种方式，首先VPS在国外，大批量的数据传输害怕被针对；其次网络环境也是个问题，所以不做多介绍这种方式了。</p>
 </li>
-<li>
-<p>依旧提交代码到Github，然后通过git拉取到VPS上。 本质上Github上是已经是html了，所以在VPS上通过nginx直接部署就可以了，感觉这种方式更好。</p>
+<li><p>依旧提交代码到Github，然后通过git拉取到VPS上。 本质上Github上是已经是html了，所以在VPS上通过nginx直接部署就可以了，感觉这种方式更好。  </p>
 </li>
 </ul>
-<h4>部署服务</h4>
-<p>1、首先部署git服务到VPS，方便进行git拉取最新数据。<br>
-2、不能每次都手动拉取代码，所以查了一下GitHub，有Webhooks可以进行调用，可以直接hook push方法，然后自动拉取最新的代码，又看到网上有现成的lua脚本，直接继承到Nginx上就可以了，可惜由于对Nginx不是非常熟悉，又懒的研究，既然是学C#的，就打算用C#研究一下接口调用就完了，发现微软有现成封装好的WebHook，直接引用Microsoft.AspNetCore.WebHooks即可，可惜发现封装的实在是太死了，不仅要定义固定的配置文件格式，连调用方式都是写死的，文档还不太全，最后部署到VPS上后还各种报错，不容易调试，直接就放弃了。<br>
-3、实在不行那就只能自己动手了，直接用WebApi，唯一的难点是当时没弄明白签名是怎么弄的，后来在stackoverflow.com找到了解决方法，用到的加密算法如下：</p>
-<p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">private byte[] SignWithHmac(byte[] dataToSign, byte[] keyBody)</span><br><span class="line">&#123;</span><br><span class="line">      using (var hmacAlgorithm = new System.Security.Cryptography.HMACSHA1(keyBody))</span><br><span class="line">      &#123;</span><br><span class="line">           return hmacAlgorithm.ComputeHash(dataToSign);</span><br><span class="line">      &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">private string ConvertToHexadecimal(IEnumerable&lt;byte&gt; bytes)</span><br><span class="line">&#123;</span><br><span class="line">      var builder = new StringBuilder();</span><br><span class="line">      foreach (var b in bytes)</span><br><span class="line">      &#123;</span><br><span class="line">          builder.Append(b.ToString(&quot;x2&quot;));</span><br><span class="line">      &#125;</span><br><span class="line">      return builder.ToString();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>完整的校验方法如下：</p>
-<p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">var mac = Request.Headers[&quot;X-Hub-Signature&quot;];</span><br><span class="line">string signature = Request.Headers[&quot;X-Hub-Signature&quot;];</span><br><span class="line">StreamReader reader = new StreamReader(Request.Body);</span><br><span class="line">string json = reader.ReadToEnd();</span><br><span class="line">var hmac = SignWithHmac(UTF8Encoding.UTF8.GetBytes(json), UTF8Encoding.UTF8.GetBytes(_config[&quot;SecretKey&quot;]));</span><br><span class="line">var hmacHex = ConvertToHexadecimal(hmac);</span><br><span class="line">bool isValid = signature.Split(&apos;=&apos;)[1] == hmacHex;</span><br></pre></td></tr></table></figure></p>
-<p>这只是部分代码，完整代码已经放到<a href="https://github.com/jxl922/CoreHooks" target="_blank" rel="noopener">Github</a>了</p>
+<h4 id="部署服务"><a href="#部署服务" class="headerlink" title="部署服务"></a>部署服务</h4><p>1、首先部署git服务到VPS，方便进行git拉取最新数据。<br>2、不能每次都手动拉取代码，所以查了一下GitHub，有Webhooks可以进行调用，可以直接hook push方法，然后自动拉取最新的代码，又看到网上有现成的lua脚本，直接继承到Nginx上就可以了，可惜由于对Nginx不是非常熟悉，又懒的研究，既然是学C#的，就打算用C#研究一下接口调用就完了，发现微软有现成封装好的WebHook，直接引用Microsoft.AspNetCore.WebHooks即可，可惜发现封装的实在是太死了，不仅要定义固定的配置文件格式，连调用方式都是写死的，文档还不太全，最后部署到VPS上后还各种报错，不容易调试，直接就放弃了。<br>3、实在不行那就只能自己动手了，直接用WebApi，唯一的难点是当时没弄明白签名是怎么弄的，后来在stackoverflow.com找到了解决方法，用到的加密算法如下：  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">private byte[] SignWithHmac(byte[] dataToSign, byte[] keyBody)</span><br><span class="line">&#123;</span><br><span class="line">      using (var hmacAlgorithm = new System.Security.Cryptography.HMACSHA1(keyBody))</span><br><span class="line">      &#123;</span><br><span class="line">           return hmacAlgorithm.ComputeHash(dataToSign);</span><br><span class="line">      &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">private string ConvertToHexadecimal(IEnumerable&lt;byte&gt; bytes)</span><br><span class="line">&#123;</span><br><span class="line">      var builder = new StringBuilder();</span><br><span class="line">      foreach (var b in bytes)</span><br><span class="line">      &#123;</span><br><span class="line">          builder.Append(b.ToString(&quot;x2&quot;));</span><br><span class="line">      &#125;</span><br><span class="line">      return builder.ToString();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>完整的校验方法如下：  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">var mac = Request.Headers[&quot;X-Hub-Signature&quot;];</span><br><span class="line">string signature = Request.Headers[&quot;X-Hub-Signature&quot;];</span><br><span class="line">StreamReader reader = new StreamReader(Request.Body);</span><br><span class="line">string json = reader.ReadToEnd();</span><br><span class="line">var hmac = SignWithHmac(UTF8Encoding.UTF8.GetBytes(json), UTF8Encoding.UTF8.GetBytes(_config[&quot;SecretKey&quot;]));</span><br><span class="line">var hmacHex = ConvertToHexadecimal(hmac);</span><br><span class="line">bool isValid = signature.Split(&apos;=&apos;)[1] == hmacHex;</span><br></pre></td></tr></table></figure>
+<p>这只是部分代码，完整代码已经放到<a href="https://github.com/jxl922/CoreHooks" target="_blank" rel="noopener">Github</a>了  </p>
 <p>4、代码写完了，但是Nginx还需要进行一下配置，因为Github是把事件名称放到Header里了，如果Nginx不做配置，是不会转发的,首先更改Nginx.config，增加下面配置</p>
-<p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">underscores_in_headers on;</span><br></pre></td></tr></table></figure></p>
-<p>然后更改Proxy转发参数，完整转发配置如下：</p>
-<p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">location ~ /api/ &#123;</span><br><span class="line">		proxy_redirect  		off;</span><br><span class="line">		proxy_pass      		http://127.0.0.1:5000;</span><br><span class="line">		proxy_http_version      1.1;</span><br><span class="line">		proxy_set_header        Upgrade $http_upgrade;</span><br><span class="line">		proxy_set_header		X-Github-Event	$http_x_github_event;</span><br><span class="line">		proxy_set_header		X-GitHub-Delivery $http_x_github_delivery;</span><br><span class="line">		proxy_set_header		X-Hub-Signature	$http_x_hub_signature;</span><br><span class="line">        proxy_set_header        Host    $http_host;</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure></p>
-<p>配置完后在GitHub上添加WebHooks就可以了</p>
-<h4>结束</h4>
-<p>虽然代码已经写完了，但是还不知道效果怎么样，所以这篇也是一个测试，看看有没有其它问题，好了，测试开始。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">underscores_in_headers on;</span><br></pre></td></tr></table></figure>
+<p>然后更改Proxy转发参数，完整转发配置如下：  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">location ~ /api/ &#123;</span><br><span class="line">		proxy_redirect  		off;</span><br><span class="line">		proxy_pass      		http://127.0.0.1:5000;</span><br><span class="line">		proxy_http_version      1.1;</span><br><span class="line">		proxy_set_header        Upgrade $http_upgrade;</span><br><span class="line">		proxy_set_header		X-Github-Event	$http_x_github_event;</span><br><span class="line">		proxy_set_header		X-GitHub-Delivery $http_x_github_delivery;</span><br><span class="line">		proxy_set_header		X-Hub-Signature	$http_x_hub_signature;</span><br><span class="line">        proxy_set_header        Host    $http_host;</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+<p>配置完后在GitHub上添加WebHooks就可以了  </p>
+<h4 id="结束"><a href="#结束" class="headerlink" title="结束"></a>结束</h4><p>虽然代码已经写完了，但是还不知道效果怎么样，所以这篇也是一个测试，看看有没有其它问题，好了，测试开始。</p>
 
           
         
@@ -1013,12 +1169,12 @@
       
         
           
-            <p>前一段时间发现Teamviewer不能用了，总是提示连不上网络等问题，后来才知道被国内代理了，真是日了狗了！没办法就只好找类似的软件，就找到了向日葵，用起来还可以，除了有一点，就是每次开机启动都会自启，而且还启动项里还找不到，当时想算了忍忍吧，毕竟免费的，然而今天多重启了几次系统，实在是忍不了了，遂找了找方法，方法是在下面的目录中：</p>
-<p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">/Library/LaunchDaemons/</span><br><span class="line">/Library/LaunchAgents/</span><br><span class="line">~/Library/LaunchAgents/</span><br></pre></td></tr></table></figure></p>
-<p>找到名称包含sunlogin的plist，删除掉就可以了，很简单。</p>
-<p>参考：</p>
-<p>http://www.tanhao.me/talk/1287.html/</p>
-<p>https://www.jiangxianli.com/?p=82</p>
+            <p>前一段时间发现Teamviewer不能用了，总是提示连不上网络等问题，后来才知道被国内代理了，真是日了狗了！没办法就只好找类似的软件，就找到了向日葵，用起来还可以，除了有一点，就是每次开机启动都会自启，而且还启动项里还找不到，当时想算了忍忍吧，毕竟免费的，然而今天多重启了几次系统，实在是忍不了了，遂找了找方法，方法是在下面的目录中： </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">/Library/LaunchDaemons/</span><br><span class="line">/Library/LaunchAgents/</span><br><span class="line">~/Library/LaunchAgents/</span><br></pre></td></tr></table></figure>
+<p>找到名称包含sunlogin的plist，删除掉就可以了，很简单。  </p>
+<p>参考：  </p>
+<p><a href="http://www.tanhao.me/talk/1287.html/" target="_blank" rel="noopener">http://www.tanhao.me/talk/1287.html/</a>  </p>
+<p><a href="https://www.jiangxianli.com/?p=82" target="_blank" rel="noopener">https://www.jiangxianli.com/?p=82</a></p>
 
           
         
@@ -1162,41 +1318,33 @@
       
         
           
-            <h4>起因</h4>
-<p>最近好久没写东西了，借口呢就是事情有点多，没有时间，其实就是😄。为什么又想写了呢？这几天刚把域名从腾讯云迁移到了Cloudflare，原因就是腾讯域名想多配置几个解析地址都不行，真是腻歪透了，刚好赶上Cloudflare的第八波，就直接迁移了，而且也比别的地便宜。好了，闲话不多说，下面开始。</p>
-<h4>糟心and沮丧🙍‍♂️</h4>
-<p>本以为很简单的东西，直接就是装node跟npm嘛，最多加上hexo跟git，好嘛，全有问题！！！</p>
+            <h4 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h4><p>最近好久没写东西了，借口呢就是事情有点多，没有时间，其实就是😄。为什么又想写了呢？这几天刚把域名从腾讯云迁移到了Cloudflare，原因就是腾讯域名想多配置几个解析地址都不行，真是腻歪透了，刚好赶上Cloudflare的第八波，就直接迁移了，而且也比别的地便宜。好了，闲话不多说，下面开始。</p>
+<h4 id="糟心and沮丧🙍‍♂️"><a href="#糟心and沮丧🙍‍♂️" class="headerlink" title="糟心and沮丧🙍‍♂️"></a>糟心and沮丧🙍‍♂️</h4><p>本以为很简单的东西，直接就是装node跟npm嘛，最多加上hexo跟git，好嘛，全有问题！！！  </p>
 <ul>
-<li>
-<p>Git不能用了</p>
-<p>这个是系统原因，最近更新了系统需要重新安装xcode组件就好了命令是：</p>
-<p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">xcode-select --install</span><br></pre></td></tr></table></figure></p>
+<li><p>Git不能用了  </p>
+<p>这个是系统原因，最近更新了系统需要重新安装xcode组件就好了命令是： </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">xcode-select --install</span><br></pre></td></tr></table></figure>
 </li>
-<li>
-<p>Node版本有点低</p>
-<p>应该是很久之前装的，目前这台笔记本一直作为娱乐本给老婆大人用，平时也就看看电影跟电视啥的，由于目前刚怀上了小baby所以不怎么用了，然后我闲着无聊就开始折腾了。<br>
-1）更新node，最开始是2.X的版本，感觉忒低了，也怪自己作，直接就升级到了最新Stable的版本，好像是11.X的，然后在装hexo的时候就各种waring跟error，看的头都大了，折腾了将近一个小时感觉可能是版本的问题就降级到最新的LTS版本：10.14.2，之前也没有仔细看日志，再次安装还是一堆错误跟警告，看了下打印出来的log大部分跟fsevents包有关。</p>
-<p>2）首先报的是在path中找不到python2，不知道为什么要找python2，查了一下系统中有python跟python2.7，没办法那就软连接一个python2到python2.7吧，命令是：</p>
-<p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ln -s /usr/bin/python2.7 /usr/local/bin/python2</span><br></pre></td></tr></table></figure></p>
-<p>注意由于系统限制，只能软连接到local目录里，否则会因为权限问题而失败。</p>
-<p>3）接着进行npm install发现还是有失败，不过python2已经找到了，报的错误是创建目录的时候由于权限问题被拒绝，目录是node_modules目录下node-sass和子目录build，没办法我就手动创建了，还有中间node还指定了一下淘宝的源，然后执行npm install的时候还是有错误，但是最关键的一步来了，在执行了npm update之后经过巨多的error跟warning之后竟然好了，好了？！你说神奇不神奇！</p>
-<p>4）总结一下，说实话完全不知道咋好的，莫名其妙的就好了😅。吐槽一下，只能说npm安装东西真的太打击人了，如果不出问题还好，否则长长的error跟warning看着都烦，更别说从这里面慢慢的找错误原因了。</p>
+<li><p>Node版本有点低  </p>
+<p>应该是很久之前装的，目前这台笔记本一直作为娱乐本给老婆大人用，平时也就看看电影跟电视啥的，由于目前刚怀上了小baby所以不怎么用了，然后我闲着无聊就开始折腾了。<br>1）更新node，最开始是2.X的版本，感觉忒低了，也怪自己作，直接就升级到了最新Stable的版本，好像是11.X的，然后在装hexo的时候就各种waring跟error，看的头都大了，折腾了将近一个小时感觉可能是版本的问题就降级到最新的LTS版本：10.14.2，之前也没有仔细看日志，再次安装还是一堆错误跟警告，看了下打印出来的log大部分跟fsevents包有关。 </p>
+<p>2）首先报的是在path中找不到python2，不知道为什么要找python2，查了一下系统中有python跟python2.7，没办法那就软连接一个python2到python2.7吧，命令是：  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ln -s /usr/bin/python2.7 /usr/local/bin/python2</span><br></pre></td></tr></table></figure>
+<p>注意由于系统限制，只能软连接到local目录里，否则会因为权限问题而失败。  </p>
+<p>3）接着进行npm install发现还是有失败，不过python2已经找到了，报的错误是创建目录的时候由于权限问题被拒绝，目录是node_modules目录下node-sass和子目录build，没办法我就手动创建了，还有中间node还指定了一下淘宝的源，然后执行npm install的时候还是有错误，但是最关键的一步来了，在执行了npm update之后经过巨多的error跟warning之后竟然好了，好了？！你说神奇不神奇！  </p>
+<p>4）总结一下，说实话完全不知道咋好的，莫名其妙的就好了😅。吐槽一下，只能说npm安装东西真的太打击人了，如果不出问题还好，否则长长的error跟warning看着都烦，更别说从这里面慢慢的找错误原因了。  </p>
 </li>
-<li>
-<p>Git配置ssh</p>
-<p>这个相对简单些了，先生成公钥跟私钥：</p>
-<p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen -t rsa -C email</span><br></pre></td></tr></table></figure></p>
-<p>位置会生成在~/.ssh/下，没有可以先创建目录，还要注意名字，别覆盖了现有的文件，可以起个专有的名字方便识别，然后执行：</p>
-<p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh-add 你的私钥</span><br></pre></td></tr></table></figure></p>
+<li><p>Git配置ssh</p>
+<p>这个相对简单些了，先生成公钥跟私钥：  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen -t rsa -C email</span><br></pre></td></tr></table></figure>
+<p>位置会生成在~/.ssh/下，没有可以先创建目录，还要注意名字，别覆盖了现有的文件，可以起个专有的名字方便识别，然后执行：  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh-add 你的私钥</span><br></pre></td></tr></table></figure>
 <p>然后将你的公钥内容复制到github或者是其它的托管代码服务商中添加即可，然后就可以进行git命令了。</p>
 </li>
-<li>
-<p>Hexo提示No layout</p>
-<p>这个对于我来说就是主题没有同步过来，我的主题是打包放到one drive上了，之前忘了拷贝了，虽然有主题文件但是里面是空的，直接复制过来解压，重新生成就好了。</p>
+<li><p>Hexo提示No layout  </p>
+<p>这个对于我来说就是主题没有同步过来，我的主题是打包放到one drive上了，之前忘了拷贝了，虽然有主题文件但是里面是空的，直接复制过来解压，重新生成就好了。  </p>
 </li>
 </ul>
-<h4>结束</h4>
-<p>好了，稍微一折腾就快12点了，得抓紧睡觉了，好了，晚安喽😴</p>
+<h4 id="结束"><a href="#结束" class="headerlink" title="结束"></a>结束</h4><p>好了，稍微一折腾就快12点了，得抓紧睡觉了，好了，晚安喽😴</p>
 
           
         
@@ -1340,12 +1488,12 @@
       
         
           
-            <p>之前看动漫《天行九歌》的时候，看到秦王向韩非请教是否有一种超越凡人的力量在掌控着命运，韩非答道(有改)：</p>
+            <p>之前看动漫《天行九歌》的时候，看到秦王向韩非请教是否有一种超越凡人的力量在掌控着命运，韩非答道(有改)：  </p>
 <blockquote>
-<p>十年可见春去秋来</p>
+<p>十年可见春去秋来  </p>
 <p>百年可证生老病死</p>
 <p>千年可叹王朝更替</p>
-<p>万年可观斗转星移</p>
+<p>万年可观斗转星移  </p>
 </blockquote>
 <p>是啊，人生本来就短暂，对于天地宇宙来说，人生不过蝼蚁，弹指不过一挥间，只需好好过自己的生活即可，命运？属于你，也不属于你，每个人的命运交织在一起就是生活，愿我们都一样活的精彩！</p>
 
@@ -1491,17 +1639,13 @@
       
         
           
-            <p>好久没写东西了，有点偷懒了，最近一直在研究three.js，目前在研究材质方面的东西，有成果了会分享出来。在做demo的时候遇到html中ul li需要横排居中并且贴近底部的问题，当时没来得及解决，就硬编码进去了，现在解决了，记录一下。</p>
-<h4>方法一：flex布局</h4>
-<p>实际工作中不是采用这种方法解决的，毕竟刚接触时间不长，只是看看有没有其它解决方法的时候找到的，下面是参考了网上并修改后的代码：</p>
-<p><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"utf-8"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">title</span>&gt;</span>demo<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">style</span> <span class="attr">type</span>=<span class="string">"text/css"</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="undefined">    html &#123;</span></span><br><span class="line"><span class="undefined">      width: 100%;</span></span><br><span class="line"><span class="undefined">      height: 100%;</span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="undefined">    body &#123;</span></span><br><span class="line"><span class="undefined">      width: 100%;</span></span><br><span class="line"><span class="undefined">      height: 100%;</span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="undefined">    .container &#123;</span></span><br><span class="line"><span class="undefined">      display: -webkit-box;</span></span><br><span class="line"><span class="undefined">      -webkit-box-orient: vertical;</span></span><br><span class="line"><span class="undefined">      height: 85%;</span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="undefined">    ul &#123;</span></span><br><span class="line"><span class="undefined">      display: flex;</span></span><br><span class="line"><span class="undefined">      flex-flow: row nowrap;</span></span><br><span class="line"><span class="undefined">      justify-content: center;</span></span><br><span class="line"><span class="undefined">      flex-direction: row;</span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="undefined">    ul li &#123;</span></span><br><span class="line"><span class="undefined">      list-style: none;</span></span><br><span class="line"><span class="undefined">      text-align: center;</span></span><br><span class="line"><span class="undefined">      line-height: 30px;</span></span><br><span class="line"><span class="undefined">      padding: 10px;</span></span><br><span class="line"><span class="undefined">      height: 30px;</span></span><br><span class="line"><span class="undefined">      width: 100px;</span></span><br><span class="line"><span class="undefined">      margin: 0 10px;</span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="undefined">  </span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"container"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">footer</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">ul</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">li</span>&gt;</span>列表1<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">li</span>&gt;</span>列表2<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">li</span>&gt;</span>列表3<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">footer</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
-<p>具体的用法就不说了，毕竟自己接触时间也不长就不误人子弟了。</p>
-<h4>方法二：CSS3中的calc()</h4>
-<p>这个在我第一次写代码的时候就想css中要是有计算宽高的方法该有多好，结果在看别人的代码时发现还真有，就是calc(),下面是代码：<br>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"utf-8"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>demo<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">style</span> <span class="attr">type</span>=<span class="string">"text/css"</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="undefined">        footer &#123;</span></span><br><span class="line"><span class="undefined">            position: absolute;</span></span><br><span class="line"><span class="undefined">            bottom: 30px;</span></span><br><span class="line"><span class="undefined">            width: 360px;</span></span><br><span class="line"><span class="undefined">            left: calc(50% - 180px);</span></span><br><span class="line"><span class="undefined">        &#125;</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined">        ul li &#123;</span></span><br><span class="line"><span class="undefined">            list-style: none;</span></span><br><span class="line"><span class="undefined">            float: left;</span></span><br><span class="line"><span class="undefined">            padding: 30px;</span></span><br><span class="line"><span class="undefined">            text-align: center;</span></span><br><span class="line"><span class="undefined">        &#125;</span></span><br><span class="line"><span class="undefined">    </span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"container"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">footer</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">ul</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">li</span>&gt;</span>列表1<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">li</span>&gt;</span>列表2<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">li</span>&gt;</span>列表3<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">footer</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
-<p>因为后面还涉及到计算的地方，所以采用的这种方法，自己感觉还是第二种用的简单点。</p>
-<h4>结束</h4>
-<p>早就听说过也一直认为前端水深，还真不是盖的，我想要达到上面的效果不只这两种，再加上浏览器适配，还真是麻烦！好了，又水了一篇🔚。</p>
+            <p>好久没写东西了，有点偷懒了，最近一直在研究three.js，目前在研究材质方面的东西，有成果了会分享出来。在做demo的时候遇到html中ul li需要横排居中并且贴近底部的问题，当时没来得及解决，就硬编码进去了，现在解决了，记录一下。  </p>
+<h4 id="方法一：flex布局"><a href="#方法一：flex布局" class="headerlink" title="方法一：flex布局"></a>方法一：flex布局</h4><p>实际工作中不是采用这种方法解决的，毕竟刚接触时间不长，只是看看有没有其它解决方法的时候找到的，下面是参考了网上并修改后的代码：  </p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"utf-8"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">title</span>&gt;</span>demo<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">style</span> <span class="attr">type</span>=<span class="string">"text/css"</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="undefined">    html &#123;</span></span><br><span class="line"><span class="undefined">      width: 100%;</span></span><br><span class="line"><span class="undefined">      height: 100%;</span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="undefined">    body &#123;</span></span><br><span class="line"><span class="undefined">      width: 100%;</span></span><br><span class="line"><span class="undefined">      height: 100%;</span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="undefined">    .container &#123;</span></span><br><span class="line"><span class="undefined">      display: -webkit-box;</span></span><br><span class="line"><span class="undefined">      -webkit-box-orient: vertical;</span></span><br><span class="line"><span class="undefined">      height: 85%;</span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="undefined">    ul &#123;</span></span><br><span class="line"><span class="undefined">      display: flex;</span></span><br><span class="line"><span class="undefined">      flex-flow: row nowrap;</span></span><br><span class="line"><span class="undefined">      justify-content: center;</span></span><br><span class="line"><span class="undefined">      flex-direction: row;</span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="undefined">    ul li &#123;</span></span><br><span class="line"><span class="undefined">      list-style: none;</span></span><br><span class="line"><span class="undefined">      text-align: center;</span></span><br><span class="line"><span class="undefined">      line-height: 30px;</span></span><br><span class="line"><span class="undefined">      padding: 10px;</span></span><br><span class="line"><span class="undefined">      height: 30px;</span></span><br><span class="line"><span class="undefined">      width: 100px;</span></span><br><span class="line"><span class="undefined">      margin: 0 10px;</span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="undefined">  </span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"container"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">footer</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">ul</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">li</span>&gt;</span>列表1<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">li</span>&gt;</span>列表2<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">li</span>&gt;</span>列表3<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">footer</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>具体的用法就不说了，毕竟自己接触时间也不长就不误人子弟了。  </p>
+<h4 id="方法二：CSS3中的calc"><a href="#方法二：CSS3中的calc" class="headerlink" title="方法二：CSS3中的calc()"></a>方法二：CSS3中的calc()</h4><p>这个在我第一次写代码的时候就想css中要是有计算宽高的方法该有多好，结果在看别人的代码时发现还真有，就是calc(),下面是代码：<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"utf-8"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>demo<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">style</span> <span class="attr">type</span>=<span class="string">"text/css"</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="undefined">        footer &#123;</span></span><br><span class="line"><span class="undefined">            position: absolute;</span></span><br><span class="line"><span class="undefined">            bottom: 30px;</span></span><br><span class="line"><span class="undefined">            width: 360px;</span></span><br><span class="line"><span class="undefined">            left: calc(50% - 180px);</span></span><br><span class="line"><span class="undefined">        &#125;</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined">        ul li &#123;</span></span><br><span class="line"><span class="undefined">            list-style: none;</span></span><br><span class="line"><span class="undefined">            float: left;</span></span><br><span class="line"><span class="undefined">            padding: 30px;</span></span><br><span class="line"><span class="undefined">            text-align: center;</span></span><br><span class="line"><span class="undefined">        &#125;</span></span><br><span class="line"><span class="undefined">    </span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"container"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">footer</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">ul</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">li</span>&gt;</span>列表1<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">li</span>&gt;</span>列表2<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">li</span>&gt;</span>列表3<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">footer</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>因为后面还涉及到计算的地方，所以采用的这种方法，自己感觉还是第二种用的简单点。  </p>
+<h4 id="结束"><a href="#结束" class="headerlink" title="结束"></a>结束</h4><p>早就听说过也一直认为前端水深，还真不是盖的，我想要达到上面的效果不只这两种，再加上浏览器适配，还真是麻烦！好了，又水了一篇🔚。</p>
 
           
         
@@ -1645,207 +1789,9 @@
       
         
           
-            <p>最近老是老款的md101有点热，尤其是放在床上的时候，正常情况下就已经60多度了，再开个Chrome就70多度了，正好今天用另一台15款的macbook pro看视频，最多就是温热的，没有很烫的感觉，就感觉老款的有问题了。</p>
-<p>其实之前这台笔记本已经被拆很多次了，什么清理风扇了、更换硬盘什么的统统搞过一遍，后来还因为涂硅脂没涂好，花了500大洋，这两年岁数大了，不爱捣鼓了，心想这回又有的折腾了，随后就拿螺丝刀拆开了后盖，本想拆风扇的，结果发现梅花刀找不着了，正好又不想弄，就想清清灰的了，接着发现风扇了有个东西，像是一个碰碎的塑料块，转风扇的时候发现有时还会导致风扇卡住无法转动，联想到之前出现过一次kernel_task 进程占cpu非常高的情况，网上搜索说是有可能传感器坏了，这样一想可能是因为风扇卡住导致的，用各种方法都不好取出来，结果翻过来转了几下就出来了，然后安装后盖开机，Bingo！温度果然降下来了，基本保持在50度左右，偶尔会突然蹦到6、70然后再降下来，毕竟笔记本太老了。</p>
+            <p>最近老是老款的md101有点热，尤其是放在床上的时候，正常情况下就已经60多度了，再开个Chrome就70多度了，正好今天用另一台15款的macbook pro看视频，最多就是温热的，没有很烫的感觉，就感觉老款的有问题了。  </p>
+<p>其实之前这台笔记本已经被拆很多次了，什么清理风扇了、更换硬盘什么的统统搞过一遍，后来还因为涂硅脂没涂好，花了500大洋，这两年岁数大了，不爱捣鼓了，心想这回又有的折腾了，随后就拿螺丝刀拆开了后盖，本想拆风扇的，结果发现梅花刀找不着了，正好又不想弄，就想清清灰的了，接着发现风扇了有个东西，像是一个碰碎的塑料块，转风扇的时候发现有时还会导致风扇卡住无法转动，联想到之前出现过一次kernel_task 进程占cpu非常高的情况，网上搜索说是有可能传感器坏了，这样一想可能是因为风扇卡住导致的，用各种方法都不好取出来，结果翻过来转了几下就出来了，然后安装后盖开机，Bingo！温度果然降下来了，基本保持在50度左右，偶尔会突然蹦到6、70然后再降下来，毕竟笔记本太老了。  </p>
 <p>发现事情真是很有趣，就因为一个小小的东西，就会让你的电脑变的不正常，想一想一个项目、一个工程、一个国家，真是千里之堤，毁于蚁穴。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://hellojxl.com/2018/08/11/Springboot-Mybatis下的增删查改/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Sean Jin">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="hellojxl">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/08/11/Springboot-Mybatis下的增删查改/" itemprop="url">Springboot+Mybatis下的增删查改</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-11T19:42:45+08:00">
-                2018-08-11
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/java/" itemprop="url" rel="index">
-                    <span itemprop="name">java</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h4>前言</h4>
-<p>上次写了<a href="http://hellojxl.com/2018/04/24/Springboot-Mybatis%E6%B5%8B%E8%AF%95%E6%88%90%E5%8A%9F/">一篇文章</a>，但只是粗略了写了一下，这次本来是工作上有个小项目，本打算用java写，可惜死活没配置好，就放弃了。正好周末就又基于上次那个项目捣鼓了一遍，可算是成功了，在此记录下。</p>
-<h4>开发工具</h4>
-<p>之前在公司试用了一下大名鼎鼎的IDEA旗舰版，虽然还算比较好用，可惜就是太贵了，所以就装了社区版，后来才知道社区版不支持web开发，那就只能用eclipse了，装上Springboot的STS插件也还可以，回到家本想也这么来，可惜最近网不好，各种被墙，代理也半死不活，慢的一匹，然后发现Springboot有基于eclipse封装好的STS，而且没有被墙，很是不错！👍</p>
-<h4>开始</h4>
-<p>这篇文章是基于Xml进行的，虽然有注解，总感觉那样是没有灵魂的（笑～～），注解的非常简单，就不多介绍了，下面开始介绍xml的配置</p>
-<ul>
-<li>添加实体类，新建包，命名为Entity，我这里是直接在com.hellojxl.helloMybaits下新建的所以包名为：com.hellojxl.helloMybaits.Entity，这点很重要，然后新建一个class，命名为User</li>
-</ul>
-<blockquote>
-<p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">package com.hellojxl.helloMybaits.Entity;</span><br><span class="line"></span><br><span class="line">public class User &#123;</span><br><span class="line">	private int id;</span><br><span class="line">	private String name;</span><br><span class="line">	private String sex;</span><br><span class="line">	</span><br><span class="line">	public int getId() &#123;</span><br><span class="line">		return id;</span><br><span class="line">	&#125;</span><br><span class="line">	public void setId(int id) &#123;</span><br><span class="line">		this.id = id;</span><br><span class="line">	&#125;</span><br><span class="line">	public String getName() &#123;</span><br><span class="line">		return name;</span><br><span class="line">	&#125;</span><br><span class="line">	public void setName(String name) &#123;</span><br><span class="line">		this.name = name;</span><br><span class="line">	&#125;</span><br><span class="line">	public String getSex() &#123;</span><br><span class="line">		return sex;</span><br><span class="line">	&#125;</span><br><span class="line">	public void setSex(String sex) &#123;</span><br><span class="line">		this.sex = sex;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-</blockquote>
-<ul>
-<li>添加Service接口，新建包，命名为Dao</li>
-</ul>
-<blockquote>
-<p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">package com.hellojxl.helloMybaits.Dao;</span><br><span class="line"></span><br><span class="line">import java.util.List;</span><br><span class="line">import com.hellojxl.helloMybaits.Entity.*;</span><br><span class="line"></span><br><span class="line">public interface UserService &#123;</span><br><span class="line">	</span><br><span class="line">	public List&lt;User&gt; getAll();</span><br><span class="line">	public User getUser(int id);</span><br><span class="line">	public int deleteUser(int id);</span><br><span class="line">	public int addUser(User u);</span><br><span class="line">	public int editUser(User u);</span><br><span class="line">	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-</blockquote>
-<ul>
-<li>配置allocation.yml，这里没用连接池</li>
-</ul>
-<blockquote>
-<p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">spring:</span><br><span class="line">  datasource:</span><br><span class="line">    url: jdbc:postgresql://127.0.0.1:5432/test</span><br><span class="line">    username: jinxiaolei</span><br><span class="line">    password: xxxxxx</span><br><span class="line">    driver-class-name: org.postgresql.Driver</span><br><span class="line">    </span><br><span class="line">mybatis:</span><br><span class="line">  mapper-locations: classpath:mapper/*.xml</span><br></pre></td></tr></table></figure></p>
-</blockquote>
-<ul>
-<li>在src/main/resource目录下新建目录mapper，添加一个xml文件，可以随便命名，这里命名为user.xml</li>
-</ul>
-<blockquote>
-<p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"> &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;</span><br><span class="line">&lt;!DOCTYPE mapper</span><br><span class="line">        PUBLIC &quot;-//mybatis.org//DTD Mapper 3.0//EN&quot;</span><br><span class="line">        &quot;http://mybatis.org/dtd/mybatis-3-mapper.dtd&quot;&gt;</span><br><span class="line">&lt;mapper namespace=&quot;com.hellojxl.helloMybaits.Dao.UserService&quot;&gt;</span><br><span class="line">    &lt;select id=&quot;getAll&quot; resultType=&quot;com.hellojxl.helloMybaits.Entity.User&quot;&gt;</span><br><span class="line">        select * from t_user</span><br><span class="line">    &lt;/select&gt;</span><br><span class="line">    &lt;select id=&quot;getUser&quot; parameterType=&quot;java.lang.Integer&quot; resultType=&quot;com.hellojxl.helloMybaits.Entity.User&quot;&gt;</span><br><span class="line">    	select * from t_user where id = #&#123;id,jdbcType=INTEGER&#125;</span><br><span class="line">    &lt;/select&gt;</span><br><span class="line">    </span><br><span class="line">    &lt;delete id=&quot;deleteUser&quot; parameterType=&quot;java.lang.Integer&quot; &gt;</span><br><span class="line">    	delete from t_user where id = #&#123;id,jdbcType=INTEGER&#125;</span><br><span class="line">    &lt;/delete&gt;</span><br><span class="line">    </span><br><span class="line">    &lt;insert id=&quot;addUser&quot; parameterType=&quot;com.hellojxl.helloMybaits.Entity.User&quot;&gt;</span><br><span class="line">    	insert into t_user (name,sex) </span><br><span class="line">    	values (#&#123;name,jdbcType=VARCHAR&#125;, #&#123;sex,jdbcType=VARCHAR&#125;)</span><br><span class="line">    &lt;/insert&gt;</span><br><span class="line">    </span><br><span class="line">    &lt;update id=&quot;editUser&quot; parameterType=&quot;com.hellojxl.helloMybaits.Entity.User&quot;&gt;</span><br><span class="line">    	update t_user </span><br><span class="line">    	set name = #&#123;name,jdbcType=VARCHAR&#125;,</span><br><span class="line">        sex = #&#123;sex,jdbcType=VARCHAR&#125;</span><br><span class="line">    	where id = #&#123;id,jdbcType=BIGINT&#125;</span><br><span class="line">    &lt;/update&gt;</span><br><span class="line">&lt;/mapper&gt;</span><br></pre></td></tr></table></figure></p>
-</blockquote>
-<p>所有的id对应UserService里方法名，参数根据实际情况进行选择</p>
-<ul>
-<li>在新建的Controller包里添加一个Controller，此处命名为HelloController，代码如下：</li>
-</ul>
-<blockquote>
-<p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line">package com.hellojxl.helloMybaits.Controller;</span><br><span class="line"></span><br><span class="line">import java.util.List;</span><br><span class="line">import org.springframework.beans.factory.annotation.Autowired;</span><br><span class="line">import org.springframework.web.bind.annotation.RequestBody;</span><br><span class="line">import org.springframework.web.bind.annotation.RequestMapping;</span><br><span class="line">import org.springframework.web.bind.annotation.RestController;</span><br><span class="line">import com.hellojxl.helloMybaits.Dao.UserService;</span><br><span class="line">import com.hellojxl.helloMybaits.Entity.User;</span><br><span class="line"></span><br><span class="line">@RestController</span><br><span class="line">public class HelloController &#123;</span><br><span class="line">	</span><br><span class="line">	@Autowired</span><br><span class="line">	private UserService userService;</span><br><span class="line">	</span><br><span class="line">    @RequestMapping(value=&quot;/get&quot;)</span><br><span class="line">    public List&lt;User&gt; getAll()&#123;</span><br><span class="line">    	List&lt;User&gt; test=userService.getAll();</span><br><span class="line">        return test;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    @RequestMapping(&quot;/user&quot;)</span><br><span class="line">    public User GetUser(int id) &#123;</span><br><span class="line">    	return userService.getUser(id);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    @RequestMapping(&quot;/add&quot;)</span><br><span class="line">    public boolean addUser(@RequestBody User u) &#123;</span><br><span class="line">    	int i= userService.addUser(u);</span><br><span class="line">    	System.out.println(&quot;addUser---------&quot;+i);</span><br><span class="line">    	if(i&gt;0) &#123;</span><br><span class="line">			return true;</span><br><span class="line">		&#125;</span><br><span class="line">		else &#123;</span><br><span class="line">			return false;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">    </span><br><span class="line">    @RequestMapping(&quot;/edit&quot;)</span><br><span class="line">    public boolean editUser(@RequestBody User u) &#123;</span><br><span class="line">		int i=userService.editUser(u);</span><br><span class="line">		System.out.println(&quot;editUser----------&quot;+ i);</span><br><span class="line">		if(i&gt;0) &#123;</span><br><span class="line">			return true;</span><br><span class="line">		&#125;</span><br><span class="line">		else &#123;</span><br><span class="line">			return false;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">    </span><br><span class="line">    @RequestMapping(&quot;/delete&quot;)</span><br><span class="line">    public boolean deleteUser(int id) &#123;</span><br><span class="line">    	int i= userService.deleteUser(id);</span><br><span class="line">    	System.out.println(&quot;deleteUser----------&quot;+ i);</span><br><span class="line">    	if(i&gt;0) &#123;</span><br><span class="line">			return true;</span><br><span class="line">		&#125;</span><br><span class="line">		else &#123;</span><br><span class="line">			return false;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-</blockquote>
-<ul>
-<li>在启动类里添加MapperScan注解</li>
-</ul>
-<blockquote>
-<p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">package com.hellojxl.helloMybaits;</span><br><span class="line"></span><br><span class="line">import org.mybatis.spring.annotation.MapperScan;</span><br><span class="line">import org.springframework.boot.SpringApplication;</span><br><span class="line">import org.springframework.boot.autoconfigure.SpringBootApplication;</span><br><span class="line"></span><br><span class="line">@MapperScan(&quot;com.hellojxl.helloMybaits.Dao&quot;)</span><br><span class="line">@SpringBootApplication</span><br><span class="line">public class HelloMybaitsApplication &#123;</span><br><span class="line">	public static void main(String[] args) &#123;</span><br><span class="line">		SpringApplication.run(HelloMybaitsApplication.class, args);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-</blockquote>
-<ul>
-<li>关于postgresql的驱动问题，刚开始用的是新建sprintboot时的默认包，然后发现会报错：Method org.postgresql.jdbc4.Jdbc4Connection.isValid(int) is not yet implemented，后来发现maven库里有个别的版本的驱动：postgresql-42.2.4.jar，换成这个就好了，依赖为：</li>
-</ul>
-<blockquote>
-<p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;org.postgresql&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;postgresql&lt;/artifactId&gt;</span><br><span class="line">    &lt;version&gt;42.2.4&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure></p>
-</blockquote>
-<h4>总结</h4>
-<ul>
-<li>遇到的最多的问题就是：Invalid bound statement (not found)，我这里是忘了加MapperScan，其它的时候是mapper没用对应上，所以包名一定要对</li>
-<li>eclipse没有提示，解决方法是：打开Preferences-&gt;Java-&gt;Editor-&gt;content assist，在右侧最下面的Auto Active中选中 Enable auto activation，Auto activation delay设为200，Auto activation triggers for Java改为.abcdefghijklmnopqrstuvwxyz就可以了</li>
-</ul>
-<p>本篇还是比较简单的，没有涉及到很复杂的查询和批量处理，以后有机会再写吧，代码已经上传到<a href="https://github.com/jxl922/helloMybaits" target="_blank" rel="noopener">Github</a>上了,直接copy代码就应该可以了，当然确保数据库有相关的表和数据，好了，结束！😄</p>
 
           
         
@@ -1935,7 +1881,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">23</span>
+                  <span class="site-state-item-count">24</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1957,7 +1903,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">26</span>
+                  <span class="site-state-item-count">27</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
