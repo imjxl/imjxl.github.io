@@ -1,48 +1,0 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
-    <title>nginx on hellojxl</title>
-    <link>http://hellojxl.com/tags/nginx/</link>
-    <description>Recent content in nginx on hellojxl</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language>
-    <copyright>© Copyright notice</copyright>
-    <lastBuildDate>Sat, 21 Jul 2018 22:54:45 +0000</lastBuildDate>
-    
-	<atom:link href="http://hellojxl.com/tags/nginx/index.xml" rel="self" type="application/rss+xml" />
-    
-    
-    <item>
-      <title>关于Nginx启用Https的记录</title>
-      <link>http://hellojxl.com/posts/%E5%85%B3%E4%BA%8Enginx%E5%90%AF%E7%94%A8https%E7%9A%84%E8%AE%B0%E5%BD%95/</link>
-      <pubDate>Sat, 21 Jul 2018 22:54:45 +0000</pubDate>
-      
-      <guid>http://hellojxl.com/posts/%E5%85%B3%E4%BA%8Enginx%E5%90%AF%E7%94%A8https%E7%9A%84%E8%AE%B0%E5%BD%95/</guid>
-      <description>记录原因 之前也部署过，结果上次因为买了一个新的VPS，打算部署v2ray的时候，遇到点问题，感觉还是要记录下来，因为是自己用所以就直接用Let&#39;s Encrypt部署吧，因为可以自动续期，90天也无所谓。
-安装部署 啥也不说，直接上certbot,详细的可以参考官方文档，这里只记录简单的部署
- 安装前提
-因为certbot基于python，所以系统需要先安装Python 2.7 or 3.4+以上的版本 下载certbot  # wget https://dl.eff.org/certbot-auto //下载# chmod a+x ./certbot-auto //修改权限# ./certbot-auto --help //验证是否成功 开始部署  首先要看nginx的根目录在什么位置，有的在/var/www/html下，有的在/usr/share/nginx/html下。
-然后配置nginx读取certbot产生的文本文件
-location ~ /.well-known/acme-challenge/ {allow	all;root /usr/share/nginx/html;default_type	&amp;#34;text/plain&amp;#34;;}location = /.well-known/acme-challenge/ {return 404;} 运行nginx -s reload重新加载配置
-./certbot-auto certonly --webroot -w /usr/share/nginx/html/ -d your.domain.com 指定webroot和域名，只要能够访问就成功了，切记一次最多五次，否则会被限制，当时因为地址弄错了，等了一个星期&amp;hellip;
-发放证书了还需要配置nginx启用
-server {listen	80;server_name	www.domain.com domain.com;return	301	$scheme:https://www.</description>
-    </item>
-    
-    <item>
-      <title>关于Supervisor和Nginx的使用</title>
-      <link>http://hellojxl.com/posts/%E5%85%B3%E4%BA%8Esupervisor%E5%92%8Cnginx%E7%9A%84%E4%BD%BF%E7%94%A8/</link>
-      <pubDate>Fri, 08 Jun 2018 21:44:06 +0000</pubDate>
-      
-      <guid>http://hellojxl.com/posts/%E5%85%B3%E4%BA%8Esupervisor%E5%92%8Cnginx%E7%9A%84%E4%BD%BF%E7%94%A8/</guid>
-      <description>感觉好久没写了，那就简单说一下最近工作中所用到的Nginx和Supervisor吧，虽然网上也一搜一大把，就当自己做下总结吧
-Nginx的使用 工作中用的是centos，安装简单的用yum直接安装的，还可以直接开机启动，下面简单说说路径匹配的问题，项目刚开始的是用的是后缀名进行匹配，规则如下：
-location ~*\.(gif|png|jpg|jpeg|bmp)$ {default_type	&amp;#39;application/octet-stream&amp;#39;;root	/home/Images/;expires	1d;}如果项目中只需要匹配一种类型的图片用这种模式就可以了，另外这种匹配比location要精确，所以默认最终会匹配这种类型，比如想访问swagger的图片，结果就因为这个原因访问不了，可以尝试加^~进行处理并且要放到这个之前，但是因为这个项目中分好几种类型的图片，需要单独分开访问，所以最终全是用location进行匹配的，而且变简单了
-location ~* /logo/ {root	/;rewrite	/logo/(.*)$ /home/logo/Images/$1 break;}还有次不知道什么原因web目录的权限突然变了，造成403 forbidden了，查看nginx日志也是权限被拒绝，通过chmod -R 777 *还是不行，搜索网上发现需要重启nginx，简单reload是没用的，这里记录下
-Supervisor的使用 下面说说Supervisor的用法，刚开始折腾了半天都不起作用，因为[include]前面的;忘记删掉了，当时是直接写在下面了，不管怎么说倒是起作用了，配置如下：
-[program:redis]command=redis-serverdirectory=/usr/local/bin/user=userautostart=trueautorestart=truestartsecs=2[program:TestApi]command=dotnet TestApi.dlldirectory=/home/project/TestApi/stderr_logfile=/var/log/museumApi.error.logstdout_logfile=/var/log/museumApi.stdout.logenvironment=ASPNETCORE_ENVIRONMNET=Productionuser=userautostart=trueautorestart=truestartsecs=2 还有web管理界面，配置如下：
-[inet_http_server] ; inet (TCP) server disabled by defaultport=0.0.0.0:9001 ; ip_address:port specifier, *:port for all ifaceusername=admin ; default is no username (open server)password=123123 ; default is no password (open server) 不过不建议在生产环境下用，不安全！</description>
-    </item>
-    
-  </channel>
-</rss>

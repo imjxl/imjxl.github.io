@@ -1,195 +1,0 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<meta charset="utf-8" />
-	<meta http-equiv="X-UA-Compatible" content="IE=edge"><title>迁移Hexo到VPS - hellojxl</title><link rel="icon" type="image/png" href=icons/myicon.png /><meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta property="og:title" content="迁移Hexo到VPS" />
-<meta property="og:description" content="前言 自从Cloudflare可以迁移域名了，就陆续将手里的域名迁移了过来，当前这个域名最开始是在腾讯上注册的，当时是部署在Gitpages上，用的CNAME的方式，听说Gitpages可以启用HTTPS的时候就打算启用，然后只能添加2条解析，无法启用，真是腻歪透了。迁移过来之后就又想直接放到自己VPS上。
-方式   直接部署hexo服务端，通过git方式直接提交到VPS上。目前没有采用这种方式，首先VPS在国外，大批量的数据传输害怕被针对；其次网络环境也是个问题，所以不做多介绍这种方式了。
-  依旧提交代码到Github，然后通过git拉取到VPS上。 本质上Github上是已经是html了，所以在VPS上通过nginx直接部署就可以了，感觉这种方式更好。
-  部署服务 1、首先部署git服务到VPS，方便进行git拉取最新数据。
-2、不能每次都手动拉取代码，所以查了一下GitHub，有Webhooks可以进行调用，可以直接hook push方法，然后自动拉取最新的代码，又看到网上有现成的lua脚本，直接继承到Nginx上就可以了，可惜由于对Nginx不是非常熟悉，又懒的研究，既然是学C#的，就打算用C#研究一下接口调用就完了，发现微软有现成封装好的WebHook，直接引用Microsoft.AspNetCore.WebHooks即可，可惜发现封装的实在是太死了，不仅要定义固定的配置文件格式，连调用方式都是写死的，文档还不太全，最后部署到VPS上后还各种报错，不容易调试，直接就放弃了。
-3、实在不行那就只能自己动手了，直接用WebApi，唯一的难点是当时没弄明白签名是怎么弄的，后来在stackoverflow.com找到了解决方法，用到的加密算法如下：
-private byte[] SignWithHmac(byte[] dataToSign, byte[] keyBody){using (var hmacAlgorithm = new System.Security.Cryptography.HMACSHA1(keyBody)){return hmacAlgorithm.ComputeHash(dataToSign);}}private string ConvertToHexadecimal(IEnumerable&lt;byte&gt; bytes){var builder = new StringBuilder();foreach (var b in bytes){builder.Append(b.ToString(&#34;x2&#34;));}return builder.ToString();}完整的校验方法如下：
-var mac = Request.Headers[&#34;X-Hub-Signature&#34;];string signature = Request.Headers[&#34;X-Hub-Signature&#34;];StreamReader reader = new StreamReader(Request.Body);string json = reader." />
-<meta property="og:type" content="article" />
-<meta property="og:url" content="http://hellojxl.com/posts/%E8%BF%81%E7%A7%BBhexo%E5%88%B0vps/" />
-<meta property="article:published_time" content="2019-01-05T21:31:10+00:00" />
-<meta property="article:modified_time" content="2019-01-05T21:31:10+00:00" />
-<meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="迁移Hexo到VPS"/>
-<meta name="twitter:description" content="前言 自从Cloudflare可以迁移域名了，就陆续将手里的域名迁移了过来，当前这个域名最开始是在腾讯上注册的，当时是部署在Gitpages上，用的CNAME的方式，听说Gitpages可以启用HTTPS的时候就打算启用，然后只能添加2条解析，无法启用，真是腻歪透了。迁移过来之后就又想直接放到自己VPS上。
-方式   直接部署hexo服务端，通过git方式直接提交到VPS上。目前没有采用这种方式，首先VPS在国外，大批量的数据传输害怕被针对；其次网络环境也是个问题，所以不做多介绍这种方式了。
-  依旧提交代码到Github，然后通过git拉取到VPS上。 本质上Github上是已经是html了，所以在VPS上通过nginx直接部署就可以了，感觉这种方式更好。
-  部署服务 1、首先部署git服务到VPS，方便进行git拉取最新数据。
-2、不能每次都手动拉取代码，所以查了一下GitHub，有Webhooks可以进行调用，可以直接hook push方法，然后自动拉取最新的代码，又看到网上有现成的lua脚本，直接继承到Nginx上就可以了，可惜由于对Nginx不是非常熟悉，又懒的研究，既然是学C#的，就打算用C#研究一下接口调用就完了，发现微软有现成封装好的WebHook，直接引用Microsoft.AspNetCore.WebHooks即可，可惜发现封装的实在是太死了，不仅要定义固定的配置文件格式，连调用方式都是写死的，文档还不太全，最后部署到VPS上后还各种报错，不容易调试，直接就放弃了。
-3、实在不行那就只能自己动手了，直接用WebApi，唯一的难点是当时没弄明白签名是怎么弄的，后来在stackoverflow.com找到了解决方法，用到的加密算法如下：
-private byte[] SignWithHmac(byte[] dataToSign, byte[] keyBody){using (var hmacAlgorithm = new System.Security.Cryptography.HMACSHA1(keyBody)){return hmacAlgorithm.ComputeHash(dataToSign);}}private string ConvertToHexadecimal(IEnumerable&lt;byte&gt; bytes){var builder = new StringBuilder();foreach (var b in bytes){builder.Append(b.ToString(&#34;x2&#34;));}return builder.ToString();}完整的校验方法如下：
-var mac = Request.Headers[&#34;X-Hub-Signature&#34;];string signature = Request.Headers[&#34;X-Hub-Signature&#34;];StreamReader reader = new StreamReader(Request.Body);string json = reader."/>
-<link href="https://fonts.googleapis.com/css?family=Ubuntu:300,400,300italic,400italic|Raleway:200,300" rel="stylesheet">
-
-	<link rel="stylesheet" type="text/css" media="screen" href="http://hellojxl.comcss/normalize.css" />
-	<link rel="stylesheet" type="text/css" media="screen" href="http://hellojxl.comcss/main.css" />
-	<link rel="stylesheet" type="text/css" href="http://hellojxl.comcss/custom.css" />
-	<link rel="stylesheet" type="text/css" href="http://hellojxl.comcss/dark.css" media="(prefers-color-scheme: dark)" />
-	<link rel="stylesheet" type="text/css" href="http://hellojxl.comcss/custom-dark.css" media="(prefers-color-scheme: dark)" />
-
-	<script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
-	<script src="http://hellojxl.comjs/main.js"></script>
-	<script src="http://hellojxl.comjs/abc.js"></script>
-	<script src="http://hellojxl.comjs/xyz.js"></script>
-	<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
-</head>
-
-<body>
-	<div class="container wrapper post">
-		<div class="header">
-	<h1 class="site-title"><a href="http://hellojxl.com">hellojxl</a></h1>
-	<div class="site-description"><h2></h2><nav class="nav social">
-			<ul class="flat"><a href="https://github.com/jxl922/" title="Github"><i data-feather="github"></i></a><a href="https://twitter.com/hellojxl" title="Twitter"><i data-feather="twitter"></i></a></ul>
-		</nav>
-	</div>
-
-	<nav class="nav">
-		<ul class="flat">
-			
-			<li>
-				<a href="/">首页</a>
-			</li>
-			
-			<li>
-				<a href="/posts">所有文章</a>
-			</li>
-			
-			<li>
-				<a href="/tags">标签</a>
-			</li>
-			
-			<li>
-				<a href="/about">关于我</a>
-			</li>
-			
-		</ul>
-	</nav>
-</div>
-
-
-		<div class="post-header">
-			<h1 class="title">迁移Hexo到VPS</h1>
-			<div class="meta">Posted at &mdash; Jan 5, 2019</div>
-		</div>
-
-		<div class="markdown">
-			<h4 id="前言">前言</h4>
-<p>自从Cloudflare可以迁移域名了，就陆续将手里的域名迁移了过来，当前这个域名最开始是在腾讯上注册的，当时是部署在Gitpages上，用的CNAME的方式，听说Gitpages可以启用HTTPS的时候就打算启用，然后只能添加2条解析，无法启用，真是腻歪透了。迁移过来之后就又想直接放到自己VPS上。</p>
-<h4 id="方式">方式</h4>
-<ul>
-<li>
-<p>直接部署hexo服务端，通过git方式直接提交到VPS上。目前没有采用这种方式，首先VPS在国外，大批量的数据传输害怕被针对；其次网络环境也是个问题，所以不做多介绍这种方式了。</p>
-</li>
-<li>
-<p>依旧提交代码到Github，然后通过git拉取到VPS上。 本质上Github上是已经是html了，所以在VPS上通过nginx直接部署就可以了，感觉这种方式更好。</p>
-</li>
-</ul>
-<h4 id="部署服务">部署服务</h4>
-<p>1、首先部署git服务到VPS，方便进行git拉取最新数据。<br>
-2、不能每次都手动拉取代码，所以查了一下GitHub，有Webhooks可以进行调用，可以直接hook push方法，然后自动拉取最新的代码，又看到网上有现成的lua脚本，直接继承到Nginx上就可以了，可惜由于对Nginx不是非常熟悉，又懒的研究，既然是学C#的，就打算用C#研究一下接口调用就完了，发现微软有现成封装好的WebHook，直接引用Microsoft.AspNetCore.WebHooks即可，可惜发现封装的实在是太死了，不仅要定义固定的配置文件格式，连调用方式都是写死的，文档还不太全，最后部署到VPS上后还各种报错，不容易调试，直接就放弃了。<br>
-3、实在不行那就只能自己动手了，直接用WebApi，唯一的难点是当时没弄明白签名是怎么弄的，后来在stackoverflow.com找到了解决方法，用到的加密算法如下：</p>
-<div class="highlight"><pre style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c#" data-lang="c#"><span style="color:#719e07">private</span> <span style="color:#dc322f">byte</span>[] SignWithHmac(<span style="color:#dc322f">byte</span>[] dataToSign, <span style="color:#dc322f">byte</span>[] keyBody)
-{
-      <span style="color:#719e07">using</span> (<span style="color:#dc322f">var</span> hmacAlgorithm = <span style="color:#719e07">new</span> System.Security.Cryptography.HMACSHA1(keyBody))
-      {
-           <span style="color:#719e07">return</span> hmacAlgorithm.ComputeHash(dataToSign);
-      }
-}
-
-<span style="color:#719e07">private</span> <span style="color:#dc322f">string</span> ConvertToHexadecimal(IEnumerable&lt;<span style="color:#dc322f">byte</span>&gt; bytes)
-{
-      <span style="color:#dc322f">var</span> builder = <span style="color:#719e07">new</span> StringBuilder();
-      <span style="color:#719e07">foreach</span> (<span style="color:#dc322f">var</span> b <span style="color:#719e07">in</span> bytes)
-      {
-          builder.Append(b.ToString(<span style="color:#2aa198">&#34;x2&#34;</span>));
-      }
-      <span style="color:#719e07">return</span> builder.ToString();
-}
-</code></pre></div><p>完整的校验方法如下：</p>
-<div class="highlight"><pre style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c#" data-lang="c#"><span style="color:#dc322f">var</span> mac = Request.Headers[<span style="color:#2aa198">&#34;X-Hub-Signature&#34;</span>];
-<span style="color:#dc322f">string</span> signature = Request.Headers[<span style="color:#2aa198">&#34;X-Hub-Signature&#34;</span>];
-StreamReader reader = <span style="color:#719e07">new</span> StreamReader(Request.Body);
-<span style="color:#dc322f">string</span> json = reader.ReadToEnd();
-<span style="color:#dc322f">var</span> hmac = SignWithHmac(UTF8Encoding.UTF8.GetBytes(json), UTF8Encoding.UTF8.GetBytes(_config[<span style="color:#2aa198">&#34;SecretKey&#34;</span>]));
-<span style="color:#dc322f">var</span> hmacHex = ConvertToHexadecimal(hmac);
-<span style="color:#dc322f">bool</span> isValid = signature.Split(<span style="color:#2aa198">&#39;=&#39;</span>)[<span style="color:#2aa198">1</span>] == hmacHex;
-</code></pre></div><p>这只是部分代码，完整代码已经放到<a href="https://github.com/jxl922/CoreHooks">Github</a>了</p>
-<p>4、代码写完了，但是Nginx还需要进行一下配置，因为Github是把事件名称放到Header里了，如果Nginx不做配置，是不会转发的,首先更改Nginx.config，增加下面配置</p>
-<div class="highlight"><pre style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">underscores_in_headers on;
-</code></pre></div><p>然后更改Proxy转发参数，完整转发配置如下：</p>
-<div class="highlight"><pre style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">location ~ /api/ {
-		proxy_redirect  		off;
-		proxy_pass      		http://127.0.0.1:5000;
-		proxy_http_version      1.1;
-		proxy_set_header        Upgrade $http_upgrade;
-		proxy_set_header		X-Github-Event	$http_x_github_event;
-		proxy_set_header		X-GitHub-Delivery $http_x_github_delivery;
-		proxy_set_header		X-Hub-Signature	$http_x_hub_signature;
-        proxy_set_header        Host    $http_host;
-	}
-</code></pre></div><p>配置完后在GitHub上添加WebHooks就可以了</p>
-<h4 id="结束">结束</h4>
-<p>虽然代码已经写完了，但是还不知道效果怎么样，所以这篇也是一个测试，看看有没有其它问题，好了，测试开始。</p>
-
-		</div>
-
-		<div class="post-tags">
-			
-				
-					<nav class="nav tags">
-							<ul class="flat">
-								
-								<li><a href="/tags/%E5%9F%9F%E5%90%8D">域名</a></li>
-								
-							</ul>
-					</nav>
-				
-			
-		</div>
-		<div id="disqus_thread"></div>
-<script type="text/javascript">
-	(function () {
-		
-		
-		if (window.location.hostname == "localhost")
-			return;
-
-		var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-		var disqus_shortname = 'localhost';
-		dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-		(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-	})();
-</script>
-<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by
-		Disqus.</a></noscript>
-<a href="http://disqus.com/" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
-</div>
-	<div class="footer wrapper">
-	<nav class="nav">
-		<div> © Copyright notice |  <a href="https://github.com/vividvilla/ezhil">Ezhil theme</a> | Built with <a href="https://gohugo.io">Hugo</a></div>
-	</nav>
-</div>
-
-
-
-<script type="application/javascript">
-var doNotTrack = false;
-if (!doNotTrack) {
-	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
-	ga('create', 'UA-123-45', 'auto');
-	
-	ga('send', 'pageview');
-}
-</script>
-<script async src='https://www.google-analytics.com/analytics.js'></script>
-
-<script>feather.replace()</script>
-</body>
-</html>

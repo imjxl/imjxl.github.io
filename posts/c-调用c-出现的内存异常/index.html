@@ -1,174 +1,0 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<meta charset="utf-8" />
-	<meta http-equiv="X-UA-Compatible" content="IE=edge"><title>c#调用c&#43;&#43;出现的内存异常 - hellojxl</title><link rel="icon" type="image/png" href=icons/myicon.png /><meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta property="og:title" content="c#调用c&#43;&#43;出现的内存异常" />
-<meta property="og:description" content="补充：
-当时测试的时候是在控制台里测试的，但是放在Unity里依然会崩溃，后来对比了一下网上的一些Demo，发现原来C&#43;&#43;的指针里少了点代码：
-//回调函数typedef void(__stdcall *callback)(int result, char *message);就是说需要加上__stdcall修饰，具体的说明见微软官方。
- 问题 年前由另一个同事负责写了套SDK，由于当初只是给VR资源集成的，所以只制作了64位，后来其它公司问是否有32位的，就只好自己来生成了，所有的都是基于C&#43;&#43;写的，主要基于libcurl和openssl，编译libcurl时稍微费了点事，完成后发现用C#调用x86的时候会报：“尝试读取或写入受保护的内存，这通常指示其他内存已损坏”，当时以为是自己编译的libcurl有问题，正好也是最后一天，折腾到下班也没解决，干脆就放弃了。
-解决 今天是第一天上班，公司来的人也不多，想起这件事来就打算再处理一下，各种编译之后发现整个过程还是会提交到的，只有等到返回值的时候才会报上面的错误，网上查也说这个错就跟C#中“未将对象引用到实例”是一样的，由于已经有几年没处理这种问题了，也没弄懂这个意思，而且当时编码好像还不太一样，然后在统一了编码之后发现了CallingConvention，下面先简单说一下C&#43;&#43;的函数
-//回调函数typedef void(*callback)(int result, char *message);//函数定义int test(char *msg, callback fuc);//实现int test(char *msg, callback fuc){return do(msg,fuc);}其实就是一个函数，带一个参数和一个回调指针，C#的调用也非常简单
-[DllImport(&#34;testdll&#34;)]public static extern int test(string msg,CallBackDelegate fuc);//新定义的委托public delegate void CallBackDelegate(int result, string ResultMessage);这是一开始的调用方式，64位下是正常的，但是一切换到32位下就会在调用时提示“尝试读取或写入受保护的内存，这通常指示其他内存已损坏”这样的错误，解决方式如下：
-[DllImport(&#34;testdll&#34;,CallingConvention= CallingConvention.Cdecl)]public static extern int test(string msg,CallBackDelegate fuc);//新定义的委托[UnmanagedFunctionPointer(CallingConvention.Cdecl)]public delegate void CallBackDelegate(int result, string ResultMessage);这样再调用就不会有任何问题了，后来简单查了一下CallingConvention的含义：" />
-<meta property="og:type" content="article" />
-<meta property="og:url" content="http://hellojxl.com/posts/c-%E8%B0%83%E7%94%A8c-%E5%87%BA%E7%8E%B0%E7%9A%84%E5%86%85%E5%AD%98%E5%BC%82%E5%B8%B8/" />
-<meta property="article:published_time" content="2019-02-11T21:50:50+00:00" />
-<meta property="article:modified_time" content="2019-02-11T21:50:50+00:00" />
-<meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="c#调用c&#43;&#43;出现的内存异常"/>
-<meta name="twitter:description" content="补充：
-当时测试的时候是在控制台里测试的，但是放在Unity里依然会崩溃，后来对比了一下网上的一些Demo，发现原来C&#43;&#43;的指针里少了点代码：
-//回调函数typedef void(__stdcall *callback)(int result, char *message);就是说需要加上__stdcall修饰，具体的说明见微软官方。
- 问题 年前由另一个同事负责写了套SDK，由于当初只是给VR资源集成的，所以只制作了64位，后来其它公司问是否有32位的，就只好自己来生成了，所有的都是基于C&#43;&#43;写的，主要基于libcurl和openssl，编译libcurl时稍微费了点事，完成后发现用C#调用x86的时候会报：“尝试读取或写入受保护的内存，这通常指示其他内存已损坏”，当时以为是自己编译的libcurl有问题，正好也是最后一天，折腾到下班也没解决，干脆就放弃了。
-解决 今天是第一天上班，公司来的人也不多，想起这件事来就打算再处理一下，各种编译之后发现整个过程还是会提交到的，只有等到返回值的时候才会报上面的错误，网上查也说这个错就跟C#中“未将对象引用到实例”是一样的，由于已经有几年没处理这种问题了，也没弄懂这个意思，而且当时编码好像还不太一样，然后在统一了编码之后发现了CallingConvention，下面先简单说一下C&#43;&#43;的函数
-//回调函数typedef void(*callback)(int result, char *message);//函数定义int test(char *msg, callback fuc);//实现int test(char *msg, callback fuc){return do(msg,fuc);}其实就是一个函数，带一个参数和一个回调指针，C#的调用也非常简单
-[DllImport(&#34;testdll&#34;)]public static extern int test(string msg,CallBackDelegate fuc);//新定义的委托public delegate void CallBackDelegate(int result, string ResultMessage);这是一开始的调用方式，64位下是正常的，但是一切换到32位下就会在调用时提示“尝试读取或写入受保护的内存，这通常指示其他内存已损坏”这样的错误，解决方式如下：
-[DllImport(&#34;testdll&#34;,CallingConvention= CallingConvention.Cdecl)]public static extern int test(string msg,CallBackDelegate fuc);//新定义的委托[UnmanagedFunctionPointer(CallingConvention.Cdecl)]public delegate void CallBackDelegate(int result, string ResultMessage);这样再调用就不会有任何问题了，后来简单查了一下CallingConvention的含义："/>
-<link href="https://fonts.googleapis.com/css?family=Ubuntu:300,400,300italic,400italic|Raleway:200,300" rel="stylesheet">
-
-	<link rel="stylesheet" type="text/css" media="screen" href="http://hellojxl.comcss/normalize.css" />
-	<link rel="stylesheet" type="text/css" media="screen" href="http://hellojxl.comcss/main.css" />
-	<link rel="stylesheet" type="text/css" href="http://hellojxl.comcss/custom.css" />
-	<link rel="stylesheet" type="text/css" href="http://hellojxl.comcss/dark.css" media="(prefers-color-scheme: dark)" />
-	<link rel="stylesheet" type="text/css" href="http://hellojxl.comcss/custom-dark.css" media="(prefers-color-scheme: dark)" />
-
-	<script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
-	<script src="http://hellojxl.comjs/main.js"></script>
-	<script src="http://hellojxl.comjs/abc.js"></script>
-	<script src="http://hellojxl.comjs/xyz.js"></script>
-	<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
-</head>
-
-<body>
-	<div class="container wrapper post">
-		<div class="header">
-	<h1 class="site-title"><a href="http://hellojxl.com">hellojxl</a></h1>
-	<div class="site-description"><h2></h2><nav class="nav social">
-			<ul class="flat"><a href="https://github.com/jxl922/" title="Github"><i data-feather="github"></i></a><a href="https://twitter.com/hellojxl" title="Twitter"><i data-feather="twitter"></i></a></ul>
-		</nav>
-	</div>
-
-	<nav class="nav">
-		<ul class="flat">
-			
-			<li>
-				<a href="/">首页</a>
-			</li>
-			
-			<li>
-				<a href="/posts">所有文章</a>
-			</li>
-			
-			<li>
-				<a href="/tags">标签</a>
-			</li>
-			
-			<li>
-				<a href="/about">关于我</a>
-			</li>
-			
-		</ul>
-	</nav>
-</div>
-
-
-		<div class="post-header">
-			<h1 class="title">c#调用c&#43;&#43;出现的内存异常</h1>
-			<div class="meta">Posted at &mdash; Feb 11, 2019</div>
-		</div>
-
-		<div class="markdown">
-			<hr>
-<p>补充：</p>
-<p>当时测试的时候是在控制台里测试的，但是放在Unity里依然会崩溃，后来对比了一下网上的一些Demo，发现原来C++的指针里少了点代码：</p>
-<div class="highlight"><pre style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">//回调函数
-typedef void(__stdcall *callback)(int result, char *message);
-</code></pre></div><p>就是说需要加上__stdcall修饰，具体的说明见<a href="https://docs.microsoft.com/en-us/cpp/cpp/stdcall?view=vs-2017">微软官方</a>。</p>
-<hr>
-<h4 id="问题">问题</h4>
-<p>年前由另一个同事负责写了套SDK，由于当初只是给VR资源集成的，所以只制作了64位，后来其它公司问是否有32位的，就只好自己来生成了，所有的都是基于C++写的，主要基于libcurl和openssl，编译libcurl时稍微费了点事，完成后发现用C#调用x86的时候会报：“尝试读取或写入受保护的内存，这通常指示其他内存已损坏”，当时以为是自己编译的libcurl有问题，正好也是最后一天，折腾到下班也没解决，干脆就放弃了。</p>
-<h4 id="解决">解决</h4>
-<p>今天是第一天上班，公司来的人也不多，想起这件事来就打算再处理一下，各种编译之后发现整个过程还是会提交到的，只有等到返回值的时候才会报上面的错误，网上查也说这个错就跟C#中“未将对象引用到实例”是一样的，由于已经有几年没处理这种问题了，也没弄懂这个意思，而且当时编码好像还不太一样，然后在统一了编码之后发现了<em><strong>CallingConvention</strong></em>，下面先简单说一下C++的函数</p>
-<div class="highlight"><pre style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">//回调函数
-typedef void(*callback)(int result, char *message);
-//函数定义
-int test(char *msg, callback fuc);
-
-//实现
-int test(char *msg, callback fuc)
-{
-    return do(msg,fuc);
-}
-
-</code></pre></div><p>其实就是一个函数，带一个参数和一个回调指针，C#的调用也非常简单</p>
-<div class="highlight"><pre style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">[DllImport(&#34;testdll&#34;)]
-public static extern int test(string msg,CallBackDelegate fuc);
-
-//新定义的委托
-public delegate void CallBackDelegate(int result, string ResultMessage);
-</code></pre></div><p>这是一开始的调用方式，64位下是正常的，但是一切换到32位下就会在调用时提示“尝试读取或写入受保护的内存，这通常指示其他内存已损坏”这样的错误，解决方式如下：</p>
-<div class="highlight"><pre style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">[DllImport(&#34;testdll&#34;,CallingConvention= CallingConvention.Cdecl)]
-public static extern int test(string msg,CallBackDelegate fuc);
-
-//新定义的委托
-[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-public delegate void CallBackDelegate(int result, string ResultMessage);
-</code></pre></div><p>这样再调用就不会有任何问题了，后来简单查了一下CallingConvention的含义：</p>
-<p>Cdecl：由调用者清理栈资源。非常适合用在可变参数的函数调用上，例如printf.</p>
-<p>FastCall： Calling convention不支持。</p>
-<p>StdCall：由被调用者清理栈资源。这是调用native函数时默认的方式。</p>
-<p>ThisCall：第一个参数是this指针，会被存储在ECX寄存器里，而其它的参数会被压栈。这种方式通常用在调用未托管的DLL的方法或类。</p>
-<p>Winapi：实际上并不是一个calling convention，实际上会被默认的平台的calling convention替代。例如window上调用，会替换成StdCall，Windows CE.NET上则被替换成Cdecl.</p>
-<p>初步怀疑是由于c++里面执行到do函数时释放掉了回调fuc造成return不了？可是无法解释64位下没有问题，看来在调用时最好把所有的属性都明确了才好，应该可以防止出现不同结果的问题。</p>
-<h4 id="结束">结束</h4>
-<p>这是农历19年的第一篇水文，哈哈哈……，大家新年快乐！🎉🎉🎉</p>
-
-		</div>
-
-		<div class="post-tags">
-			
-				
-			
-		</div>
-		<div id="disqus_thread"></div>
-<script type="text/javascript">
-	(function () {
-		
-		
-		if (window.location.hostname == "localhost")
-			return;
-
-		var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-		var disqus_shortname = 'localhost';
-		dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-		(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-	})();
-</script>
-<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by
-		Disqus.</a></noscript>
-<a href="http://disqus.com/" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
-</div>
-	<div class="footer wrapper">
-	<nav class="nav">
-		<div> © Copyright notice |  <a href="https://github.com/vividvilla/ezhil">Ezhil theme</a> | Built with <a href="https://gohugo.io">Hugo</a></div>
-	</nav>
-</div>
-
-
-
-<script type="application/javascript">
-var doNotTrack = false;
-if (!doNotTrack) {
-	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
-	ga('create', 'UA-123-45', 'auto');
-	
-	ga('send', 'pageview');
-}
-</script>
-<script async src='https://www.google-analytics.com/analytics.js'></script>
-
-<script>feather.replace()</script>
-</body>
-</html>

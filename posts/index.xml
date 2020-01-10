@@ -1,339 +1,0 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
-    <title>Posts on hellojxl</title>
-    <link>http://hellojxl.com/posts/</link>
-    <description>Recent content in Posts on hellojxl</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language>
-    <copyright>© Copyright notice</copyright>
-    <lastBuildDate>Sat, 23 Mar 2019 14:38:10 +0000</lastBuildDate>
-    
-	<atom:link href="http://hellojxl.com/posts/index.xml" rel="self" type="application/rss+xml" />
-    
-    
-    <item>
-      <title>学习Linux下cron服务</title>
-      <link>http://hellojxl.com/posts/%E5%AD%A6%E4%B9%A0linux%E4%B8%8Bcron%E6%9C%8D%E5%8A%A1/</link>
-      <pubDate>Sat, 23 Mar 2019 14:38:10 +0000</pubDate>
-      
-      <guid>http://hellojxl.com/posts/%E5%AD%A6%E4%B9%A0linux%E4%B8%8Bcron%E6%9C%8D%E5%8A%A1/</guid>
-      <description>起因 最近let&#39;s encrypt不定时的推送证书到期的邮件，同时也在工作中用到了Hangfire的任务管理，本身是基于类似cron的crontab的开源类库，因此就简单学习了解了一下。
-Cron时间格式 格式本身就是字符串，以5或6个空格隔开，最后可以加年(可以为空)，没有年的定义如下：
-* * * * * *- - - - - -| | | | | || | | | | +--- day of week (0 - 6) (Sunday=0)| | | | +----- month (1 - 12)| | | +------- day of month (1 - 31)| | +--------- hour (0 - 23)| +----------- min (0 - 59)+------------- sec (0 - 59)每一个域可出现的字符如下(摘自百度)：</description>
-    </item>
-    
-    <item>
-      <title>c#调用c&#43;&#43;出现的内存异常</title>
-      <link>http://hellojxl.com/posts/c-%E8%B0%83%E7%94%A8c-%E5%87%BA%E7%8E%B0%E7%9A%84%E5%86%85%E5%AD%98%E5%BC%82%E5%B8%B8/</link>
-      <pubDate>Mon, 11 Feb 2019 21:50:50 +0000</pubDate>
-      
-      <guid>http://hellojxl.com/posts/c-%E8%B0%83%E7%94%A8c-%E5%87%BA%E7%8E%B0%E7%9A%84%E5%86%85%E5%AD%98%E5%BC%82%E5%B8%B8/</guid>
-      <description>补充：
-当时测试的时候是在控制台里测试的，但是放在Unity里依然会崩溃，后来对比了一下网上的一些Demo，发现原来C++的指针里少了点代码：
-//回调函数typedef void(__stdcall *callback)(int result, char *message);就是说需要加上__stdcall修饰，具体的说明见微软官方。
- 问题 年前由另一个同事负责写了套SDK，由于当初只是给VR资源集成的，所以只制作了64位，后来其它公司问是否有32位的，就只好自己来生成了，所有的都是基于C++写的，主要基于libcurl和openssl，编译libcurl时稍微费了点事，完成后发现用C#调用x86的时候会报：“尝试读取或写入受保护的内存，这通常指示其他内存已损坏”，当时以为是自己编译的libcurl有问题，正好也是最后一天，折腾到下班也没解决，干脆就放弃了。
-解决 今天是第一天上班，公司来的人也不多，想起这件事来就打算再处理一下，各种编译之后发现整个过程还是会提交到的，只有等到返回值的时候才会报上面的错误，网上查也说这个错就跟C#中“未将对象引用到实例”是一样的，由于已经有几年没处理这种问题了，也没弄懂这个意思，而且当时编码好像还不太一样，然后在统一了编码之后发现了CallingConvention，下面先简单说一下C++的函数
-//回调函数typedef void(*callback)(int result, char *message);//函数定义int test(char *msg, callback fuc);//实现int test(char *msg, callback fuc){return do(msg,fuc);}其实就是一个函数，带一个参数和一个回调指针，C#的调用也非常简单
-[DllImport(&amp;#34;testdll&amp;#34;)]public static extern int test(string msg,CallBackDelegate fuc);//新定义的委托public delegate void CallBackDelegate(int result, string ResultMessage);这是一开始的调用方式，64位下是正常的，但是一切换到32位下就会在调用时提示“尝试读取或写入受保护的内存，这通常指示其他内存已损坏”这样的错误，解决方式如下：
-[DllImport(&amp;#34;testdll&amp;#34;,CallingConvention= CallingConvention.Cdecl)]public static extern int test(string msg,CallBackDelegate fuc);//新定义的委托[UnmanagedFunctionPointer(CallingConvention.Cdecl)]public delegate void CallBackDelegate(int result, string ResultMessage);这样再调用就不会有任何问题了，后来简单查了一下CallingConvention的含义：</description>
-    </item>
-    
-    <item>
-      <title>初次使用Mysql遇到的问题</title>
-      <link>http://hellojxl.com/posts/%E5%88%9D%E6%AC%A1%E4%BD%BF%E7%94%A8mysql%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/</link>
-      <pubDate>Sat, 26 Jan 2019 15:53:52 +0000</pubDate>
-      
-      <guid>http://hellojxl.com/posts/%E5%88%9D%E6%AC%A1%E4%BD%BF%E7%94%A8mysql%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/</guid>
-      <description>前言 最近一直忙着弄一个博客系统，以防那天node又坏了，那我就直接换了，目前是在之前文章里提到的beetlex blog的基础上进行改造的，主要想修改一下几点：
- 进行前后端分离，因为我不想改动一点东西就要重新编译。 放弃cookie将，所有的认证方式更改为JWT形式。 前端样式改为类Next的主题。 数据库更改为mysql。 去掉某些不用的组件，像elasticsearch、腾讯云等。  暂时只有这些，当然还有一些迁移过程中出现的bug，目前感觉差不多已经可以用了，不过在Safari下面会报一些错误，正在解决。
-所谓的问题 其实也不是第一次用，只是迁移过程中初次遇到的问题：
- DBeaver报无法识别的DateTimeZone的问题。  这个其实很简单，只要在设置的时候选择正确的时区即可，起初我以为会自动选择，看来还是没那么智能，还需要手动选择一下。
-保存emoji表情时出现的Incorrect string value: &amp;lsquo;\xF0\x9F\x98\xAD&amp;rdquo;,&amp;hellip;&amp;rsquo; for column &amp;lsquo;commentContent&amp;rsquo; at row ‘rowname’的问题。  这个网上查询说因为Utf8编码的问题，需要将编码设置为uft8mb4，我设置的时候记着选择的是utf8，但是不是uft8mb4就忘记了，但是从DBeaver上面看的话编码确实是uft8mb4，应该默认就是，我的异常是从代码里报出来的，是要在连接字符串中也要指定的，就涉及到下面这个问题了。 3. dotnet core连接字符串中设置编码的问题
-之前配置Java的时候遇到过，但是还没有在C#里配置过，其实只需要加上charset=&#39;utf8mb4&amp;rsquo; 即可，最开始设置的是utf8，发现还是保存不了emoji，网上说是如果配置为utf8会在服务端自动转换，但是我这里还是不行，需要明确指定。
-结尾 本来打算安装mariaDB的，结果发现没有Mac版本的，没办法只好装mysql了，另外最近转了部门，公司也要明确转Java，所以研究了一下Spring cloud的服务中心，结果发现运行起来之后注册不了，目前还不知道啥原因，等排除了也要记录一下。</description>
-    </item>
-    
-    <item>
-      <title>关于nvm的使用</title>
-      <link>http://hellojxl.com/posts/%E5%85%B3%E4%BA%8Envm%E7%9A%84%E4%BD%BF%E7%94%A8/</link>
-      <pubDate>Sat, 12 Jan 2019 15:38:03 +0000</pubDate>
-      
-      <guid>http://hellojxl.com/posts/%E5%85%B3%E4%BA%8Envm%E7%9A%84%E4%BD%BF%E7%94%A8/</guid>
-      <description>关于nvm nvm是一个nodejs的版本管理工具，可以在多个node.js的版本之间进行切换。
-原因 一不小心升级了旧MBP上node版本，hexo直接GG，心中真是一万个草泥马崩腾而过，顿时就不想用hexo了，烦的不行。偶然发现了nvm，虽说有n包管理工具，但是感觉不好用，于是直接尝试了一下，很顺畅，心里立马就舒心了。
-nvm的安装和使用 nvm的github是这里，总体来说还是非常简单的，Mac下直接用：
-curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.34.0/install.sh | bash进行安装，但是如果如果发现没有nvm的命令的话需要在执行touch ~/.bash_profile后重新执行上面的命令就可以了。
-用法也很简单nvm install node就可以了，这样会安装最新、稳定的node版本，但是我在安装过程中发现hexo目前还无法在node v11版本下使用，所以最好安装LTS版本，命令是nvm install --lts，默认好像是使用最新的版本，我当时在安装最新版本后直接用了nvm use node，后来发现不能用了之后才安装的lts版本，查资料说是use只会在当前终端中生效，如果想默认一个其它版本可以用nvm alias default node版本，比如我装的最新版本是11.x，LTS版本是10.x的，那么可以用nvm alias default 10即可。
-结束 当时接连因为node版本的问题，都想自己弄了，找到了一个基于dotnet core版的博客XBlog,貌似好几个开源博客都叫这名的，这个博客是基于作者自己封装的ORM，完全用不惯，自己已经魔改成sqlsugar了，不过前端样式还在整改中，还有一些其它用不惯的地方，慢慢改着吧，等自己满意了再发出来，就酱了。</description>
-    </item>
-    
-    <item>
-      <title>迁移Hexo到VPS</title>
-      <link>http://hellojxl.com/posts/%E8%BF%81%E7%A7%BBhexo%E5%88%B0vps/</link>
-      <pubDate>Sat, 05 Jan 2019 21:31:10 +0000</pubDate>
-      
-      <guid>http://hellojxl.com/posts/%E8%BF%81%E7%A7%BBhexo%E5%88%B0vps/</guid>
-      <description>前言 自从Cloudflare可以迁移域名了，就陆续将手里的域名迁移了过来，当前这个域名最开始是在腾讯上注册的，当时是部署在Gitpages上，用的CNAME的方式，听说Gitpages可以启用HTTPS的时候就打算启用，然后只能添加2条解析，无法启用，真是腻歪透了。迁移过来之后就又想直接放到自己VPS上。
-方式   直接部署hexo服务端，通过git方式直接提交到VPS上。目前没有采用这种方式，首先VPS在国外，大批量的数据传输害怕被针对；其次网络环境也是个问题，所以不做多介绍这种方式了。
-  依旧提交代码到Github，然后通过git拉取到VPS上。 本质上Github上是已经是html了，所以在VPS上通过nginx直接部署就可以了，感觉这种方式更好。
-  部署服务 1、首先部署git服务到VPS，方便进行git拉取最新数据。
-2、不能每次都手动拉取代码，所以查了一下GitHub，有Webhooks可以进行调用，可以直接hook push方法，然后自动拉取最新的代码，又看到网上有现成的lua脚本，直接继承到Nginx上就可以了，可惜由于对Nginx不是非常熟悉，又懒的研究，既然是学C#的，就打算用C#研究一下接口调用就完了，发现微软有现成封装好的WebHook，直接引用Microsoft.AspNetCore.WebHooks即可，可惜发现封装的实在是太死了，不仅要定义固定的配置文件格式，连调用方式都是写死的，文档还不太全，最后部署到VPS上后还各种报错，不容易调试，直接就放弃了。
-3、实在不行那就只能自己动手了，直接用WebApi，唯一的难点是当时没弄明白签名是怎么弄的，后来在stackoverflow.com找到了解决方法，用到的加密算法如下：
-private byte[] SignWithHmac(byte[] dataToSign, byte[] keyBody){using (var hmacAlgorithm = new System.Security.Cryptography.HMACSHA1(keyBody)){return hmacAlgorithm.ComputeHash(dataToSign);}}private string ConvertToHexadecimal(IEnumerable&amp;lt;byte&amp;gt; bytes){var builder = new StringBuilder();foreach (var b in bytes){builder.Append(b.ToString(&amp;#34;x2&amp;#34;));}return builder.ToString();}完整的校验方法如下：
-var mac = Request.Headers[&amp;#34;X-Hub-Signature&amp;#34;];string signature = Request.Headers[&amp;#34;X-Hub-Signature&amp;#34;];StreamReader reader = new StreamReader(Request.Body);string json = reader.</description>
-    </item>
-    
-    <item>
-      <title>禁用向日葵远程软件的开机自动启动</title>
-      <link>http://hellojxl.com/posts/%E7%A6%81%E7%94%A8%E5%90%91%E6%97%A5%E8%91%B5%E8%BF%9C%E7%A8%8B%E8%BD%AF%E4%BB%B6%E7%9A%84%E5%BC%80%E6%9C%BA%E8%87%AA%E5%8A%A8%E5%90%AF%E5%8A%A8/</link>
-      <pubDate>Wed, 26 Dec 2018 15:43:49 +0000</pubDate>
-      
-      <guid>http://hellojxl.com/posts/%E7%A6%81%E7%94%A8%E5%90%91%E6%97%A5%E8%91%B5%E8%BF%9C%E7%A8%8B%E8%BD%AF%E4%BB%B6%E7%9A%84%E5%BC%80%E6%9C%BA%E8%87%AA%E5%8A%A8%E5%90%AF%E5%8A%A8/</guid>
-      <description>前一段时间发现Teamviewer不能用了，总是提示连不上网络等问题，后来才知道被国内代理了，真是日了狗了！没办法就只好找类似的软件，就找到了向日葵，用起来还可以，除了有一点，就是每次开机启动都会自启，而且还启动项里还找不到，当时想算了忍忍吧，毕竟免费的，然而今天多重启了几次系统，实在是忍不了了，遂找了找方法，方法是在下面的目录中：
-/Library/LaunchDaemons//Library/LaunchAgents/~/Library/LaunchAgents/找到名称包含sunlogin的plist，删除掉就可以了，很简单。
-参考：
-http://www.tanhao.me/talk/1287.html/
-https://www.jiangxianli.com/?p=82</description>
-    </item>
-    
-    <item>
-      <title>在新Mac上继续hexo</title>
-      <link>http://hellojxl.com/posts/%E5%9C%A8%E6%96%B0mac%E4%B8%8A%E7%BB%A7%E7%BB%ADhexo/</link>
-      <pubDate>Tue, 25 Dec 2018 22:26:33 +0000</pubDate>
-      
-      <guid>http://hellojxl.com/posts/%E5%9C%A8%E6%96%B0mac%E4%B8%8A%E7%BB%A7%E7%BB%ADhexo/</guid>
-      <description>起因 最近好久没写东西了，借口呢就是事情有点多，没有时间，其实就是😄。为什么又想写了呢？这几天刚把域名从腾讯云迁移到了Cloudflare，原因就是腾讯域名想多配置几个解析地址都不行，真是腻歪透了，刚好赶上Cloudflare的第八波，就直接迁移了，而且也比别的地便宜。好了，闲话不多说，下面开始。
-糟心and沮丧🙍‍♂️ 本以为很简单的东西，直接就是装node跟npm嘛，最多加上hexo跟git，好嘛，全有问题！！！
-  Git不能用了
-这个是系统原因，最近更新了系统需要重新安装xcode组件就好了命令是：
-xcode-select --install   Node版本有点低
-应该是很久之前装的，目前这台笔记本一直作为娱乐本给老婆大人用，平时也就看看电影跟电视啥的，由于目前刚怀上了小baby所以不怎么用了，然后我闲着无聊就开始折腾了。
-1）更新node，最开始是2.X的版本，感觉忒低了，也怪自己作，直接就升级到了最新Stable的版本，好像是11.X的，然后在装hexo的时候就各种waring跟error，看的头都大了，折腾了将近一个小时感觉可能是版本的问题就降级到最新的LTS版本：10.14.2，之前也没有仔细看日志，再次安装还是一堆错误跟警告，看了下打印出来的log大部分跟fsevents包有关。
-2）首先报的是在path中找不到python2，不知道为什么要找python2，查了一下系统中有python跟python2.7，没办法那就软连接一个python2到python2.7吧，命令是：
-ln -s /usr/bin/python2.7 /usr/local/bin/python2注意由于系统限制，只能软连接到local目录里，否则会因为权限问题而失败。
-3）接着进行npm install发现还是有失败，不过python2已经找到了，报的错误是创建目录的时候由于权限问题被拒绝，目录是node_modules目录下node-sass和子目录build，没办法我就手动创建了，还有中间node还指定了一下淘宝的源，然后执行npm install的时候还是有错误，但是最关键的一步来了，在执行了npm update之后经过巨多的error跟warning之后竟然好了，好了？！你说神奇不神奇！
-4）总结一下，说实话完全不知道咋好的，莫名其妙的就好了😅。吐槽一下，只能说npm安装东西真的太打击人了，如果不出问题还好，否则长长的error跟warning看着都烦，更别说从这里面慢慢的找错误原因了。
-  Git配置ssh
-这个相对简单些了，先生成公钥跟私钥：
-ssh-keygen -t rsa -C email位置会生成在~/.ssh/下，没有可以先创建目录，还要注意名字，别覆盖了现有的文件，可以起个专有的名字方便识别，然后执行：
-ssh-add 你的私钥然后将你的公钥内容复制到github或者是其它的托管代码服务商中添加即可，然后就可以进行git命令了。
-  Hexo提示No layout
-这个对于我来说就是主题没有同步过来，我的主题是打包放到one drive上了，之前忘了拷贝了，虽然有主题文件但是里面是空的，直接复制过来解压，重新生成就好了。
-  结束 好了，稍微一折腾就快12点了，得抓紧睡觉了，好了，晚安喽😴</description>
-    </item>
-    
-    <item>
-      <title>关于人生追求的迷惑</title>
-      <link>http://hellojxl.com/posts/%E5%85%B3%E4%BA%8E%E4%BA%BA%E7%94%9F%E8%BF%BD%E6%B1%82%E7%9A%84%E8%BF%B7%E6%83%91/</link>
-      <pubDate>Sat, 03 Nov 2018 22:49:05 +0000</pubDate>
-      
-      <guid>http://hellojxl.com/posts/%E5%85%B3%E4%BA%8E%E4%BA%BA%E7%94%9F%E8%BF%BD%E6%B1%82%E7%9A%84%E8%BF%B7%E6%83%91/</guid>
-      <description>之前看动漫《天行九歌》的时候，看到秦王向韩非请教是否有一种超越凡人的力量在掌控着命运，韩非答道(有改)：
- 十年可见春去秋来
-百年可证生老病死
-千年可叹王朝更替
-万年可观斗转星移
- 是啊，人生本来就短暂，对于天地宇宙来说，人生不过蝼蚁，弹指不过一挥间，只需好好过自己的生活即可，命运？属于你，也不属于你，每个人的命运交织在一起就是生活，愿我们都一样活的精彩！</description>
-    </item>
-    
-    <item>
-      <title>html下ul_li横排居中</title>
-      <link>http://hellojxl.com/posts/html%E4%B8%8Bul-li%E6%A8%AA%E6%8E%92%E5%B1%85%E4%B8%AD/</link>
-      <pubDate>Sat, 03 Nov 2018 20:22:10 +0000</pubDate>
-      
-      <guid>http://hellojxl.com/posts/html%E4%B8%8Bul-li%E6%A8%AA%E6%8E%92%E5%B1%85%E4%B8%AD/</guid>
-      <description>好久没写东西了，有点偷懒了，最近一直在研究three.js，目前在研究材质方面的东西，有成果了会分享出来。在做demo的时候遇到html中ul li需要横排居中并且贴近底部的问题，当时没来得及解决，就硬编码进去了，现在解决了，记录一下。
-方法一：flex布局 实际工作中不是采用这种方法解决的，毕竟刚接触时间不长，只是看看有没有其它解决方法的时候找到的，下面是参考了网上并修改后的代码：
-&amp;lt;!DOCTYPE html&amp;gt;&amp;lt;html&amp;gt;&amp;lt;head&amp;gt;&amp;lt;meta charset=&amp;#34;utf-8&amp;#34;&amp;gt;&amp;lt;title&amp;gt;demo&amp;lt;/title&amp;gt;&amp;lt;style type=&amp;#34;text/css&amp;#34;&amp;gt;html {width: 100%;height: 100%;}body {width: 100%;height: 100%;}.container {display: -webkit-box;-webkit-box-orient: vertical;height: 85%;}ul {display: flex;flex-flow: row nowrap;justify-content: center;flex-direction: row;}ul li {list-style: none;text-align: center;line-height: 30px;padding: 10px;height: 30px;width: 100px;margin: 0 10px;}&amp;lt;/style&amp;gt;&amp;lt;/head&amp;gt;&amp;lt;body&amp;gt;&amp;lt;div class=&amp;#34;container&amp;#34;&amp;gt;&amp;lt;/div&amp;gt;&amp;lt;footer&amp;gt;&amp;lt;ul&amp;gt;&amp;lt;li&amp;gt;列表1&amp;lt;/li&amp;gt;&amp;lt;li&amp;gt;列表2&amp;lt;/li&amp;gt;&amp;lt;li&amp;gt;列表3&amp;lt;/li&amp;gt;&amp;lt;/ul&amp;gt;&amp;lt;/footer&amp;gt;&amp;lt;/body&amp;gt;&amp;lt;/html&amp;gt;具体的用法就不说了，毕竟自己接触时间也不长就不误人子弟了。</description>
-    </item>
-    
-    <item>
-      <title>记修理Mac的一件小事</title>
-      <link>http://hellojxl.com/posts/%E8%AE%B0%E4%BF%AE%E7%90%86mac%E7%9A%84%E4%B8%80%E4%BB%B6%E5%B0%8F%E4%BA%8B/</link>
-      <pubDate>Sat, 18 Aug 2018 21:20:01 +0000</pubDate>
-      
-      <guid>http://hellojxl.com/posts/%E8%AE%B0%E4%BF%AE%E7%90%86mac%E7%9A%84%E4%B8%80%E4%BB%B6%E5%B0%8F%E4%BA%8B/</guid>
-      <description>最近老是老款的md101有点热，尤其是放在床上的时候，正常情况下就已经60多度了，再开个Chrome就70多度了，正好今天用另一台15款的macbook pro看视频，最多就是温热的，没有很烫的感觉，就感觉老款的有问题了。
-其实之前这台笔记本已经被拆很多次了，什么清理风扇了、更换硬盘什么的统统搞过一遍，后来还因为涂硅脂没涂好，花了500大洋，这两年岁数大了，不爱捣鼓了，心想这回又有的折腾了，随后就拿螺丝刀拆开了后盖，本想拆风扇的，结果发现梅花刀找不着了，正好又不想弄，就想清清灰的了，接着发现风扇了有个东西，像是一个碰碎的塑料块，转风扇的时候发现有时还会导致风扇卡住无法转动，联想到之前出现过一次kernel_task 进程占cpu非常高的情况，网上搜索说是有可能传感器坏了，这样一想可能是因为风扇卡住导致的，用各种方法都不好取出来，结果翻过来转了几下就出来了，然后安装后盖开机，Bingo！温度果然降下来了，基本保持在50度左右，偶尔会突然蹦到6、70然后再降下来，毕竟笔记本太老了。
-发现事情真是很有趣，就因为一个小小的东西，就会让你的电脑变的不正常，想一想一个项目、一个工程、一个国家，真是千里之堤，毁于蚁穴。</description>
-    </item>
-    
-    <item>
-      <title>Springboot&#43;Mybatis下的增删查改</title>
-      <link>http://hellojxl.com/posts/springboot-mybatis%E4%B8%8B%E7%9A%84%E5%A2%9E%E5%88%A0%E6%9F%A5%E6%94%B9/</link>
-      <pubDate>Sat, 11 Aug 2018 19:42:45 +0000</pubDate>
-      
-      <guid>http://hellojxl.com/posts/springboot-mybatis%E4%B8%8B%E7%9A%84%E5%A2%9E%E5%88%A0%E6%9F%A5%E6%94%B9/</guid>
-      <description>前言 上次写了一篇文章，但只是粗略了写了一下，这次本来是工作上有个小项目，本打算用java写，可惜死活没配置好，就放弃了。正好周末就又基于上次那个项目捣鼓了一遍，可算是成功了，在此记录下。
-开发工具 之前在公司试用了一下大名鼎鼎的IDEA旗舰版，虽然还算比较好用，可惜就是太贵了，所以就装了社区版，后来才知道社区版不支持web开发，那就只能用eclipse了，装上Springboot的STS插件也还可以，回到家本想也这么来，可惜最近网不好，各种被墙，代理也半死不活，慢的一匹，然后发现Springboot有基于eclipse封装好的STS，而且没有被墙，很是不错！👍
-开始 这篇文章是基于Xml进行的，虽然有注解，总感觉那样是没有灵魂的（笑～～），注解的非常简单，就不多介绍了，下面开始介绍xml的配置
- 添加实体类，新建包，命名为Entity，我这里是直接在com.hellojxl.helloMybaits下新建的所以包名为：com.hellojxl.helloMybaits.Entity，这点很重要，然后新建一个class，命名为User    package com.hellojxl.helloMybaits.Entity;
-public class User { private int id; private String name; private String sex;
-public int getId() {return id;}public void setId(int id) {this.id = id;}public String getName() {return name;}public void setName(String name) {this.name = name;}public String getSex() {return sex;}public void setSex(String sex) {this.</description>
-    </item>
-    
-    <item>
-      <title>v2ray安装注意记录</title>
-      <link>http://hellojxl.com/posts/v2ray%E5%AE%89%E8%A3%85%E6%B3%A8%E6%84%8F%E8%AE%B0%E5%BD%95/</link>
-      <pubDate>Fri, 27 Jul 2018 21:02:19 +0000</pubDate>
-      
-      <guid>http://hellojxl.com/posts/v2ray%E5%AE%89%E8%A3%85%E6%B3%A8%E6%84%8F%E8%AE%B0%E5%BD%95/</guid>
-      <description>原因 新购了一个国外VPS，肯定要(你懂的)，主机商提供了三种系统，Ubuntu、Debian和Centos，由于某些原因三种系统都轮流安装了一遍，或者说都虐了一遍了，其中经历惨不忍睹啊！
-相关问题 不得不说v2ray的官方文档还是很齐全的，但是由于linux的版本太多过程还是会遇到问题的，所以具体的安装文档还是参照官方文档，我这里只是记录遇到的问题
- 问题一：Centos7下Nginx下无法进行数据转发，报Permission Denied
-解决方法：可以参考白话配置,不过我这里由于是VPS的问题，SELinux被主机商禁用了，开启不了，只能更换系统 问题二：Debian下SSL版本低，这个算不上问题，只是我这升级完ssl出现好多问题，果断更换系统，没办法，自己太菜🐶，关键是不明白什么主机商提供的Debian8的ssl协议竟然这么低。 问题三：Centos6下提示出错：Install daemon fail, please install it manually
-解决方法：原来是因为不支持centos6，参考这里，具体如下： 新建/etc/init.d/v2ray,并添加下面的配置  #!/bin/sh## v2ray Startup script for v2ray## chkconfig: - 24 76# processname: v2ray# pidfile: /var/run/v2ray.pid# description: V2Ray proxy services#### BEGIN INIT INFO# Provides: v2ray# Required-Start: $network $local_fs $remote_fs# Required-Stop: $remote_fs# Default-Start: 2 3 4 5# Default-Stop: 0 1 6# Short-Description: V2Ray proxy services# Description: V2Ray proxy services### END INIT INFODESC=v2rayNAME=v2rayDAEMON=/usr/bin/v2ray/v2rayPIDFILE=/var/run/$NAME.</description>
-    </item>
-    
-    <item>
-      <title>关于Nginx启用Https的记录</title>
-      <link>http://hellojxl.com/posts/%E5%85%B3%E4%BA%8Enginx%E5%90%AF%E7%94%A8https%E7%9A%84%E8%AE%B0%E5%BD%95/</link>
-      <pubDate>Sat, 21 Jul 2018 22:54:45 +0000</pubDate>
-      
-      <guid>http://hellojxl.com/posts/%E5%85%B3%E4%BA%8Enginx%E5%90%AF%E7%94%A8https%E7%9A%84%E8%AE%B0%E5%BD%95/</guid>
-      <description>记录原因 之前也部署过，结果上次因为买了一个新的VPS，打算部署v2ray的时候，遇到点问题，感觉还是要记录下来，因为是自己用所以就直接用Let&#39;s Encrypt部署吧，因为可以自动续期，90天也无所谓。
-安装部署 啥也不说，直接上certbot,详细的可以参考官方文档，这里只记录简单的部署
- 安装前提
-因为certbot基于python，所以系统需要先安装Python 2.7 or 3.4+以上的版本 下载certbot  # wget https://dl.eff.org/certbot-auto //下载# chmod a+x ./certbot-auto //修改权限# ./certbot-auto --help //验证是否成功 开始部署  首先要看nginx的根目录在什么位置，有的在/var/www/html下，有的在/usr/share/nginx/html下。
-然后配置nginx读取certbot产生的文本文件
-location ~ /.well-known/acme-challenge/ {allow	all;root /usr/share/nginx/html;default_type	&amp;#34;text/plain&amp;#34;;}location = /.well-known/acme-challenge/ {return 404;} 运行nginx -s reload重新加载配置
-./certbot-auto certonly --webroot -w /usr/share/nginx/html/ -d your.domain.com 指定webroot和域名，只要能够访问就成功了，切记一次最多五次，否则会被限制，当时因为地址弄错了，等了一个星期&amp;hellip;
-发放证书了还需要配置nginx启用
-server {listen	80;server_name	www.domain.com domain.com;return	301	$scheme:https://www.</description>
-    </item>
-    
-    <item>
-      <title>Manjaro折腾笔记</title>
-      <link>http://hellojxl.com/posts/manjaro%E6%8A%98%E8%85%BE%E7%AC%94%E8%AE%B0/</link>
-      <pubDate>Mon, 16 Jul 2018 22:16:18 +0000</pubDate>
-      
-      <guid>http://hellojxl.com/posts/manjaro%E6%8A%98%E8%85%BE%E7%AC%94%E8%AE%B0/</guid>
-      <description>前言 由于公司配的E460笔记本经常死机，不清楚是不是win10的问题，同时由于win10是家庭版无法使用Docker，所以打算换一下系统看看有没有改善，并且不想装双系统，所以用虚拟机代替，下面就是整个折腾的过程，虽然最终以失败而告终。
-1.选择宿主主机系统   以win10为宿主主机，虚拟linux，但是由于win10系统下大概率会死机，所以不想采用这种方案
-  以linux为宿主主机，虚拟Windows，可能会消耗资源多一些，不过还可以承受。所以打算采用这种方式。
-  2.选择Linux发行版本 已经好长时间没有折腾linux桌面系统了，最早折腾过ubuntu,debian和suse，后来就一直Windows和Mac。刚开始想装ubuntu，毕竟之前安装过，熟悉一点，所以下的ubuntu的镜像用vmware安装，但是到了分区界面死活分不了区，遂想起来deepin，下完之后可以正常安装，不过进了系统之后那是一个卡，跟之前想的完全不一样，然后又换，就找到了Manjaro，基于arch的发行版，之前也听过arch，不过没接触过，但是看好评不错就选用了Manjaro。
-3.虚拟机体验 因为Mac买的Vmware Fusion用的还可以，就开始用的vmware player安装，顺便把该装的软件都装了一下，完事之后感觉非常不错，后来因为Vmware Player的版权的原因打算用virtual box代替，结果迁移半天都没成功，引导的时候总是提示找不到硬盘，最后Vmware Workstation都用上了依旧失败，迁移什么的果然是骗人的🤦‍♂️，只好又用virtual box重装了一遍，完了之后发现注销的时候竟然不卡了！！！
-4.真机安装 虚拟机感觉不错就真机安装吧，其实心里挺担心的，毕竟是工作用，刻盘用的rufus，dd模式，备份整个系统盘，打算全部抹盘，插入U盘开始，没有进入引导？好吧，更改bios设置，可以进入了，结果安装的过程中出现：[drm:atom_op_jump [amdgpu]]ERROR atombios stuck in loop for more than 5secs aborting，应该是amd显卡驱动的问题，google也没查到好的解决办法，以失败而告终😅
-5.Manjaro配置记录 网上有好多，自己只是借鉴并记录一下，备用
- 更改国内源  $ sudo pacman-mirrors -i -c China //改为国内源$ sudo pacman -Syy //更新数据源 设置 archlinuxcn 源，修改 /etc/pacman.conf，最后添加  [archlinuxcn]SigLevel = Optional TrustedOnlyServer = https://mirrors.tuna.tsinghua.edu.cn/archlinuxcn/$arch //添加清华源 // 更新$ sudo pacman -Syy 设置AUR国内源并安装  $ sudo pacman -S yaourt 修改 /etc/yaourtrc，去掉 # AURURL 的注释，修改为:AURURL=”https://aur.</description>
-    </item>
-    
-    <item>
-      <title>关于Hangfire的用法</title>
-      <link>http://hellojxl.com/posts/%E5%85%B3%E4%BA%8Ehangfire%E7%9A%84%E7%94%A8%E6%B3%95/</link>
-      <pubDate>Thu, 28 Jun 2018 21:56:14 +0000</pubDate>
-      
-      <guid>http://hellojxl.com/posts/%E5%85%B3%E4%BA%8Ehangfire%E7%9A%84%E7%94%A8%E6%B3%95/</guid>
-      <description>最近项目中要执行后台任务，所以找了一下相关库，刚开始用的是TimedJob，用起来很简单，本身提供依赖注入,代码如下：
-//先在ConfigureServices添加app.AddTimedJob(); //然后在Configure中使用app.UseTimedJob();//定义一个类继承接口Jobpublic Class MyJob:Job{private IConfigure _configure;//注入配置文件public MyJob(IConfigure configure){_configure=configure;}[Invoke(Begin = &amp;#34;2018-11-29 23:00:00&amp;#34;, Interval = 1000 * 3600 * 24, SkipWhileExecuting =true)]public void Run(){//Job要执行的逻辑代码Console.WriteLine(&amp;#34;hello world&amp;#34;);}} 整个用法还是很简单的，如果只是一些简单任务可以采用这种方式，只是如果想通过UI控制的话，这种方式做的工作有点多，所以接下来就要说到Hangfire了,这个用起来就更简单了，而且自带UI，可以直接在UI上进行任务触发，用法跟TimedJob差不多，同时由于Hangfire需要保存任务，需要数据库支持，第三方插件也支持Redis，由于项目正好用Sql Server，再加上任务不是很复杂就直接用数据库了
-//添加Hangfire，此处用的是PostgreSqlservices.AddHangfire(config=&amp;gt;{config.UsePostgreSqlStorage(&amp;#34;ConnectionString&amp;#34;);}); //使用Hangfireapp.UseHangfireServer();//自定义认证，默认只能本地DashboardOptions options=new DashboardOptions();options.Authorization=new []{new MyAuthorization()};app.UseHangfireDashboard(&amp;#34;/Job&amp;#34;,options);//添加任务RecurringJob.AddOrUpdate(&amp;#34;MyJob&amp;#34;,x=&amp;gt;x.HelloTest(&amp;#34;Hello World&amp;#34;),Cron.Minutely);这里有两个问题需要解决一下
- 依赖注入，这个通过以下方式实现  //先定义接口public interface IGoodJob{void HelloTest(string test);}//实现接口public class MyJob : IGoodJob{private IConfiguration _configure;public MyJob(IConfiguration Configuration){_configure=Configuration;}public void HelloTest(string test){Console.</description>
-    </item>
-    
-    <item>
-      <title>关于Supervisor和Nginx的使用</title>
-      <link>http://hellojxl.com/posts/%E5%85%B3%E4%BA%8Esupervisor%E5%92%8Cnginx%E7%9A%84%E4%BD%BF%E7%94%A8/</link>
-      <pubDate>Fri, 08 Jun 2018 21:44:06 +0000</pubDate>
-      
-      <guid>http://hellojxl.com/posts/%E5%85%B3%E4%BA%8Esupervisor%E5%92%8Cnginx%E7%9A%84%E4%BD%BF%E7%94%A8/</guid>
-      <description>感觉好久没写了，那就简单说一下最近工作中所用到的Nginx和Supervisor吧，虽然网上也一搜一大把，就当自己做下总结吧
-Nginx的使用 工作中用的是centos，安装简单的用yum直接安装的，还可以直接开机启动，下面简单说说路径匹配的问题，项目刚开始的是用的是后缀名进行匹配，规则如下：
-location ~*\.(gif|png|jpg|jpeg|bmp)$ {default_type	&amp;#39;application/octet-stream&amp;#39;;root	/home/Images/;expires	1d;}如果项目中只需要匹配一种类型的图片用这种模式就可以了，另外这种匹配比location要精确，所以默认最终会匹配这种类型，比如想访问swagger的图片，结果就因为这个原因访问不了，可以尝试加^~进行处理并且要放到这个之前，但是因为这个项目中分好几种类型的图片，需要单独分开访问，所以最终全是用location进行匹配的，而且变简单了
-location ~* /logo/ {root	/;rewrite	/logo/(.*)$ /home/logo/Images/$1 break;}还有次不知道什么原因web目录的权限突然变了，造成403 forbidden了，查看nginx日志也是权限被拒绝，通过chmod -R 777 *还是不行，搜索网上发现需要重启nginx，简单reload是没用的，这里记录下
-Supervisor的使用 下面说说Supervisor的用法，刚开始折腾了半天都不起作用，因为[include]前面的;忘记删掉了，当时是直接写在下面了，不管怎么说倒是起作用了，配置如下：
-[program:redis]command=redis-serverdirectory=/usr/local/bin/user=userautostart=trueautorestart=truestartsecs=2[program:TestApi]command=dotnet TestApi.dlldirectory=/home/project/TestApi/stderr_logfile=/var/log/museumApi.error.logstdout_logfile=/var/log/museumApi.stdout.logenvironment=ASPNETCORE_ENVIRONMNET=Productionuser=userautostart=trueautorestart=truestartsecs=2 还有web管理界面，配置如下：
-[inet_http_server] ; inet (TCP) server disabled by defaultport=0.0.0.0:9001 ; ip_address:port specifier, *:port for all ifaceusername=admin ; default is no username (open server)password=123123 ; default is no password (open server) 不过不建议在生产环境下用，不安全！</description>
-    </item>
-    
-    <item>
-      <title>Springboot&#43;Mybatis测试成功</title>
-      <link>http://hellojxl.com/posts/springboot-mybatis%E6%B5%8B%E8%AF%95%E6%88%90%E5%8A%9F/</link>
-      <pubDate>Tue, 24 Apr 2018 23:26:27 +0000</pubDate>
-      
-      <guid>http://hellojxl.com/posts/springboot-mybatis%E6%B5%8B%E8%AF%95%E6%88%90%E5%8A%9F/</guid>
-      <description>实现目标 由于只是测试，所以只要当前目标只要用Springboot+mybatis启动成功即可，只当自己的学习，数据库用的是postgresql，目前网上的mysql居多，自己学习肯定要有点区别
-原因 目前公司一直在转java，而且年前那会招.net确实不太好招，就算以后自己离职也好进行交接，就当为自己留条后路
-具体实现 之前偶尔也测试过，有时候成功，有时候失败，虽然sprintboot已经封装的很好了，可惜对我这个门外汉还是有点摸不着门路，其实只是不熟悉而已，而且之前其实是没做过这方面的东西的，之前客户端居多，dotnet core也是一上来就学，确实也少了许多包袱，但愿Java也是，言归正传：
- 构建脚手架，去启动页进行构建，目前选择Web中的Web，Jersey，SQl中的MyBatis，Maven还是Gradle都可以，根据自己情况选择 导入工程，进行构建，我这里选的intellJ IDEA社区版，免费嘛，eclipse也可以，根据自己习惯，我这里选择Maven工程，选择jdk版本，接下来就是自动构建了 新建控制器  //增加注解@RestControllerpublic class HelloController {//增加对应关系@RequestMapping(value=&amp;#34;/hello&amp;#34;)public String Hello(){return &amp;#34;good&amp;#34;;}}  修改application.properties文件，增加数据库配置  //配置数据库urlspring.datasource.url=jdbc:postgresql://localhost:5432/xxx?useUnicode=true&amp;amp;characterEncoding=utf8//用户名spring.datasource.username=xxx//密码spring.datasource.password=xx驱动spring.datasource.driverClassName=org.postgresql.Driver//实体位置，当前还不涉及到，所以没用到mybatis.typeAliasesPackage=com.hellojxl.helloMybaits.boot_feature.entity//映射的xml所在位置mybatis.mapperLocations=classpath:mapper/*.xml 调出Maven工程窗口，方法是：View-&amp;gt;Tool Window-&amp;gt;Maven Projects，选中spring-boot，右键spring-boot-&amp;gt;run进行启动，当初用这个还有点懵逼😅  出现的问题  异常：Spring Boot - Error creating bean with name &amp;lsquo;dataSource&amp;rsquo; defined in class path resource
-解决方法：驱动配置出错，首先没有加载postgresql驱动，在pom文件中增加：  &amp;lt;dependency&amp;gt;&amp;lt;groupId&amp;gt;postgresql&amp;lt;/groupId&amp;gt;&amp;lt;artifactId&amp;gt;postgresql&amp;lt;/artifactId&amp;gt;&amp;lt;version&amp;gt;9.1-901-1.jdbc4&amp;lt;/version&amp;gt;&amp;lt;/dependency&amp;gt; 然后是数据库配置出错，驱动配置的是mysql的，自己复制粘贴的锅</description>
-    </item>
-    
-    <item>
-      <title>关于dapper迁移到SqlSugar的记录</title>
-      <link>http://hellojxl.com/posts/%E5%85%B3%E4%BA%8Edapper%E8%BF%81%E7%A7%BB%E5%88%B0sqlsugar%E7%9A%84%E8%AE%B0%E5%BD%95/</link>
-      <pubDate>Mon, 23 Apr 2018 23:36:46 +0000</pubDate>
-      
-      <guid>http://hellojxl.com/posts/%E5%85%B3%E4%BA%8Edapper%E8%BF%81%E7%A7%BB%E5%88%B0sqlsugar%E7%9A%84%E8%AE%B0%E5%BD%95/</guid>
-      <description>迁移原因 由于接受的是之前项目组开发的项目的，项目是由本人从.net framework迁移至dotnet core的，目前用到Predicate，发现各种异常，加之时间比较紧而且dapperextensions貌似还没有完全迁移到dotnet core，最后考虑再三打算放弃dapper(其实dapper本身来说还是很好用的，只是dapperextensions现在来说不太好用)，看了看发现了SqlSugar，经过测试发现，如果忽略SqlSugar的orm特性，完全可以无缝迁移过去，而且由于国人开发的原因，文档还算齐全，发现国人的库还是比较靠谱的😊，给国人点个👍
-迁移过程 具体细节就不多说了，只写自己目前用到的特性
-  sql语句查询，这个不必说，因为dapper主要是操作sql语句，由于项目中变动不能太大，不然非得疯了不可，实际迁移过程中还是很方便的
-  实体及表结构操作，更改对应表名的功能dapper也有，但发现dapperextensions完全需要再重新做一遍对应的操作，而且会有异常问题，很是麻烦，这个在sqlSugar中就很简单
-  条件查询系统，项目迁移对主要原因就是因为dapperextensions的Predicate系统貌似完全处于瘫痪状态，自己又没有时间去修改，迁移到SqlSugar之后用的很是舒心，而且语法上也差别不大
-  分页功能，这本是一个常用的功能，都有提供，不多说。
-  由于SqlSugar本身就是ORM，所以可以省好多事，而且也像文档介绍的那样Lambda的解析也非常完善
-迁移结果 目前已经完成迁移，正在进行开发，目前还没有什么坑，并发性还没有测试，等项目完成了来个测试，看看结果如果，也希望能多多支持国人的项目SqlSugar4文档地址，GitHub地址</description>
-    </item>
-    
-    <item>
-      <title>dotnet core在swagger中添加认证</title>
-      <link>http://hellojxl.com/posts/dotnet-core%E5%9C%A8swagger%E4%B8%AD%E6%B7%BB%E5%8A%A0%E8%AE%A4%E8%AF%81/</link>
-      <pubDate>Wed, 11 Apr 2018 22:24:08 +0000</pubDate>
-      
-      <guid>http://hellojxl.com/posts/dotnet-core%E5%9C%A8swagger%E4%B8%AD%E6%B7%BB%E5%8A%A0%E8%AE%A4%E8%AF%81/</guid>
-      <description>2018-04-16更新：经过测试，这么写是可以的，只是每次调用前都要加上：bearer token,可以在命名Filter的时候加上提醒一下，暂时没去想其它更好的方法
-还有当前如果有多个项目的话，比如这个项目引用了另一个项目的model，默认是不会显示注释的，解决方法是：每个项目单独生成xml文件，然后在include XML文档时同时引入，那么就可以显示了
-Nignx反向代理的情况下，默认会找不到swagger的json文件导致失败，方法是：
-//加入两个点c.SwaggerEndpoint(&amp;#34;../swagger/v1/swagger.json&amp;#34;, &amp;#34;My API V1&amp;#34;); 最近项目中用到swagger进行Api文档说明，之前只是匆匆的测试了一下，这次前端说要看一下就仔细研究了一下，由于项目中增加了jwt认证，当然也要在swagger中体现出来，就网上搜索了一下，虽然文章不少可是不是版本对不上就是用不了，好不容易在这个博客上找到点线索，在此记录一下。
-添加Swagger 这个很简单，网上教程也多的是，具体流程如下:
-//添加引用using Swashbuckle.AspNetCore.Swagger;//在ConfigureServices中添加services.AddSwaggerGen(c =&amp;gt;{c.SwaggerDoc(&amp;#34;v1&amp;#34;, new Info { Title = &amp;#34;My API&amp;#34;, Version = &amp;#34;v1&amp;#34; });//添加xml注释说明，下面会说var filePath = Path.Combine(PlatformServices.Default.Application.ApplicationBasePath, &amp;#34;MyApi.xml&amp;#34;);c.IncludeXmlComments(filePath);//添加认证，下面会说c.OperationFilter&amp;lt;AuthorizationHeaderFilter&amp;gt;();});//在Configure中添加app.UseSwagger();app.UseSwaggerUI(c =&amp;gt;{c.SwaggerEndpoint(&amp;#34;/swagger/v1/swagger.json&amp;#34;, &amp;#34;My API V1&amp;#34;);});这样默认swagger就可以启动了，当然如果现在真要运行是起不来的，因为还没有生成xml注释文档，下面来添加
-添加xml文档注释 这个如果用vs的话很简单，在项目配置里配置一下就好，如果用vs code的话稍微有点麻烦，其实更简单，只是刚开始不知道怎么加而已，只需要在csproj文件中添加下面代码
-&amp;lt;PropertyGroup&amp;gt;&amp;lt;TargetFramework&amp;gt;netcoreapp2.0&amp;lt;/TargetFramework&amp;gt;//下面这句，注意文件名称&amp;lt;DocumentationFile&amp;gt;bin/Debug/netcoreapp2.0/myApi.xml&amp;lt;/DocumentationFile&amp;gt; &amp;lt;/PropertyGroup&amp;gt; 其实也可以添加到这里
-&amp;lt;PropertyGroup Condition=&amp;#34;&amp;#39;$(Configuration)|$(Platform)&amp;#39;==&amp;#39;Debug|AnyCPU&amp;#39;&amp;#34;&amp;gt;&amp;lt;DocumentationFile&amp;gt;bin/Debug/netcoreapp2.0/myApi.xml&amp;lt;/DocumentationFile&amp;gt; 只是我发现有的工程里没有Condition选项，发现添加到TargetFramework下也可以就都写上了，vs code添加注释可以用XML Documentation Comments Support for Visual Studio Code插件，和vs一样，只是有的时候貌似会多加个return，而且一旦要注释，整个工程都要有注释，否则无法运行，暂时没考虑怎么解决，以后再说</description>
-    </item>
-    
-    <item>
-      <title>Vscode插件sqltools的用法</title>
-      <link>http://hellojxl.com/posts/vscode%E6%8F%92%E4%BB%B6sqltools%E7%9A%84%E7%94%A8%E6%B3%95/</link>
-      <pubDate>Tue, 10 Apr 2018 21:26:58 +0000</pubDate>
-      
-      <guid>http://hellojxl.com/posts/vscode%E6%8F%92%E4%BB%B6sqltools%E7%9A%84%E7%94%A8%E6%B3%95/</guid>
-      <description>好久没写东西了，感觉不能再这样下去了，赶紧补一补，正好今天边查数据库边写Api，突然想为何不都在vscode中干活呢，然后就搜了搜，还真有这样的插件，就是sqltools，其实之前最早是sublime上找的，貌似是一个开发者，但是没配置成功，今天在vscode里配置成功了，就此记录下
-sqltools的安装 这个很简单，如果方便呢直接在vscode的插件里搜索sqltools，或者用命令安装，貌似呼出控制台的快捷键不一样，Windows上是：F1，Mac上是：Shift+Command+P，或许是跟我设置的快捷键有关，因为本人之前比较喜欢sublime(现在也用)，输入命令：ext install sqltools就可以了
-sqltools的配置 之前在sublime中没配置成功，按网上的教程好像不起作用，这次花了点时间具体研究了vscode的，具体是：
-1.新建连接
-用命令很简单，呼出命令窗口，输入：sqltools management:setup就会提示有提示新建连接，按提示输入所需要的字段即可，或者在配置文件中添加一个新连接，安装完时会有例子，仿照着放到配置文件里的“sqltools.connections”里就好了
-2.连接数据库
-同样输入命令：sqltools tools:connect就会连接，如果有多个数据库会提示让进行选择，同样也可以在配置文件里设置默认连接数据库
-3.执行查询
-连接成功后会在左下角显示所有的表，此时写查询语句时就会出现自动提示，非常好用，写完之后选中语句按Ctrl+E键两次就可以执行了，具体的用法可以看插件说明
-结尾 插件虽然不错，可是总觉得有点不适应，但是拿来应应急总是好的，此外还推荐个插件：background，可以添加背景图片，也可以自定义，好了，就这样吧😊。</description>
-    </item>
-    
-    <item>
-      <title>在vscode中禁用just my code</title>
-      <link>http://hellojxl.com/posts/%E5%9C%A8vscode%E4%B8%AD%E5%90%AF%E7%94%A8just-my-code/</link>
-      <pubDate>Thu, 29 Mar 2018 20:32:32 +0000</pubDate>
-      
-      <guid>http://hellojxl.com/posts/%E5%9C%A8vscode%E4%B8%AD%E5%90%AF%E7%94%A8just-my-code/</guid>
-      <description>最近打算开始用vscode写代码，之前用过一段时间，感觉不怎么好用，最近又用了用，感觉好用很多，今天打开一个项目发现调试不了其它项目，同时调试中一直在打印启用了just my code，所以就搜怎么禁用，当时还没搜到，后来偶然在微软的网站上查到可以在launch.json下添加：
-&amp;#34;just my code&amp;#34;:false就可以禁用just my code了，试用下来感觉已经不比vs差了，还有智能提示，感觉很智能，对了顺便说一下，可以装一下由开发者jchannon开发的C# Extensions，非常好用！</description>
-    </item>
-    
-    <item>
-      <title>hexo在windows subsystem for linux 环境下的配置</title>
-      <link>http://hellojxl.com/posts/windows-subsystem-linux-%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/</link>
-      <pubDate>Sat, 24 Mar 2018 18:58:27 +0000</pubDate>
-      
-      <guid>http://hellojxl.com/posts/windows-subsystem-linux-%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/</guid>
-      <description>最近想重新启用hexo来写博客，可总不能只在一台机子上写，于是就在公司的Windows笔记本hexo环境，正好最近捣鼓sublinux，就想在Linux里部署，当时选的Debian系统，然后麻烦就来了，Windows上的sublinux跟mini版一样，各种环境都没有，什么命令都没有，可经过一番折腾，现在回想起来可能跟自己的Linux水平太差有关，废话不多说，进入正题
-安装nodejs 先开始在Mac上安装的时候太顺了，本以为Linux上也不会太难，结果折腾了一天才安装上 nodejs官网有三种安装方式，①Debian的本身的apt②已经编译好的二进制文件③源码编译，这三个里面最简单的事第二种，下载完成之后只需配置环境变量即可，由于是sublinux的缘故，配置环境变量只有用户下的.bashrc文件里才行，比如root用户需要如下操作:
-  vi ~/.bashrc 在最后一行添加：export PATH=$PATH:/usr/local/node/bin 注：路径可以自由写 source ~/.bashrc 立即生效即可   安装Git和ssh 这个就比较简单了，直接apt-get install就可以了，具体的配置就不多说了，网上多的是。
-安装hexo 这里还是要再提一句Windows下的subsystem for Linux，感觉还是跟缺少相关库，安装的时候会提示：gyp WARN EACCES user &amp;ldquo;root&amp;rdquo; does not have permission to access the dev dir：xxx，网上参考查到的stackoverflow,用的第二种方法：
- node install -g hexo-cli &amp;ndash;unsafe-perm
- 安装过程中会装几个库，然后就可以用了。
-最后 至于同步问题，我也是参考网上的教程，用的码云的git，因为可以创建私有的git，至于其它方面因为自己git方面也不是很熟，就不误人子弟了，最近也一直在折腾Linux，感觉也挺有意思，后续有什么也会再贴出来。</description>
-    </item>
-    
-  </channel>
-</rss>

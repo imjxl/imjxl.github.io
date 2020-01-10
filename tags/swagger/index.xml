@@ -1,33 +1,0 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
-    <title>swagger on hellojxl</title>
-    <link>http://hellojxl.com/tags/swagger/</link>
-    <description>Recent content in swagger on hellojxl</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language>
-    <copyright>© Copyright notice</copyright>
-    <lastBuildDate>Wed, 11 Apr 2018 22:24:08 +0000</lastBuildDate>
-    
-	<atom:link href="http://hellojxl.com/tags/swagger/index.xml" rel="self" type="application/rss+xml" />
-    
-    
-    <item>
-      <title>dotnet core在swagger中添加认证</title>
-      <link>http://hellojxl.com/posts/dotnet-core%E5%9C%A8swagger%E4%B8%AD%E6%B7%BB%E5%8A%A0%E8%AE%A4%E8%AF%81/</link>
-      <pubDate>Wed, 11 Apr 2018 22:24:08 +0000</pubDate>
-      
-      <guid>http://hellojxl.com/posts/dotnet-core%E5%9C%A8swagger%E4%B8%AD%E6%B7%BB%E5%8A%A0%E8%AE%A4%E8%AF%81/</guid>
-      <description>2018-04-16更新：经过测试，这么写是可以的，只是每次调用前都要加上：bearer token,可以在命名Filter的时候加上提醒一下，暂时没去想其它更好的方法
-还有当前如果有多个项目的话，比如这个项目引用了另一个项目的model，默认是不会显示注释的，解决方法是：每个项目单独生成xml文件，然后在include XML文档时同时引入，那么就可以显示了
-Nignx反向代理的情况下，默认会找不到swagger的json文件导致失败，方法是：
-//加入两个点c.SwaggerEndpoint(&amp;#34;../swagger/v1/swagger.json&amp;#34;, &amp;#34;My API V1&amp;#34;); 最近项目中用到swagger进行Api文档说明，之前只是匆匆的测试了一下，这次前端说要看一下就仔细研究了一下，由于项目中增加了jwt认证，当然也要在swagger中体现出来，就网上搜索了一下，虽然文章不少可是不是版本对不上就是用不了，好不容易在这个博客上找到点线索，在此记录一下。
-添加Swagger 这个很简单，网上教程也多的是，具体流程如下:
-//添加引用using Swashbuckle.AspNetCore.Swagger;//在ConfigureServices中添加services.AddSwaggerGen(c =&amp;gt;{c.SwaggerDoc(&amp;#34;v1&amp;#34;, new Info { Title = &amp;#34;My API&amp;#34;, Version = &amp;#34;v1&amp;#34; });//添加xml注释说明，下面会说var filePath = Path.Combine(PlatformServices.Default.Application.ApplicationBasePath, &amp;#34;MyApi.xml&amp;#34;);c.IncludeXmlComments(filePath);//添加认证，下面会说c.OperationFilter&amp;lt;AuthorizationHeaderFilter&amp;gt;();});//在Configure中添加app.UseSwagger();app.UseSwaggerUI(c =&amp;gt;{c.SwaggerEndpoint(&amp;#34;/swagger/v1/swagger.json&amp;#34;, &amp;#34;My API V1&amp;#34;);});这样默认swagger就可以启动了，当然如果现在真要运行是起不来的，因为还没有生成xml注释文档，下面来添加
-添加xml文档注释 这个如果用vs的话很简单，在项目配置里配置一下就好，如果用vs code的话稍微有点麻烦，其实更简单，只是刚开始不知道怎么加而已，只需要在csproj文件中添加下面代码
-&amp;lt;PropertyGroup&amp;gt;&amp;lt;TargetFramework&amp;gt;netcoreapp2.0&amp;lt;/TargetFramework&amp;gt;//下面这句，注意文件名称&amp;lt;DocumentationFile&amp;gt;bin/Debug/netcoreapp2.0/myApi.xml&amp;lt;/DocumentationFile&amp;gt; &amp;lt;/PropertyGroup&amp;gt; 其实也可以添加到这里
-&amp;lt;PropertyGroup Condition=&amp;#34;&amp;#39;$(Configuration)|$(Platform)&amp;#39;==&amp;#39;Debug|AnyCPU&amp;#39;&amp;#34;&amp;gt;&amp;lt;DocumentationFile&amp;gt;bin/Debug/netcoreapp2.0/myApi.xml&amp;lt;/DocumentationFile&amp;gt; 只是我发现有的工程里没有Condition选项，发现添加到TargetFramework下也可以就都写上了，vs code添加注释可以用XML Documentation Comments Support for Visual Studio Code插件，和vs一样，只是有的时候貌似会多加个return，而且一旦要注释，整个工程都要有注释，否则无法运行，暂时没考虑怎么解决，以后再说</description>
-    </item>
-    
-  </channel>
-</rss>

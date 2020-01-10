@@ -1,202 +1,0 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<meta charset="utf-8" />
-	<meta http-equiv="X-UA-Compatible" content="IE=edge"><title>关于Hangfire的用法 - hellojxl</title><link rel="icon" type="image/png" href=icons/myicon.png /><meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta property="og:title" content="关于Hangfire的用法" />
-<meta property="og:description" content="最近项目中要执行后台任务，所以找了一下相关库，刚开始用的是TimedJob，用起来很简单，本身提供依赖注入,代码如下：
-//先在ConfigureServices添加app.AddTimedJob(); //然后在Configure中使用app.UseTimedJob();//定义一个类继承接口Jobpublic Class MyJob:Job{private IConfigure _configure;//注入配置文件public MyJob(IConfigure configure){_configure=configure;}[Invoke(Begin = &#34;2018-11-29 23:00:00&#34;, Interval = 1000 * 3600 * 24, SkipWhileExecuting =true)]public void Run(){//Job要执行的逻辑代码Console.WriteLine(&#34;hello world&#34;);}} 整个用法还是很简单的，如果只是一些简单任务可以采用这种方式，只是如果想通过UI控制的话，这种方式做的工作有点多，所以接下来就要说到Hangfire了,这个用起来就更简单了，而且自带UI，可以直接在UI上进行任务触发，用法跟TimedJob差不多，同时由于Hangfire需要保存任务，需要数据库支持，第三方插件也支持Redis，由于项目正好用Sql Server，再加上任务不是很复杂就直接用数据库了
-//添加Hangfire，此处用的是PostgreSqlservices.AddHangfire(config=&gt;{config.UsePostgreSqlStorage(&#34;ConnectionString&#34;);}); //使用Hangfireapp.UseHangfireServer();//自定义认证，默认只能本地DashboardOptions options=new DashboardOptions();options.Authorization=new []{new MyAuthorization()};app.UseHangfireDashboard(&#34;/Job&#34;,options);//添加任务RecurringJob.AddOrUpdate(&#34;MyJob&#34;,x=&gt;x.HelloTest(&#34;Hello World&#34;),Cron.Minutely);这里有两个问题需要解决一下
- 依赖注入，这个通过以下方式实现  //先定义接口public interface IGoodJob{void HelloTest(string test);}//实现接口public class MyJob : IGoodJob{private IConfiguration _configure;public MyJob(IConfiguration Configuration){_configure=Configuration;}public void HelloTest(string test){Console." />
-<meta property="og:type" content="article" />
-<meta property="og:url" content="http://hellojxl.com/posts/%E5%85%B3%E4%BA%8Ehangfire%E7%9A%84%E7%94%A8%E6%B3%95/" />
-<meta property="article:published_time" content="2018-06-28T21:56:14+00:00" />
-<meta property="article:modified_time" content="2018-06-28T21:56:14+00:00" />
-<meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="关于Hangfire的用法"/>
-<meta name="twitter:description" content="最近项目中要执行后台任务，所以找了一下相关库，刚开始用的是TimedJob，用起来很简单，本身提供依赖注入,代码如下：
-//先在ConfigureServices添加app.AddTimedJob(); //然后在Configure中使用app.UseTimedJob();//定义一个类继承接口Jobpublic Class MyJob:Job{private IConfigure _configure;//注入配置文件public MyJob(IConfigure configure){_configure=configure;}[Invoke(Begin = &#34;2018-11-29 23:00:00&#34;, Interval = 1000 * 3600 * 24, SkipWhileExecuting =true)]public void Run(){//Job要执行的逻辑代码Console.WriteLine(&#34;hello world&#34;);}} 整个用法还是很简单的，如果只是一些简单任务可以采用这种方式，只是如果想通过UI控制的话，这种方式做的工作有点多，所以接下来就要说到Hangfire了,这个用起来就更简单了，而且自带UI，可以直接在UI上进行任务触发，用法跟TimedJob差不多，同时由于Hangfire需要保存任务，需要数据库支持，第三方插件也支持Redis，由于项目正好用Sql Server，再加上任务不是很复杂就直接用数据库了
-//添加Hangfire，此处用的是PostgreSqlservices.AddHangfire(config=&gt;{config.UsePostgreSqlStorage(&#34;ConnectionString&#34;);}); //使用Hangfireapp.UseHangfireServer();//自定义认证，默认只能本地DashboardOptions options=new DashboardOptions();options.Authorization=new []{new MyAuthorization()};app.UseHangfireDashboard(&#34;/Job&#34;,options);//添加任务RecurringJob.AddOrUpdate(&#34;MyJob&#34;,x=&gt;x.HelloTest(&#34;Hello World&#34;),Cron.Minutely);这里有两个问题需要解决一下
- 依赖注入，这个通过以下方式实现  //先定义接口public interface IGoodJob{void HelloTest(string test);}//实现接口public class MyJob : IGoodJob{private IConfiguration _configure;public MyJob(IConfiguration Configuration){_configure=Configuration;}public void HelloTest(string test){Console."/>
-<link href="https://fonts.googleapis.com/css?family=Ubuntu:300,400,300italic,400italic|Raleway:200,300" rel="stylesheet">
-
-	<link rel="stylesheet" type="text/css" media="screen" href="http://hellojxl.comcss/normalize.css" />
-	<link rel="stylesheet" type="text/css" media="screen" href="http://hellojxl.comcss/main.css" />
-	<link rel="stylesheet" type="text/css" href="http://hellojxl.comcss/custom.css" />
-	<link rel="stylesheet" type="text/css" href="http://hellojxl.comcss/dark.css" media="(prefers-color-scheme: dark)" />
-	<link rel="stylesheet" type="text/css" href="http://hellojxl.comcss/custom-dark.css" media="(prefers-color-scheme: dark)" />
-
-	<script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
-	<script src="http://hellojxl.comjs/main.js"></script>
-	<script src="http://hellojxl.comjs/abc.js"></script>
-	<script src="http://hellojxl.comjs/xyz.js"></script>
-	<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
-</head>
-
-<body>
-	<div class="container wrapper post">
-		<div class="header">
-	<h1 class="site-title"><a href="http://hellojxl.com">hellojxl</a></h1>
-	<div class="site-description"><h2></h2><nav class="nav social">
-			<ul class="flat"><a href="https://github.com/jxl922/" title="Github"><i data-feather="github"></i></a><a href="https://twitter.com/hellojxl" title="Twitter"><i data-feather="twitter"></i></a></ul>
-		</nav>
-	</div>
-
-	<nav class="nav">
-		<ul class="flat">
-			
-			<li>
-				<a href="/">首页</a>
-			</li>
-			
-			<li>
-				<a href="/posts">所有文章</a>
-			</li>
-			
-			<li>
-				<a href="/tags">标签</a>
-			</li>
-			
-			<li>
-				<a href="/about">关于我</a>
-			</li>
-			
-		</ul>
-	</nav>
-</div>
-
-
-		<div class="post-header">
-			<h1 class="title">关于Hangfire的用法</h1>
-			<div class="meta">Posted at &mdash; Jun 28, 2018</div>
-		</div>
-
-		<div class="markdown">
-			<p>最近项目中要执行后台任务，所以找了一下相关库，刚开始用的是<a href="https://www.nuget.org/packages/Pomelo.AspNetCore.TimedJob/2.0.0-rtm-10046">TimedJob</a>，用起来很简单，本身提供依赖注入,代码如下：</p>
-<div class="highlight"><pre style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">
-//先在ConfigureServices添加
-app.AddTimedJob();  
-//然后在Configure中使用
-app.UseTimedJob();
-//定义一个类继承接口Job
-public Class MyJob:Job
-{
-	private IConfigure _configure;
-	//注入配置文件
-	public MyJob(IConfigure configure)
-	{
-		_configure=configure;
-	}
-	[Invoke(Begin = &#34;2018-11-29 23:00:00&#34;, Interval = 1000 * 3600 * 24, SkipWhileExecuting =true)]
-     public void Run()
-     {
-          //Job要执行的逻辑代码
-          Console.WriteLine(&#34;hello world&#34;);
-     }
-}  
-
-</code></pre></div><p>整个用法还是很简单的，如果只是一些简单任务可以采用这种方式，只是如果想通过UI控制的话，这种方式做的工作有点多，所以接下来就要说到<a href="https://www.hangfire.io">Hangfire</a>了,这个用起来就更简单了，而且自带UI，可以直接在UI上进行任务触发，用法跟TimedJob差不多，同时由于Hangfire需要保存任务，需要数据库支持，第三方插件也支持Redis，由于项目正好用Sql Server，再加上任务不是很复杂就直接用数据库了</p>
-<div class="highlight"><pre style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">
-//添加Hangfire，此处用的是PostgreSql
-services.AddHangfire(
-	config=&gt;{
-	config.UsePostgreSqlStorage(&#34;ConnectionString&#34;);
- });  
- //使用Hangfire
- app.UseHangfireServer();
- //自定义认证，默认只能本地
- DashboardOptions options=new DashboardOptions();
- options.Authorization=new []{new MyAuthorization()};
- app.UseHangfireDashboard(&#34;/Job&#34;,options);
- 
- //添加任务
-RecurringJob.AddOrUpdate(&#34;MyJob&#34;,x=&gt;x.HelloTest(&#34;Hello World&#34;),Cron.Minutely);
-</code></pre></div><p>这里有两个问题需要解决一下</p>
-<ul>
-<li>依赖注入，这个通过以下方式实现</li>
-</ul>
-<div class="highlight"><pre style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">//先定义接口
-public interface IGoodJob
-{
-    void HelloTest(string test);
-}
-//实现接口
-public class MyJob : IGoodJob
-{
-    private IConfiguration _configure;
-    public MyJob(IConfiguration Configuration)
-    {
-         _configure=Configuration;
-    }
-    public void HelloTest(string test)
-    {
-        Console.WriteLine(&#34;hello&#34;+test);
-    }
-}
-//在ConfigureServices中注册
-services.AddSingleton&lt;IGoodJob,MyJob&gt;();
-//在最后调用
-RecurringJob.AddOrUpdate&lt;IGoodJob&gt;(&#34;Job&#34;,x=&gt;x.HelloTest(&#34;good&#34;),Cron.Minutely);
-</code></pre></div><ul>
-<li>自定义认证，由于当前项目用的是JWT认证，当时参考了<a href="https://discuss.hangfire.io/t/using-bearer-auth-token/2166/3">这里</a>,就是Hangfire的论坛，由于增加认证之后，每次面板刷新数据都会进行认证，所以仿照这个地址将Token放到Cookie里，每次验证的时候判断一下，而且还要判断token是否过期，代码先不贴了，需要验证</li>
-</ul>
-<h4 id="最后">最后</h4>
-<p>其实不只这两个，这里只是把自己用到的记录一下，其他的还有Quartz.NET，FluentScheduler等，今天看公众号发现2.1里面也自带了IHostedService接口，具体用法还是参考官方文档吧，好了，洗漱睡觉了😪</p>
-
-		</div>
-
-		<div class="post-tags">
-			
-				
-					<nav class="nav tags">
-							<ul class="flat">
-								
-								<li><a href="/tags/dotnet-core">dotnet core</a></li>
-								
-								<li><a href="/tags/c">c#</a></li>
-								
-							</ul>
-					</nav>
-				
-			
-		</div>
-		<div id="disqus_thread"></div>
-<script type="text/javascript">
-	(function () {
-		
-		
-		if (window.location.hostname == "localhost")
-			return;
-
-		var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-		var disqus_shortname = 'localhost';
-		dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-		(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-	})();
-</script>
-<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by
-		Disqus.</a></noscript>
-<a href="http://disqus.com/" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
-</div>
-	<div class="footer wrapper">
-	<nav class="nav">
-		<div> © Copyright notice |  <a href="https://github.com/vividvilla/ezhil">Ezhil theme</a> | Built with <a href="https://gohugo.io">Hugo</a></div>
-	</nav>
-</div>
-
-
-
-<script type="application/javascript">
-var doNotTrack = false;
-if (!doNotTrack) {
-	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
-	ga('create', 'UA-123-45', 'auto');
-	
-	ga('send', 'pageview');
-}
-</script>
-<script async src='https://www.google-analytics.com/analytics.js'></script>
-
-<script>feather.replace()</script>
-</body>
-</html>
