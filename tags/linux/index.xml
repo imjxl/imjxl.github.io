@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>linux on hellojxl</title>
+    <link>http://hellojxl.com/tags/linux/</link>
+    <description>Recent content in linux on hellojxl</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>© Copyright notice</copyright>
+    <lastBuildDate>Sat, 23 Mar 2019 14:38:10 +0000</lastBuildDate>
+    
+	<atom:link href="http://hellojxl.com/tags/linux/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>学习Linux下cron服务</title>
+      <link>http://hellojxl.com/posts/%E5%AD%A6%E4%B9%A0linux%E4%B8%8Bcron%E6%9C%8D%E5%8A%A1/</link>
+      <pubDate>Sat, 23 Mar 2019 14:38:10 +0000</pubDate>
+      
+      <guid>http://hellojxl.com/posts/%E5%AD%A6%E4%B9%A0linux%E4%B8%8Bcron%E6%9C%8D%E5%8A%A1/</guid>
+      <description>起因 最近let&#39;s encrypt不定时的推送证书到期的邮件，同时也在工作中用到了Hangfire的任务管理，本身是基于类似cron的crontab的开源类库，因此就简单学习了解了一下。
+Cron时间格式 格式本身就是字符串，以5或6个空格隔开，最后可以加年(可以为空)，没有年的定义如下：
+* * * * * *- - - - - -| | | | | || | | | | +--- day of week (0 - 6) (Sunday=0)| | | | +----- month (1 - 12)| | | +------- day of month (1 - 31)| | +--------- hour (0 - 23)| +----------- min (0 - 59)+------------- sec (0 - 59)每一个域可出现的字符如下(摘自百度)：</description>
+    </item>
+    
+    <item>
+      <title>v2ray安装注意记录</title>
+      <link>http://hellojxl.com/posts/v2ray%E5%AE%89%E8%A3%85%E6%B3%A8%E6%84%8F%E8%AE%B0%E5%BD%95/</link>
+      <pubDate>Fri, 27 Jul 2018 21:02:19 +0000</pubDate>
+      
+      <guid>http://hellojxl.com/posts/v2ray%E5%AE%89%E8%A3%85%E6%B3%A8%E6%84%8F%E8%AE%B0%E5%BD%95/</guid>
+      <description>原因 新购了一个国外VPS，肯定要(你懂的)，主机商提供了三种系统，Ubuntu、Debian和Centos，由于某些原因三种系统都轮流安装了一遍，或者说都虐了一遍了，其中经历惨不忍睹啊！
+相关问题 不得不说v2ray的官方文档还是很齐全的，但是由于linux的版本太多过程还是会遇到问题的，所以具体的安装文档还是参照官方文档，我这里只是记录遇到的问题
+ 问题一：Centos7下Nginx下无法进行数据转发，报Permission Denied
+解决方法：可以参考白话配置,不过我这里由于是VPS的问题，SELinux被主机商禁用了，开启不了，只能更换系统 问题二：Debian下SSL版本低，这个算不上问题，只是我这升级完ssl出现好多问题，果断更换系统，没办法，自己太菜🐶，关键是不明白什么主机商提供的Debian8的ssl协议竟然这么低。 问题三：Centos6下提示出错：Install daemon fail, please install it manually
+解决方法：原来是因为不支持centos6，参考这里，具体如下： 新建/etc/init.d/v2ray,并添加下面的配置  #!/bin/sh## v2ray Startup script for v2ray## chkconfig: - 24 76# processname: v2ray# pidfile: /var/run/v2ray.pid# description: V2Ray proxy services#### BEGIN INIT INFO# Provides: v2ray# Required-Start: $network $local_fs $remote_fs# Required-Stop: $remote_fs# Default-Start: 2 3 4 5# Default-Stop: 0 1 6# Short-Description: V2Ray proxy services# Description: V2Ray proxy services### END INIT INFODESC=v2rayNAME=v2rayDAEMON=/usr/bin/v2ray/v2rayPIDFILE=/var/run/$NAME.</description>
+    </item>
+    
+    <item>
+      <title>Manjaro折腾笔记</title>
+      <link>http://hellojxl.com/posts/manjaro%E6%8A%98%E8%85%BE%E7%AC%94%E8%AE%B0/</link>
+      <pubDate>Mon, 16 Jul 2018 22:16:18 +0000</pubDate>
+      
+      <guid>http://hellojxl.com/posts/manjaro%E6%8A%98%E8%85%BE%E7%AC%94%E8%AE%B0/</guid>
+      <description>前言 由于公司配的E460笔记本经常死机，不清楚是不是win10的问题，同时由于win10是家庭版无法使用Docker，所以打算换一下系统看看有没有改善，并且不想装双系统，所以用虚拟机代替，下面就是整个折腾的过程，虽然最终以失败而告终。
+1.选择宿主主机系统   以win10为宿主主机，虚拟linux，但是由于win10系统下大概率会死机，所以不想采用这种方案
+  以linux为宿主主机，虚拟Windows，可能会消耗资源多一些，不过还可以承受。所以打算采用这种方式。
+  2.选择Linux发行版本 已经好长时间没有折腾linux桌面系统了，最早折腾过ubuntu,debian和suse，后来就一直Windows和Mac。刚开始想装ubuntu，毕竟之前安装过，熟悉一点，所以下的ubuntu的镜像用vmware安装，但是到了分区界面死活分不了区，遂想起来deepin，下完之后可以正常安装，不过进了系统之后那是一个卡，跟之前想的完全不一样，然后又换，就找到了Manjaro，基于arch的发行版，之前也听过arch，不过没接触过，但是看好评不错就选用了Manjaro。
+3.虚拟机体验 因为Mac买的Vmware Fusion用的还可以，就开始用的vmware player安装，顺便把该装的软件都装了一下，完事之后感觉非常不错，后来因为Vmware Player的版权的原因打算用virtual box代替，结果迁移半天都没成功，引导的时候总是提示找不到硬盘，最后Vmware Workstation都用上了依旧失败，迁移什么的果然是骗人的🤦‍♂️，只好又用virtual box重装了一遍，完了之后发现注销的时候竟然不卡了！！！
+4.真机安装 虚拟机感觉不错就真机安装吧，其实心里挺担心的，毕竟是工作用，刻盘用的rufus，dd模式，备份整个系统盘，打算全部抹盘，插入U盘开始，没有进入引导？好吧，更改bios设置，可以进入了，结果安装的过程中出现：[drm:atom_op_jump [amdgpu]]ERROR atombios stuck in loop for more than 5secs aborting，应该是amd显卡驱动的问题，google也没查到好的解决办法，以失败而告终😅
+5.Manjaro配置记录 网上有好多，自己只是借鉴并记录一下，备用
+ 更改国内源  $ sudo pacman-mirrors -i -c China //改为国内源$ sudo pacman -Syy //更新数据源 设置 archlinuxcn 源，修改 /etc/pacman.conf，最后添加  [archlinuxcn]SigLevel = Optional TrustedOnlyServer = https://mirrors.tuna.tsinghua.edu.cn/archlinuxcn/$arch //添加清华源 // 更新$ sudo pacman -Syy 设置AUR国内源并安装  $ sudo pacman -S yaourt 修改 /etc/yaourtrc，去掉 # AURURL 的注释，修改为:AURURL=”https://aur.</description>
+    </item>
+    
+    <item>
+      <title>关于Supervisor和Nginx的使用</title>
+      <link>http://hellojxl.com/posts/%E5%85%B3%E4%BA%8Esupervisor%E5%92%8Cnginx%E7%9A%84%E4%BD%BF%E7%94%A8/</link>
+      <pubDate>Fri, 08 Jun 2018 21:44:06 +0000</pubDate>
+      
+      <guid>http://hellojxl.com/posts/%E5%85%B3%E4%BA%8Esupervisor%E5%92%8Cnginx%E7%9A%84%E4%BD%BF%E7%94%A8/</guid>
+      <description>感觉好久没写了，那就简单说一下最近工作中所用到的Nginx和Supervisor吧，虽然网上也一搜一大把，就当自己做下总结吧
+Nginx的使用 工作中用的是centos，安装简单的用yum直接安装的，还可以直接开机启动，下面简单说说路径匹配的问题，项目刚开始的是用的是后缀名进行匹配，规则如下：
+location ~*\.(gif|png|jpg|jpeg|bmp)$ {default_type	&amp;#39;application/octet-stream&amp;#39;;root	/home/Images/;expires	1d;}如果项目中只需要匹配一种类型的图片用这种模式就可以了，另外这种匹配比location要精确，所以默认最终会匹配这种类型，比如想访问swagger的图片，结果就因为这个原因访问不了，可以尝试加^~进行处理并且要放到这个之前，但是因为这个项目中分好几种类型的图片，需要单独分开访问，所以最终全是用location进行匹配的，而且变简单了
+location ~* /logo/ {root	/;rewrite	/logo/(.*)$ /home/logo/Images/$1 break;}还有次不知道什么原因web目录的权限突然变了，造成403 forbidden了，查看nginx日志也是权限被拒绝，通过chmod -R 777 *还是不行，搜索网上发现需要重启nginx，简单reload是没用的，这里记录下
+Supervisor的使用 下面说说Supervisor的用法，刚开始折腾了半天都不起作用，因为[include]前面的;忘记删掉了，当时是直接写在下面了，不管怎么说倒是起作用了，配置如下：
+[program:redis]command=redis-serverdirectory=/usr/local/bin/user=userautostart=trueautorestart=truestartsecs=2[program:TestApi]command=dotnet TestApi.dlldirectory=/home/project/TestApi/stderr_logfile=/var/log/museumApi.error.logstdout_logfile=/var/log/museumApi.stdout.logenvironment=ASPNETCORE_ENVIRONMNET=Productionuser=userautostart=trueautorestart=truestartsecs=2 还有web管理界面，配置如下：
+[inet_http_server] ; inet (TCP) server disabled by defaultport=0.0.0.0:9001 ; ip_address:port specifier, *:port for all ifaceusername=admin ; default is no username (open server)password=123123 ; default is no password (open server) 不过不建议在生产环境下用，不安全！</description>
+    </item>
+    
+    <item>
+      <title>hexo在windows subsystem for linux 环境下的配置</title>
+      <link>http://hellojxl.com/posts/windows-subsystem-linux-%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/</link>
+      <pubDate>Sat, 24 Mar 2018 18:58:27 +0000</pubDate>
+      
+      <guid>http://hellojxl.com/posts/windows-subsystem-linux-%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/</guid>
+      <description>最近想重新启用hexo来写博客，可总不能只在一台机子上写，于是就在公司的Windows笔记本hexo环境，正好最近捣鼓sublinux，就想在Linux里部署，当时选的Debian系统，然后麻烦就来了，Windows上的sublinux跟mini版一样，各种环境都没有，什么命令都没有，可经过一番折腾，现在回想起来可能跟自己的Linux水平太差有关，废话不多说，进入正题
+安装nodejs 先开始在Mac上安装的时候太顺了，本以为Linux上也不会太难，结果折腾了一天才安装上 nodejs官网有三种安装方式，①Debian的本身的apt②已经编译好的二进制文件③源码编译，这三个里面最简单的事第二种，下载完成之后只需配置环境变量即可，由于是sublinux的缘故，配置环境变量只有用户下的.bashrc文件里才行，比如root用户需要如下操作:
+  vi ~/.bashrc 在最后一行添加：export PATH=$PATH:/usr/local/node/bin 注：路径可以自由写 source ~/.bashrc 立即生效即可   安装Git和ssh 这个就比较简单了，直接apt-get install就可以了，具体的配置就不多说了，网上多的是。
+安装hexo 这里还是要再提一句Windows下的subsystem for Linux，感觉还是跟缺少相关库，安装的时候会提示：gyp WARN EACCES user &amp;ldquo;root&amp;rdquo; does not have permission to access the dev dir：xxx，网上参考查到的stackoverflow,用的第二种方法：
+ node install -g hexo-cli &amp;ndash;unsafe-perm
+ 安装过程中会装几个库，然后就可以用了。
+最后 至于同步问题，我也是参考网上的教程，用的码云的git，因为可以创建私有的git，至于其它方面因为自己git方面也不是很熟，就不误人子弟了，最近也一直在折腾Linux，感觉也挺有意思，后续有什么也会再贴出来。</description>
+    </item>
+    
+  </channel>
+</rss>

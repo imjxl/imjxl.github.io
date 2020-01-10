@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Let&#39;s Encrypt on hellojxl</title>
+    <link>http://hellojxl.com/tags/lets-encrypt/</link>
+    <description>Recent content in Let&#39;s Encrypt on hellojxl</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>© Copyright notice</copyright>
+    <lastBuildDate>Sat, 21 Jul 2018 22:54:45 +0000</lastBuildDate>
+    
+	<atom:link href="http://hellojxl.com/tags/lets-encrypt/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>关于Nginx启用Https的记录</title>
+      <link>http://hellojxl.com/posts/%E5%85%B3%E4%BA%8Enginx%E5%90%AF%E7%94%A8https%E7%9A%84%E8%AE%B0%E5%BD%95/</link>
+      <pubDate>Sat, 21 Jul 2018 22:54:45 +0000</pubDate>
+      
+      <guid>http://hellojxl.com/posts/%E5%85%B3%E4%BA%8Enginx%E5%90%AF%E7%94%A8https%E7%9A%84%E8%AE%B0%E5%BD%95/</guid>
+      <description>记录原因 之前也部署过，结果上次因为买了一个新的VPS，打算部署v2ray的时候，遇到点问题，感觉还是要记录下来，因为是自己用所以就直接用Let&#39;s Encrypt部署吧，因为可以自动续期，90天也无所谓。
+安装部署 啥也不说，直接上certbot,详细的可以参考官方文档，这里只记录简单的部署
+ 安装前提
+因为certbot基于python，所以系统需要先安装Python 2.7 or 3.4+以上的版本 下载certbot  # wget https://dl.eff.org/certbot-auto //下载# chmod a+x ./certbot-auto //修改权限# ./certbot-auto --help //验证是否成功 开始部署  首先要看nginx的根目录在什么位置，有的在/var/www/html下，有的在/usr/share/nginx/html下。
+然后配置nginx读取certbot产生的文本文件
+location ~ /.well-known/acme-challenge/ {allow	all;root /usr/share/nginx/html;default_type	&amp;#34;text/plain&amp;#34;;}location = /.well-known/acme-challenge/ {return 404;} 运行nginx -s reload重新加载配置
+./certbot-auto certonly --webroot -w /usr/share/nginx/html/ -d your.domain.com 指定webroot和域名，只要能够访问就成功了，切记一次最多五次，否则会被限制，当时因为地址弄错了，等了一个星期&amp;hellip;
+发放证书了还需要配置nginx启用
+server {listen	80;server_name	www.domain.com domain.com;return	301	$scheme:https://www.</description>
+    </item>
+    
+  </channel>
+</rss>

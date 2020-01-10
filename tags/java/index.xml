@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>java on hellojxl</title>
+    <link>http://hellojxl.com/tags/java/</link>
+    <description>Recent content in java on hellojxl</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>© Copyright notice</copyright>
+    <lastBuildDate>Sat, 11 Aug 2018 19:42:45 +0000</lastBuildDate>
+    
+	<atom:link href="http://hellojxl.com/tags/java/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Springboot&#43;Mybatis下的增删查改</title>
+      <link>http://hellojxl.com/posts/springboot-mybatis%E4%B8%8B%E7%9A%84%E5%A2%9E%E5%88%A0%E6%9F%A5%E6%94%B9/</link>
+      <pubDate>Sat, 11 Aug 2018 19:42:45 +0000</pubDate>
+      
+      <guid>http://hellojxl.com/posts/springboot-mybatis%E4%B8%8B%E7%9A%84%E5%A2%9E%E5%88%A0%E6%9F%A5%E6%94%B9/</guid>
+      <description>前言 上次写了一篇文章，但只是粗略了写了一下，这次本来是工作上有个小项目，本打算用java写，可惜死活没配置好，就放弃了。正好周末就又基于上次那个项目捣鼓了一遍，可算是成功了，在此记录下。
+开发工具 之前在公司试用了一下大名鼎鼎的IDEA旗舰版，虽然还算比较好用，可惜就是太贵了，所以就装了社区版，后来才知道社区版不支持web开发，那就只能用eclipse了，装上Springboot的STS插件也还可以，回到家本想也这么来，可惜最近网不好，各种被墙，代理也半死不活，慢的一匹，然后发现Springboot有基于eclipse封装好的STS，而且没有被墙，很是不错！👍
+开始 这篇文章是基于Xml进行的，虽然有注解，总感觉那样是没有灵魂的（笑～～），注解的非常简单，就不多介绍了，下面开始介绍xml的配置
+ 添加实体类，新建包，命名为Entity，我这里是直接在com.hellojxl.helloMybaits下新建的所以包名为：com.hellojxl.helloMybaits.Entity，这点很重要，然后新建一个class，命名为User    package com.hellojxl.helloMybaits.Entity;
+public class User { private int id; private String name; private String sex;
+public int getId() {return id;}public void setId(int id) {this.id = id;}public String getName() {return name;}public void setName(String name) {this.name = name;}public String getSex() {return sex;}public void setSex(String sex) {this.</description>
+    </item>
+    
+    <item>
+      <title>Springboot&#43;Mybatis测试成功</title>
+      <link>http://hellojxl.com/posts/springboot-mybatis%E6%B5%8B%E8%AF%95%E6%88%90%E5%8A%9F/</link>
+      <pubDate>Tue, 24 Apr 2018 23:26:27 +0000</pubDate>
+      
+      <guid>http://hellojxl.com/posts/springboot-mybatis%E6%B5%8B%E8%AF%95%E6%88%90%E5%8A%9F/</guid>
+      <description>实现目标 由于只是测试，所以只要当前目标只要用Springboot+mybatis启动成功即可，只当自己的学习，数据库用的是postgresql，目前网上的mysql居多，自己学习肯定要有点区别
+原因 目前公司一直在转java，而且年前那会招.net确实不太好招，就算以后自己离职也好进行交接，就当为自己留条后路
+具体实现 之前偶尔也测试过，有时候成功，有时候失败，虽然sprintboot已经封装的很好了，可惜对我这个门外汉还是有点摸不着门路，其实只是不熟悉而已，而且之前其实是没做过这方面的东西的，之前客户端居多，dotnet core也是一上来就学，确实也少了许多包袱，但愿Java也是，言归正传：
+ 构建脚手架，去启动页进行构建，目前选择Web中的Web，Jersey，SQl中的MyBatis，Maven还是Gradle都可以，根据自己情况选择 导入工程，进行构建，我这里选的intellJ IDEA社区版，免费嘛，eclipse也可以，根据自己习惯，我这里选择Maven工程，选择jdk版本，接下来就是自动构建了 新建控制器  //增加注解@RestControllerpublic class HelloController {//增加对应关系@RequestMapping(value=&amp;#34;/hello&amp;#34;)public String Hello(){return &amp;#34;good&amp;#34;;}}  修改application.properties文件，增加数据库配置  //配置数据库urlspring.datasource.url=jdbc:postgresql://localhost:5432/xxx?useUnicode=true&amp;amp;characterEncoding=utf8//用户名spring.datasource.username=xxx//密码spring.datasource.password=xx驱动spring.datasource.driverClassName=org.postgresql.Driver//实体位置，当前还不涉及到，所以没用到mybatis.typeAliasesPackage=com.hellojxl.helloMybaits.boot_feature.entity//映射的xml所在位置mybatis.mapperLocations=classpath:mapper/*.xml 调出Maven工程窗口，方法是：View-&amp;gt;Tool Window-&amp;gt;Maven Projects，选中spring-boot，右键spring-boot-&amp;gt;run进行启动，当初用这个还有点懵逼😅  出现的问题  异常：Spring Boot - Error creating bean with name &amp;lsquo;dataSource&amp;rsquo; defined in class path resource
+解决方法：驱动配置出错，首先没有加载postgresql驱动，在pom文件中增加：  &amp;lt;dependency&amp;gt;&amp;lt;groupId&amp;gt;postgresql&amp;lt;/groupId&amp;gt;&amp;lt;artifactId&amp;gt;postgresql&amp;lt;/artifactId&amp;gt;&amp;lt;version&amp;gt;9.1-901-1.jdbc4&amp;lt;/version&amp;gt;&amp;lt;/dependency&amp;gt; 然后是数据库配置出错，驱动配置的是mysql的，自己复制粘贴的锅</description>
+    </item>
+    
+  </channel>
+</rss>

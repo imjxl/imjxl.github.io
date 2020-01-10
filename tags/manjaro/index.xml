@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>manjaro on hellojxl</title>
+    <link>http://hellojxl.com/tags/manjaro/</link>
+    <description>Recent content in manjaro on hellojxl</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>© Copyright notice</copyright>
+    <lastBuildDate>Mon, 16 Jul 2018 22:16:18 +0000</lastBuildDate>
+    
+	<atom:link href="http://hellojxl.com/tags/manjaro/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Manjaro折腾笔记</title>
+      <link>http://hellojxl.com/posts/manjaro%E6%8A%98%E8%85%BE%E7%AC%94%E8%AE%B0/</link>
+      <pubDate>Mon, 16 Jul 2018 22:16:18 +0000</pubDate>
+      
+      <guid>http://hellojxl.com/posts/manjaro%E6%8A%98%E8%85%BE%E7%AC%94%E8%AE%B0/</guid>
+      <description>前言 由于公司配的E460笔记本经常死机，不清楚是不是win10的问题，同时由于win10是家庭版无法使用Docker，所以打算换一下系统看看有没有改善，并且不想装双系统，所以用虚拟机代替，下面就是整个折腾的过程，虽然最终以失败而告终。
+1.选择宿主主机系统   以win10为宿主主机，虚拟linux，但是由于win10系统下大概率会死机，所以不想采用这种方案
+  以linux为宿主主机，虚拟Windows，可能会消耗资源多一些，不过还可以承受。所以打算采用这种方式。
+  2.选择Linux发行版本 已经好长时间没有折腾linux桌面系统了，最早折腾过ubuntu,debian和suse，后来就一直Windows和Mac。刚开始想装ubuntu，毕竟之前安装过，熟悉一点，所以下的ubuntu的镜像用vmware安装，但是到了分区界面死活分不了区，遂想起来deepin，下完之后可以正常安装，不过进了系统之后那是一个卡，跟之前想的完全不一样，然后又换，就找到了Manjaro，基于arch的发行版，之前也听过arch，不过没接触过，但是看好评不错就选用了Manjaro。
+3.虚拟机体验 因为Mac买的Vmware Fusion用的还可以，就开始用的vmware player安装，顺便把该装的软件都装了一下，完事之后感觉非常不错，后来因为Vmware Player的版权的原因打算用virtual box代替，结果迁移半天都没成功，引导的时候总是提示找不到硬盘，最后Vmware Workstation都用上了依旧失败，迁移什么的果然是骗人的🤦‍♂️，只好又用virtual box重装了一遍，完了之后发现注销的时候竟然不卡了！！！
+4.真机安装 虚拟机感觉不错就真机安装吧，其实心里挺担心的，毕竟是工作用，刻盘用的rufus，dd模式，备份整个系统盘，打算全部抹盘，插入U盘开始，没有进入引导？好吧，更改bios设置，可以进入了，结果安装的过程中出现：[drm:atom_op_jump [amdgpu]]ERROR atombios stuck in loop for more than 5secs aborting，应该是amd显卡驱动的问题，google也没查到好的解决办法，以失败而告终😅
+5.Manjaro配置记录 网上有好多，自己只是借鉴并记录一下，备用
+ 更改国内源  $ sudo pacman-mirrors -i -c China //改为国内源$ sudo pacman -Syy //更新数据源 设置 archlinuxcn 源，修改 /etc/pacman.conf，最后添加  [archlinuxcn]SigLevel = Optional TrustedOnlyServer = https://mirrors.tuna.tsinghua.edu.cn/archlinuxcn/$arch //添加清华源 // 更新$ sudo pacman -Syy 设置AUR国内源并安装  $ sudo pacman -S yaourt 修改 /etc/yaourtrc，去掉 # AURURL 的注释，修改为:AURURL=”https://aur.</description>
+    </item>
+    
+  </channel>
+</rss>

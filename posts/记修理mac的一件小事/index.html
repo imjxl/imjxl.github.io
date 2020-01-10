@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"><title>记修理Mac的一件小事 - hellojxl</title><link rel="icon" type="image/png" href=icons/myicon.png /><meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta property="og:title" content="记修理Mac的一件小事" />
+<meta property="og:description" content="最近老是老款的md101有点热，尤其是放在床上的时候，正常情况下就已经60多度了，再开个Chrome就70多度了，正好今天用另一台15款的macbook pro看视频，最多就是温热的，没有很烫的感觉，就感觉老款的有问题了。
+其实之前这台笔记本已经被拆很多次了，什么清理风扇了、更换硬盘什么的统统搞过一遍，后来还因为涂硅脂没涂好，花了500大洋，这两年岁数大了，不爱捣鼓了，心想这回又有的折腾了，随后就拿螺丝刀拆开了后盖，本想拆风扇的，结果发现梅花刀找不着了，正好又不想弄，就想清清灰的了，接着发现风扇了有个东西，像是一个碰碎的塑料块，转风扇的时候发现有时还会导致风扇卡住无法转动，联想到之前出现过一次kernel_task 进程占cpu非常高的情况，网上搜索说是有可能传感器坏了，这样一想可能是因为风扇卡住导致的，用各种方法都不好取出来，结果翻过来转了几下就出来了，然后安装后盖开机，Bingo！温度果然降下来了，基本保持在50度左右，偶尔会突然蹦到6、70然后再降下来，毕竟笔记本太老了。
+发现事情真是很有趣，就因为一个小小的东西，就会让你的电脑变的不正常，想一想一个项目、一个工程、一个国家，真是千里之堤，毁于蚁穴。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://hellojxl.com/posts/%E8%AE%B0%E4%BF%AE%E7%90%86mac%E7%9A%84%E4%B8%80%E4%BB%B6%E5%B0%8F%E4%BA%8B/" />
+<meta property="article:published_time" content="2018-08-18T21:20:01+00:00" />
+<meta property="article:modified_time" content="2018-08-18T21:20:01+00:00" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="记修理Mac的一件小事"/>
+<meta name="twitter:description" content="最近老是老款的md101有点热，尤其是放在床上的时候，正常情况下就已经60多度了，再开个Chrome就70多度了，正好今天用另一台15款的macbook pro看视频，最多就是温热的，没有很烫的感觉，就感觉老款的有问题了。
+其实之前这台笔记本已经被拆很多次了，什么清理风扇了、更换硬盘什么的统统搞过一遍，后来还因为涂硅脂没涂好，花了500大洋，这两年岁数大了，不爱捣鼓了，心想这回又有的折腾了，随后就拿螺丝刀拆开了后盖，本想拆风扇的，结果发现梅花刀找不着了，正好又不想弄，就想清清灰的了，接着发现风扇了有个东西，像是一个碰碎的塑料块，转风扇的时候发现有时还会导致风扇卡住无法转动，联想到之前出现过一次kernel_task 进程占cpu非常高的情况，网上搜索说是有可能传感器坏了，这样一想可能是因为风扇卡住导致的，用各种方法都不好取出来，结果翻过来转了几下就出来了，然后安装后盖开机，Bingo！温度果然降下来了，基本保持在50度左右，偶尔会突然蹦到6、70然后再降下来，毕竟笔记本太老了。
+发现事情真是很有趣，就因为一个小小的东西，就会让你的电脑变的不正常，想一想一个项目、一个工程、一个国家，真是千里之堤，毁于蚁穴。"/>
+<link href="https://fonts.googleapis.com/css?family=Ubuntu:300,400,300italic,400italic|Raleway:200,300" rel="stylesheet">
+
+	<link rel="stylesheet" type="text/css" media="screen" href="http://hellojxl.comcss/normalize.css" />
+	<link rel="stylesheet" type="text/css" media="screen" href="http://hellojxl.comcss/main.css" />
+	<link rel="stylesheet" type="text/css" href="http://hellojxl.comcss/custom.css" />
+	<link rel="stylesheet" type="text/css" href="http://hellojxl.comcss/dark.css" media="(prefers-color-scheme: dark)" />
+	<link rel="stylesheet" type="text/css" href="http://hellojxl.comcss/custom-dark.css" media="(prefers-color-scheme: dark)" />
+
+	<script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+	<script src="http://hellojxl.comjs/main.js"></script>
+	<script src="http://hellojxl.comjs/abc.js"></script>
+	<script src="http://hellojxl.comjs/xyz.js"></script>
+	<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+</head>
+
+<body>
+	<div class="container wrapper post">
+		<div class="header">
+	<h1 class="site-title"><a href="http://hellojxl.com">hellojxl</a></h1>
+	<div class="site-description"><h2></h2><nav class="nav social">
+			<ul class="flat"><a href="https://github.com/jxl922/" title="Github"><i data-feather="github"></i></a><a href="https://twitter.com/hellojxl" title="Twitter"><i data-feather="twitter"></i></a></ul>
+		</nav>
+	</div>
+
+	<nav class="nav">
+		<ul class="flat">
+			
+			<li>
+				<a href="/">首页</a>
+			</li>
+			
+			<li>
+				<a href="/posts">所有文章</a>
+			</li>
+			
+			<li>
+				<a href="/tags">标签</a>
+			</li>
+			
+			<li>
+				<a href="/about">关于我</a>
+			</li>
+			
+		</ul>
+	</nav>
+</div>
+
+
+		<div class="post-header">
+			<h1 class="title">记修理Mac的一件小事</h1>
+			<div class="meta">Posted at &mdash; Aug 18, 2018</div>
+		</div>
+
+		<div class="markdown">
+			<p>最近老是老款的md101有点热，尤其是放在床上的时候，正常情况下就已经60多度了，再开个Chrome就70多度了，正好今天用另一台15款的macbook pro看视频，最多就是温热的，没有很烫的感觉，就感觉老款的有问题了。</p>
+<p>其实之前这台笔记本已经被拆很多次了，什么清理风扇了、更换硬盘什么的统统搞过一遍，后来还因为涂硅脂没涂好，花了500大洋，这两年岁数大了，不爱捣鼓了，心想这回又有的折腾了，随后就拿螺丝刀拆开了后盖，本想拆风扇的，结果发现梅花刀找不着了，正好又不想弄，就想清清灰的了，接着发现风扇了有个东西，像是一个碰碎的塑料块，转风扇的时候发现有时还会导致风扇卡住无法转动，联想到之前出现过一次kernel_task 进程占cpu非常高的情况，网上搜索说是有可能传感器坏了，这样一想可能是因为风扇卡住导致的，用各种方法都不好取出来，结果翻过来转了几下就出来了，然后安装后盖开机，Bingo！温度果然降下来了，基本保持在50度左右，偶尔会突然蹦到6、70然后再降下来，毕竟笔记本太老了。</p>
+<p>发现事情真是很有趣，就因为一个小小的东西，就会让你的电脑变的不正常，想一想一个项目、一个工程、一个国家，真是千里之堤，毁于蚁穴。</p>
+
+		</div>
+
+		<div class="post-tags">
+			
+				
+					<nav class="nav tags">
+							<ul class="flat">
+								
+								<li><a href="/tags/macbook-pro">macbook pro</a></li>
+								
+							</ul>
+					</nav>
+				
+			
+		</div>
+		<div id="disqus_thread"></div>
+<script type="text/javascript">
+	(function () {
+		
+		
+		if (window.location.hostname == "localhost")
+			return;
+
+		var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+		var disqus_shortname = 'localhost';
+		dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+		(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+	})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by
+		Disqus.</a></noscript>
+<a href="http://disqus.com/" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</div>
+	<div class="footer wrapper">
+	<nav class="nav">
+		<div> © Copyright notice |  <a href="https://github.com/vividvilla/ezhil">Ezhil theme</a> | Built with <a href="https://gohugo.io">Hugo</a></div>
+	</nav>
+</div>
+
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-123-45', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+<script>feather.replace()</script>
+</body>
+</html>
