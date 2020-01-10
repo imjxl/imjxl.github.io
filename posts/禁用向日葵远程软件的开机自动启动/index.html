@@ -2,7 +2,7 @@
 <html>
 <head>
 	<meta charset="utf-8" />
-	<meta http-equiv="X-UA-Compatible" content="IE=edge"><title>禁用向日葵远程软件的开机自动启动 - hellojxl</title><link rel="icon" type="image/png" href=icons/myicon.png /><meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"><title>禁用向日葵远程软件的开机自动启动 - hellojxl</title><link rel="icon" type="image/png" href=icons/l.png /><meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta property="og:title" content="禁用向日葵远程软件的开机自动启动" />
 <meta property="og:description" content="前一段时间发现Teamviewer不能用了，总是提示连不上网络等问题，后来才知道被国内代理了，真是日了狗了！没办法就只好找类似的软件，就找到了向日葵，用起来还可以，除了有一点，就是每次开机启动都会自启，而且还启动项里还找不到，当时想算了忍忍吧，毕竟免费的，然而今天多重启了几次系统，实在是忍不了了，遂找了找方法，方法是在下面的目录中：
 /Library/LaunchDaemons//Library/LaunchAgents/~/Library/LaunchAgents/找到名称包含sunlogin的plist，删除掉就可以了，很简单。
