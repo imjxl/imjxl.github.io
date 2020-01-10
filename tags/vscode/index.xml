@@ -2,22 +2,22 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>vscode on hellojxl</title>
-    <link>/tags/vscode/</link>
+    <link>https://www.hellojxl.com/tags/vscode/</link>
     <description>Recent content in vscode on hellojxl</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>© Copyright hellojxl</copyright>
     <lastBuildDate>Thu, 29 Mar 2018 20:32:32 +0000</lastBuildDate>
     
-	<atom:link href="/tags/vscode/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://www.hellojxl.com/tags/vscode/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>在vscode中禁用just my code</title>
-      <link>/posts/%E5%9C%A8vscode%E4%B8%AD%E5%90%AF%E7%94%A8just-my-code/</link>
+      <link>https://www.hellojxl.com/posts/%E5%9C%A8vscode%E4%B8%AD%E5%90%AF%E7%94%A8just-my-code/</link>
       <pubDate>Thu, 29 Mar 2018 20:32:32 +0000</pubDate>
       
-      <guid>/posts/%E5%9C%A8vscode%E4%B8%AD%E5%90%AF%E7%94%A8just-my-code/</guid>
+      <guid>https://www.hellojxl.com/posts/%E5%9C%A8vscode%E4%B8%AD%E5%90%AF%E7%94%A8just-my-code/</guid>
       <description>最近打算开始用vscode写代码，之前用过一段时间，感觉不怎么好用，最近又用了用，感觉好用很多，今天打开一个项目发现调试不了其它项目，同时调试中一直在打印启用了just my code，所以就搜怎么禁用，当时还没搜到，后来偶然在微软的网站上查到可以在launch.json下添加：
 &amp;#34;just my code&amp;#34;:false就可以禁用just my code了，试用下来感觉已经不比vs差了，还有智能提示，感觉很智能，对了顺便说一下，可以装一下由开发者jchannon开发的C# Extensions，非常好用！</description>
     </item>

@@ -2,22 +2,22 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>mysql on hellojxl</title>
-    <link>/tags/mysql/</link>
+    <link>https://www.hellojxl.com/tags/mysql/</link>
     <description>Recent content in mysql on hellojxl</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>© Copyright hellojxl</copyright>
     <lastBuildDate>Sat, 26 Jan 2019 15:53:52 +0000</lastBuildDate>
     
-	<atom:link href="/tags/mysql/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://www.hellojxl.com/tags/mysql/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>初次使用Mysql遇到的问题</title>
-      <link>/posts/%E5%88%9D%E6%AC%A1%E4%BD%BF%E7%94%A8mysql%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/</link>
+      <link>https://www.hellojxl.com/posts/%E5%88%9D%E6%AC%A1%E4%BD%BF%E7%94%A8mysql%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/</link>
       <pubDate>Sat, 26 Jan 2019 15:53:52 +0000</pubDate>
       
-      <guid>/posts/%E5%88%9D%E6%AC%A1%E4%BD%BF%E7%94%A8mysql%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/</guid>
+      <guid>https://www.hellojxl.com/posts/%E5%88%9D%E6%AC%A1%E4%BD%BF%E7%94%A8mysql%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/</guid>
       <description>前言 最近一直忙着弄一个博客系统，以防那天node又坏了，那我就直接换了，目前是在之前文章里提到的beetlex blog的基础上进行改造的，主要想修改一下几点：
  进行前后端分离，因为我不想改动一点东西就要重新编译。 放弃cookie将，所有的认证方式更改为JWT形式。 前端样式改为类Next的主题。 数据库更改为mysql。 去掉某些不用的组件，像elasticsearch、腾讯云等。  暂时只有这些，当然还有一些迁移过程中出现的bug，目前感觉差不多已经可以用了，不过在Safari下面会报一些错误，正在解决。
 所谓的问题 其实也不是第一次用，只是迁移过程中初次遇到的问题：

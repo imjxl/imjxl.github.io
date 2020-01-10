@@ -2,22 +2,22 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>cron on hellojxl</title>
-    <link>/tags/cron/</link>
+    <link>https://www.hellojxl.com/tags/cron/</link>
     <description>Recent content in cron on hellojxl</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>© Copyright hellojxl</copyright>
     <lastBuildDate>Sat, 23 Mar 2019 14:38:10 +0000</lastBuildDate>
     
-	<atom:link href="/tags/cron/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://www.hellojxl.com/tags/cron/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>学习Linux下cron服务</title>
-      <link>/posts/%E5%AD%A6%E4%B9%A0linux%E4%B8%8Bcron%E6%9C%8D%E5%8A%A1/</link>
+      <link>https://www.hellojxl.com/posts/%E5%AD%A6%E4%B9%A0linux%E4%B8%8Bcron%E6%9C%8D%E5%8A%A1/</link>
       <pubDate>Sat, 23 Mar 2019 14:38:10 +0000</pubDate>
       
-      <guid>/posts/%E5%AD%A6%E4%B9%A0linux%E4%B8%8Bcron%E6%9C%8D%E5%8A%A1/</guid>
+      <guid>https://www.hellojxl.com/posts/%E5%AD%A6%E4%B9%A0linux%E4%B8%8Bcron%E6%9C%8D%E5%8A%A1/</guid>
       <description>起因 最近let&#39;s encrypt不定时的推送证书到期的邮件，同时也在工作中用到了Hangfire的任务管理，本身是基于类似cron的crontab的开源类库，因此就简单学习了解了一下。
 Cron时间格式 格式本身就是字符串，以5或6个空格隔开，最后可以加年(可以为空)，没有年的定义如下：
 * * * * * *- - - - - -| | | | | || | | | | +--- day of week (0 - 6) (Sunday=0)| | | | +----- month (1 - 12)| | | +------- day of month (1 - 31)| | +--------- hour (0 - 23)| +----------- min (0 - 59)+------------- sec (0 - 59)每一个域可出现的字符如下(摘自百度)：</description>

@@ -2,22 +2,22 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>swagger on hellojxl</title>
-    <link>/tags/swagger/</link>
+    <link>https://www.hellojxl.com/tags/swagger/</link>
     <description>Recent content in swagger on hellojxl</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>© Copyright hellojxl</copyright>
     <lastBuildDate>Wed, 11 Apr 2018 22:24:08 +0000</lastBuildDate>
     
-	<atom:link href="/tags/swagger/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://www.hellojxl.com/tags/swagger/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>dotnet core在swagger中添加认证</title>
-      <link>/posts/dotnet-core%E5%9C%A8swagger%E4%B8%AD%E6%B7%BB%E5%8A%A0%E8%AE%A4%E8%AF%81/</link>
+      <link>https://www.hellojxl.com/posts/dotnet-core%E5%9C%A8swagger%E4%B8%AD%E6%B7%BB%E5%8A%A0%E8%AE%A4%E8%AF%81/</link>
       <pubDate>Wed, 11 Apr 2018 22:24:08 +0000</pubDate>
       
-      <guid>/posts/dotnet-core%E5%9C%A8swagger%E4%B8%AD%E6%B7%BB%E5%8A%A0%E8%AE%A4%E8%AF%81/</guid>
+      <guid>https://www.hellojxl.com/posts/dotnet-core%E5%9C%A8swagger%E4%B8%AD%E6%B7%BB%E5%8A%A0%E8%AE%A4%E8%AF%81/</guid>
       <description>2018-04-16更新：经过测试，这么写是可以的，只是每次调用前都要加上：bearer token,可以在命名Filter的时候加上提醒一下，暂时没去想其它更好的方法
 还有当前如果有多个项目的话，比如这个项目引用了另一个项目的model，默认是不会显示注释的，解决方法是：每个项目单独生成xml文件，然后在include XML文档时同时引入，那么就可以显示了
 Nignx反向代理的情况下，默认会找不到swagger的json文件导致失败，方法是：

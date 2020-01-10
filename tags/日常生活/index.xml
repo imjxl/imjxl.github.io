@@ -2,22 +2,22 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>日常生活 on hellojxl</title>
-    <link>/tags/%E6%97%A5%E5%B8%B8%E7%94%9F%E6%B4%BB/</link>
+    <link>https://www.hellojxl.com/tags/%E6%97%A5%E5%B8%B8%E7%94%9F%E6%B4%BB/</link>
     <description>Recent content in 日常生活 on hellojxl</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>© Copyright hellojxl</copyright>
     <lastBuildDate>Tue, 10 Apr 2018 21:26:58 +0000</lastBuildDate>
     
-	<atom:link href="/tags/%E6%97%A5%E5%B8%B8%E7%94%9F%E6%B4%BB/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://www.hellojxl.com/tags/%E6%97%A5%E5%B8%B8%E7%94%9F%E6%B4%BB/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Vscode插件sqltools的用法</title>
-      <link>/posts/vscode%E6%8F%92%E4%BB%B6sqltools%E7%9A%84%E7%94%A8%E6%B3%95/</link>
+      <link>https://www.hellojxl.com/posts/vscode%E6%8F%92%E4%BB%B6sqltools%E7%9A%84%E7%94%A8%E6%B3%95/</link>
       <pubDate>Tue, 10 Apr 2018 21:26:58 +0000</pubDate>
       
-      <guid>/posts/vscode%E6%8F%92%E4%BB%B6sqltools%E7%9A%84%E7%94%A8%E6%B3%95/</guid>
+      <guid>https://www.hellojxl.com/posts/vscode%E6%8F%92%E4%BB%B6sqltools%E7%9A%84%E7%94%A8%E6%B3%95/</guid>
       <description>好久没写东西了，感觉不能再这样下去了，赶紧补一补，正好今天边查数据库边写Api，突然想为何不都在vscode中干活呢，然后就搜了搜，还真有这样的插件，就是sqltools，其实之前最早是sublime上找的，貌似是一个开发者，但是没配置成功，今天在vscode里配置成功了，就此记录下
 sqltools的安装 这个很简单，如果方便呢直接在vscode的插件里搜索sqltools，或者用命令安装，貌似呼出控制台的快捷键不一样，Windows上是：F1，Mac上是：Shift+Command+P，或许是跟我设置的快捷键有关，因为本人之前比较喜欢sublime(现在也用)，输入命令：ext install sqltools就可以了
 sqltools的配置 之前在sublime中没配置成功，按网上的教程好像不起作用，这次花了点时间具体研究了vscode的，具体是：

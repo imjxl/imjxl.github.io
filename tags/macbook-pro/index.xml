@@ -2,22 +2,22 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>macbook pro on hellojxl</title>
-    <link>/tags/macbook-pro/</link>
+    <link>https://www.hellojxl.com/tags/macbook-pro/</link>
     <description>Recent content in macbook pro on hellojxl</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>© Copyright hellojxl</copyright>
     <lastBuildDate>Sat, 18 Aug 2018 21:20:01 +0000</lastBuildDate>
     
-	<atom:link href="/tags/macbook-pro/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://www.hellojxl.com/tags/macbook-pro/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>记修理Mac的一件小事</title>
-      <link>/posts/%E8%AE%B0%E4%BF%AE%E7%90%86mac%E7%9A%84%E4%B8%80%E4%BB%B6%E5%B0%8F%E4%BA%8B/</link>
+      <link>https://www.hellojxl.com/posts/%E8%AE%B0%E4%BF%AE%E7%90%86mac%E7%9A%84%E4%B8%80%E4%BB%B6%E5%B0%8F%E4%BA%8B/</link>
       <pubDate>Sat, 18 Aug 2018 21:20:01 +0000</pubDate>
       
-      <guid>/posts/%E8%AE%B0%E4%BF%AE%E7%90%86mac%E7%9A%84%E4%B8%80%E4%BB%B6%E5%B0%8F%E4%BA%8B/</guid>
+      <guid>https://www.hellojxl.com/posts/%E8%AE%B0%E4%BF%AE%E7%90%86mac%E7%9A%84%E4%B8%80%E4%BB%B6%E5%B0%8F%E4%BA%8B/</guid>
       <description>最近老是老款的md101有点热，尤其是放在床上的时候，正常情况下就已经60多度了，再开个Chrome就70多度了，正好今天用另一台15款的macbook pro看视频，最多就是温热的，没有很烫的感觉，就感觉老款的有问题了。
 其实之前这台笔记本已经被拆很多次了，什么清理风扇了、更换硬盘什么的统统搞过一遍，后来还因为涂硅脂没涂好，花了500大洋，这两年岁数大了，不爱捣鼓了，心想这回又有的折腾了，随后就拿螺丝刀拆开了后盖，本想拆风扇的，结果发现梅花刀找不着了，正好又不想弄，就想清清灰的了，接着发现风扇了有个东西，像是一个碰碎的塑料块，转风扇的时候发现有时还会导致风扇卡住无法转动，联想到之前出现过一次kernel_task 进程占cpu非常高的情况，网上搜索说是有可能传感器坏了，这样一想可能是因为风扇卡住导致的，用各种方法都不好取出来，结果翻过来转了几下就出来了，然后安装后盖开机，Bingo！温度果然降下来了，基本保持在50度左右，偶尔会突然蹦到6、70然后再降下来，毕竟笔记本太老了。
 发现事情真是很有趣，就因为一个小小的东西，就会让你的电脑变的不正常，想一想一个项目、一个工程、一个国家，真是千里之堤，毁于蚁穴。</description>

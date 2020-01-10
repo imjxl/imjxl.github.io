@@ -2,22 +2,22 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>manjaro on hellojxl</title>
-    <link>/tags/manjaro/</link>
+    <link>https://www.hellojxl.com/tags/manjaro/</link>
     <description>Recent content in manjaro on hellojxl</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>© Copyright hellojxl</copyright>
     <lastBuildDate>Mon, 16 Jul 2018 22:16:18 +0000</lastBuildDate>
     
-	<atom:link href="/tags/manjaro/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://www.hellojxl.com/tags/manjaro/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Manjaro折腾笔记</title>
-      <link>/posts/manjaro%E6%8A%98%E8%85%BE%E7%AC%94%E8%AE%B0/</link>
+      <link>https://www.hellojxl.com/posts/manjaro%E6%8A%98%E8%85%BE%E7%AC%94%E8%AE%B0/</link>
       <pubDate>Mon, 16 Jul 2018 22:16:18 +0000</pubDate>
       
-      <guid>/posts/manjaro%E6%8A%98%E8%85%BE%E7%AC%94%E8%AE%B0/</guid>
+      <guid>https://www.hellojxl.com/posts/manjaro%E6%8A%98%E8%85%BE%E7%AC%94%E8%AE%B0/</guid>
       <description>前言 由于公司配的E460笔记本经常死机，不清楚是不是win10的问题，同时由于win10是家庭版无法使用Docker，所以打算换一下系统看看有没有改善，并且不想装双系统，所以用虚拟机代替，下面就是整个折腾的过程，虽然最终以失败而告终。
 1.选择宿主主机系统   以win10为宿主主机，虚拟linux，但是由于win10系统下大概率会死机，所以不想采用这种方案
   以linux为宿主主机，虚拟Windows，可能会消耗资源多一些，不过还可以承受。所以打算采用这种方式。

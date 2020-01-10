@@ -10,7 +10,7 @@
  构建脚手架，去启动页进行构建，目前选择Web中的Web，Jersey，SQl中的MyBatis，Maven还是Gradle都可以，根据自己情况选择 导入工程，进行构建，我这里选的intellJ IDEA社区版，免费嘛，eclipse也可以，根据自己习惯，我这里选择Maven工程，选择jdk版本，接下来就是自动构建了 新建控制器  //增加注解@RestControllerpublic class HelloController {//增加对应关系@RequestMapping(value=&#34;/hello&#34;)public String Hello(){return &#34;good&#34;;}}  修改application.properties文件，增加数据库配置  //配置数据库urlspring.datasource.url=jdbc:postgresql://localhost:5432/xxx?useUnicode=true&amp;characterEncoding=utf8//用户名spring.datasource.username=xxx//密码spring.datasource.password=xx驱动spring.datasource.driverClassName=org.postgresql.Driver//实体位置，当前还不涉及到，所以没用到mybatis.typeAliasesPackage=com.hellojxl.helloMybaits.boot_feature.entity//映射的xml所在位置mybatis.mapperLocations=classpath:mapper/*.xml 调出Maven工程窗口，方法是：View-&gt;Tool Window-&gt;Maven Projects，选中spring-boot，右键spring-boot-&gt;run进行启动，当初用这个还有点懵逼😅  出现的问题  异常：Spring Boot - Error creating bean with name &lsquo;dataSource&rsquo; defined in class path resource
 解决方法：驱动配置出错，首先没有加载postgresql驱动，在pom文件中增加：  &lt;dependency&gt;&lt;groupId&gt;postgresql&lt;/groupId&gt;&lt;artifactId&gt;postgresql&lt;/artifactId&gt;&lt;version&gt;9.1-901-1.jdbc4&lt;/version&gt;&lt;/dependency&gt; 然后是数据库配置出错，驱动配置的是mysql的，自己复制粘贴的锅" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="/posts/springboot-mybatis%E6%B5%8B%E8%AF%95%E6%88%90%E5%8A%9F/" />
+<meta property="og:url" content="https://www.hellojxl.com/posts/springboot-mybatis%E6%B5%8B%E8%AF%95%E6%88%90%E5%8A%9F/" />
 <meta property="article:published_time" content="2018-04-24T23:26:27+00:00" />
 <meta property="article:modified_time" content="2018-04-24T23:26:27+00:00" />
 <meta name="twitter:card" content="summary"/>
@@ -22,19 +22,19 @@
 解决方法：驱动配置出错，首先没有加载postgresql驱动，在pom文件中增加：  &lt;dependency&gt;&lt;groupId&gt;postgresql&lt;/groupId&gt;&lt;artifactId&gt;postgresql&lt;/artifactId&gt;&lt;version&gt;9.1-901-1.jdbc4&lt;/version&gt;&lt;/dependency&gt; 然后是数据库配置出错，驱动配置的是mysql的，自己复制粘贴的锅"/>
 <link href="https://fonts.googleapis.com/css?family=Ubuntu:300,400,300italic,400italic|Raleway:200,300" rel="stylesheet">
 
-	<link rel="stylesheet" type="text/css" media="screen" href="css/normalize.css" />
-	<link rel="stylesheet" type="text/css" media="screen" href="css/main.css" /><link rel="stylesheet" type="text/css" href="css/dark.css" media="(prefers-color-scheme: dark)" />
+	<link rel="stylesheet" type="text/css" media="screen" href="https://www.hellojxl.com/css/normalize.css" />
+	<link rel="stylesheet" type="text/css" media="screen" href="https://www.hellojxl.com/css/main.css" /><link rel="stylesheet" type="text/css" href="https://www.hellojxl.com/css/dark.css" media="(prefers-color-scheme: dark)" />
 
-	<script src="js/feather.min.js"></script>
+	<script src="https://www.hellojxl.com/js/feather.min.js"></script>
 	
-	<script src="js/main.js"></script>
+	<script src="https://www.hellojxl.com/js/main.js"></script>
 	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 </head>
 
 <body>
 	<div class="container wrapper post">
 		<div class="header">
-	<h1 class="site-title"><a href="">hellojxl</a></h1>
+	<h1 class="site-title"><a href="https://www.hellojxl.com/">hellojxl</a></h1>
 	<div class="site-description"><h2></h2><nav class="nav social">
 			<ul class="flat"><a href="https://github.com/jxl922/" title="Github"><i data-feather="github"></i></a><a href="https://twitter.com/hellojxl" title="Twitter"><i data-feather="twitter"></i></a></ul>
 		</nav>
