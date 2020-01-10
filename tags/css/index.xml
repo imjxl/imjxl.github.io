@@ -2,22 +2,22 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>css on hellojxl</title>
-    <link>http://hellojxl.com/tags/css/</link>
+    <link>/tags/css/</link>
     <description>Recent content in css on hellojxl</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>© Copyright notice</copyright>
     <lastBuildDate>Sat, 03 Nov 2018 20:22:10 +0000</lastBuildDate>
     
-	<atom:link href="http://hellojxl.com/tags/css/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="/tags/css/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>html下ul_li横排居中</title>
-      <link>http://hellojxl.com/posts/html%E4%B8%8Bul-li%E6%A8%AA%E6%8E%92%E5%B1%85%E4%B8%AD/</link>
+      <link>/posts/html%E4%B8%8Bul-li%E6%A8%AA%E6%8E%92%E5%B1%85%E4%B8%AD/</link>
       <pubDate>Sat, 03 Nov 2018 20:22:10 +0000</pubDate>
       
-      <guid>http://hellojxl.com/posts/html%E4%B8%8Bul-li%E6%A8%AA%E6%8E%92%E5%B1%85%E4%B8%AD/</guid>
+      <guid>/posts/html%E4%B8%8Bul-li%E6%A8%AA%E6%8E%92%E5%B1%85%E4%B8%AD/</guid>
       <description>好久没写东西了，有点偷懒了，最近一直在研究three.js，目前在研究材质方面的东西，有成果了会分享出来。在做demo的时候遇到html中ul li需要横排居中并且贴近底部的问题，当时没来得及解决，就硬编码进去了，现在解决了，记录一下。
 方法一：flex布局 实际工作中不是采用这种方法解决的，毕竟刚接触时间不长，只是看看有没有其它解决方法的时候找到的，下面是参考了网上并修改后的代码：
 &amp;lt;!DOCTYPE html&amp;gt;&amp;lt;html&amp;gt;&amp;lt;head&amp;gt;&amp;lt;meta charset=&amp;#34;utf-8&amp;#34;&amp;gt;&amp;lt;title&amp;gt;demo&amp;lt;/title&amp;gt;&amp;lt;style type=&amp;#34;text/css&amp;#34;&amp;gt;html {width: 100%;height: 100%;}body {width: 100%;height: 100%;}.container {display: -webkit-box;-webkit-box-orient: vertical;height: 85%;}ul {display: flex;flex-flow: row nowrap;justify-content: center;flex-direction: row;}ul li {list-style: none;text-align: center;line-height: 30px;padding: 10px;height: 30px;width: 100px;margin: 0 10px;}&amp;lt;/style&amp;gt;&amp;lt;/head&amp;gt;&amp;lt;body&amp;gt;&amp;lt;div class=&amp;#34;container&amp;#34;&amp;gt;&amp;lt;/div&amp;gt;&amp;lt;footer&amp;gt;&amp;lt;ul&amp;gt;&amp;lt;li&amp;gt;列表1&amp;lt;/li&amp;gt;&amp;lt;li&amp;gt;列表2&amp;lt;/li&amp;gt;&amp;lt;li&amp;gt;列表3&amp;lt;/li&amp;gt;&amp;lt;/ul&amp;gt;&amp;lt;/footer&amp;gt;&amp;lt;/body&amp;gt;&amp;lt;/html&amp;gt;具体的用法就不说了，毕竟自己接触时间也不长就不误人子弟了。</description>

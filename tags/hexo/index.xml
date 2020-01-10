@@ -2,22 +2,22 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>hexo on hellojxl</title>
-    <link>http://hellojxl.com/tags/hexo/</link>
+    <link>/tags/hexo/</link>
     <description>Recent content in hexo on hellojxl</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>© Copyright notice</copyright>
     <lastBuildDate>Tue, 25 Dec 2018 22:26:33 +0000</lastBuildDate>
     
-	<atom:link href="http://hellojxl.com/tags/hexo/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="/tags/hexo/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>在新Mac上继续hexo</title>
-      <link>http://hellojxl.com/posts/%E5%9C%A8%E6%96%B0mac%E4%B8%8A%E7%BB%A7%E7%BB%ADhexo/</link>
+      <link>/posts/%E5%9C%A8%E6%96%B0mac%E4%B8%8A%E7%BB%A7%E7%BB%ADhexo/</link>
       <pubDate>Tue, 25 Dec 2018 22:26:33 +0000</pubDate>
       
-      <guid>http://hellojxl.com/posts/%E5%9C%A8%E6%96%B0mac%E4%B8%8A%E7%BB%A7%E7%BB%ADhexo/</guid>
+      <guid>/posts/%E5%9C%A8%E6%96%B0mac%E4%B8%8A%E7%BB%A7%E7%BB%ADhexo/</guid>
       <description>起因 最近好久没写东西了，借口呢就是事情有点多，没有时间，其实就是😄。为什么又想写了呢？这几天刚把域名从腾讯云迁移到了Cloudflare，原因就是腾讯域名想多配置几个解析地址都不行，真是腻歪透了，刚好赶上Cloudflare的第八波，就直接迁移了，而且也比别的地便宜。好了，闲话不多说，下面开始。
 糟心and沮丧🙍‍♂️ 本以为很简单的东西，直接就是装node跟npm嘛，最多加上hexo跟git，好嘛，全有问题！！！
   Git不能用了
@@ -40,10 +40,10 @@ ssh-add 你的私钥然后将你的公钥内容复制到github或者是其它�
     
     <item>
       <title>hexo在windows subsystem for linux 环境下的配置</title>
-      <link>http://hellojxl.com/posts/windows-subsystem-linux-%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/</link>
+      <link>/posts/windows-subsystem-linux-%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/</link>
       <pubDate>Sat, 24 Mar 2018 18:58:27 +0000</pubDate>
       
-      <guid>http://hellojxl.com/posts/windows-subsystem-linux-%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/</guid>
+      <guid>/posts/windows-subsystem-linux-%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/</guid>
       <description>最近想重新启用hexo来写博客，可总不能只在一台机子上写，于是就在公司的Windows笔记本hexo环境，正好最近捣鼓sublinux，就想在Linux里部署，当时选的Debian系统，然后麻烦就来了，Windows上的sublinux跟mini版一样，各种环境都没有，什么命令都没有，可经过一番折腾，现在回想起来可能跟自己的Linux水平太差有关，废话不多说，进入正题
 安装nodejs 先开始在Mac上安装的时候太顺了，本以为Linux上也不会太难，结果折腾了一天才安装上 nodejs官网有三种安装方式，①Debian的本身的apt②已经编译好的二进制文件③源码编译，这三个里面最简单的事第二种，下载完成之后只需配置环境变量即可，由于是sublinux的缘故，配置环境变量只有用户下的.bashrc文件里才行，比如root用户需要如下操作:
   vi ~/.bashrc 在最后一行添加：export PATH=$PATH:/usr/local/node/bin 注：路径可以自由写 source ~/.bashrc 立即生效即可   安装Git和ssh 这个就比较简单了，直接apt-get install就可以了，具体的配置就不多说了，网上多的是。

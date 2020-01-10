@@ -2,22 +2,22 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Posts on hellojxl</title>
-    <link>http://hellojxl.com/posts/</link>
+    <link>/posts/</link>
     <description>Recent content in Posts on hellojxl</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>© Copyright notice</copyright>
     <lastBuildDate>Sat, 23 Mar 2019 14:38:10 +0000</lastBuildDate>
     
-	<atom:link href="http://hellojxl.com/posts/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="/posts/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>学习Linux下cron服务</title>
-      <link>http://hellojxl.com/posts/%E5%AD%A6%E4%B9%A0linux%E4%B8%8Bcron%E6%9C%8D%E5%8A%A1/</link>
+      <link>/posts/%E5%AD%A6%E4%B9%A0linux%E4%B8%8Bcron%E6%9C%8D%E5%8A%A1/</link>
       <pubDate>Sat, 23 Mar 2019 14:38:10 +0000</pubDate>
       
-      <guid>http://hellojxl.com/posts/%E5%AD%A6%E4%B9%A0linux%E4%B8%8Bcron%E6%9C%8D%E5%8A%A1/</guid>
+      <guid>/posts/%E5%AD%A6%E4%B9%A0linux%E4%B8%8Bcron%E6%9C%8D%E5%8A%A1/</guid>
       <description>起因 最近let&#39;s encrypt不定时的推送证书到期的邮件，同时也在工作中用到了Hangfire的任务管理，本身是基于类似cron的crontab的开源类库，因此就简单学习了解了一下。
 Cron时间格式 格式本身就是字符串，以5或6个空格隔开，最后可以加年(可以为空)，没有年的定义如下：
 * * * * * *- - - - - -| | | | | || | | | | +--- day of week (0 - 6) (Sunday=0)| | | | +----- month (1 - 12)| | | +------- day of month (1 - 31)| | +--------- hour (0 - 23)| +----------- min (0 - 59)+------------- sec (0 - 59)每一个域可出现的字符如下(摘自百度)：</description>
@@ -25,10 +25,10 @@ Cron时间格式 格式本身就是字符串，以5或6个空格隔开，最后�
     
     <item>
       <title>c#调用c&#43;&#43;出现的内存异常</title>
-      <link>http://hellojxl.com/posts/c-%E8%B0%83%E7%94%A8c-%E5%87%BA%E7%8E%B0%E7%9A%84%E5%86%85%E5%AD%98%E5%BC%82%E5%B8%B8/</link>
+      <link>/posts/c-%E8%B0%83%E7%94%A8c-%E5%87%BA%E7%8E%B0%E7%9A%84%E5%86%85%E5%AD%98%E5%BC%82%E5%B8%B8/</link>
       <pubDate>Mon, 11 Feb 2019 21:50:50 +0000</pubDate>
       
-      <guid>http://hellojxl.com/posts/c-%E8%B0%83%E7%94%A8c-%E5%87%BA%E7%8E%B0%E7%9A%84%E5%86%85%E5%AD%98%E5%BC%82%E5%B8%B8/</guid>
+      <guid>/posts/c-%E8%B0%83%E7%94%A8c-%E5%87%BA%E7%8E%B0%E7%9A%84%E5%86%85%E5%AD%98%E5%BC%82%E5%B8%B8/</guid>
       <description>补充：
 当时测试的时候是在控制台里测试的，但是放在Unity里依然会崩溃，后来对比了一下网上的一些Demo，发现原来C++的指针里少了点代码：
 //回调函数typedef void(__stdcall *callback)(int result, char *message);就是说需要加上__stdcall修饰，具体的说明见微软官方。
@@ -41,10 +41,10 @@ Cron时间格式 格式本身就是字符串，以5或6个空格隔开，最后�
     
     <item>
       <title>初次使用Mysql遇到的问题</title>
-      <link>http://hellojxl.com/posts/%E5%88%9D%E6%AC%A1%E4%BD%BF%E7%94%A8mysql%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/</link>
+      <link>/posts/%E5%88%9D%E6%AC%A1%E4%BD%BF%E7%94%A8mysql%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/</link>
       <pubDate>Sat, 26 Jan 2019 15:53:52 +0000</pubDate>
       
-      <guid>http://hellojxl.com/posts/%E5%88%9D%E6%AC%A1%E4%BD%BF%E7%94%A8mysql%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/</guid>
+      <guid>/posts/%E5%88%9D%E6%AC%A1%E4%BD%BF%E7%94%A8mysql%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/</guid>
       <description>前言 最近一直忙着弄一个博客系统，以防那天node又坏了，那我就直接换了，目前是在之前文章里提到的beetlex blog的基础上进行改造的，主要想修改一下几点：
  进行前后端分离，因为我不想改动一点东西就要重新编译。 放弃cookie将，所有的认证方式更改为JWT形式。 前端样式改为类Next的主题。 数据库更改为mysql。 去掉某些不用的组件，像elasticsearch、腾讯云等。  暂时只有这些，当然还有一些迁移过程中出现的bug，目前感觉差不多已经可以用了，不过在Safari下面会报一些错误，正在解决。
 所谓的问题 其实也不是第一次用，只是迁移过程中初次遇到的问题：
@@ -56,10 +56,10 @@ Cron时间格式 格式本身就是字符串，以5或6个空格隔开，最后�
     
     <item>
       <title>关于nvm的使用</title>
-      <link>http://hellojxl.com/posts/%E5%85%B3%E4%BA%8Envm%E7%9A%84%E4%BD%BF%E7%94%A8/</link>
+      <link>/posts/%E5%85%B3%E4%BA%8Envm%E7%9A%84%E4%BD%BF%E7%94%A8/</link>
       <pubDate>Sat, 12 Jan 2019 15:38:03 +0000</pubDate>
       
-      <guid>http://hellojxl.com/posts/%E5%85%B3%E4%BA%8Envm%E7%9A%84%E4%BD%BF%E7%94%A8/</guid>
+      <guid>/posts/%E5%85%B3%E4%BA%8Envm%E7%9A%84%E4%BD%BF%E7%94%A8/</guid>
       <description>关于nvm nvm是一个nodejs的版本管理工具，可以在多个node.js的版本之间进行切换。
 原因 一不小心升级了旧MBP上node版本，hexo直接GG，心中真是一万个草泥马崩腾而过，顿时就不想用hexo了，烦的不行。偶然发现了nvm，虽说有n包管理工具，但是感觉不好用，于是直接尝试了一下，很顺畅，心里立马就舒心了。
 nvm的安装和使用 nvm的github是这里，总体来说还是非常简单的，Mac下直接用：
@@ -70,10 +70,10 @@ curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.34.0/install.sh | b
     
     <item>
       <title>迁移Hexo到VPS</title>
-      <link>http://hellojxl.com/posts/%E8%BF%81%E7%A7%BBhexo%E5%88%B0vps/</link>
+      <link>/posts/%E8%BF%81%E7%A7%BBhexo%E5%88%B0vps/</link>
       <pubDate>Sat, 05 Jan 2019 21:31:10 +0000</pubDate>
       
-      <guid>http://hellojxl.com/posts/%E8%BF%81%E7%A7%BBhexo%E5%88%B0vps/</guid>
+      <guid>/posts/%E8%BF%81%E7%A7%BBhexo%E5%88%B0vps/</guid>
       <description>前言 自从Cloudflare可以迁移域名了，就陆续将手里的域名迁移了过来，当前这个域名最开始是在腾讯上注册的，当时是部署在Gitpages上，用的CNAME的方式，听说Gitpages可以启用HTTPS的时候就打算启用，然后只能添加2条解析，无法启用，真是腻歪透了。迁移过来之后就又想直接放到自己VPS上。
 方式   直接部署hexo服务端，通过git方式直接提交到VPS上。目前没有采用这种方式，首先VPS在国外，大批量的数据传输害怕被针对；其次网络环境也是个问题，所以不做多介绍这种方式了。
   依旧提交代码到Github，然后通过git拉取到VPS上。 本质上Github上是已经是html了，所以在VPS上通过nginx直接部署就可以了，感觉这种方式更好。
@@ -86,10 +86,10 @@ var mac = Request.Headers[&amp;#34;X-Hub-Signature&amp;#34;];string signature =
     
     <item>
       <title>禁用向日葵远程软件的开机自动启动</title>
-      <link>http://hellojxl.com/posts/%E7%A6%81%E7%94%A8%E5%90%91%E6%97%A5%E8%91%B5%E8%BF%9C%E7%A8%8B%E8%BD%AF%E4%BB%B6%E7%9A%84%E5%BC%80%E6%9C%BA%E8%87%AA%E5%8A%A8%E5%90%AF%E5%8A%A8/</link>
+      <link>/posts/%E7%A6%81%E7%94%A8%E5%90%91%E6%97%A5%E8%91%B5%E8%BF%9C%E7%A8%8B%E8%BD%AF%E4%BB%B6%E7%9A%84%E5%BC%80%E6%9C%BA%E8%87%AA%E5%8A%A8%E5%90%AF%E5%8A%A8/</link>
       <pubDate>Wed, 26 Dec 2018 15:43:49 +0000</pubDate>
       
-      <guid>http://hellojxl.com/posts/%E7%A6%81%E7%94%A8%E5%90%91%E6%97%A5%E8%91%B5%E8%BF%9C%E7%A8%8B%E8%BD%AF%E4%BB%B6%E7%9A%84%E5%BC%80%E6%9C%BA%E8%87%AA%E5%8A%A8%E5%90%AF%E5%8A%A8/</guid>
+      <guid>/posts/%E7%A6%81%E7%94%A8%E5%90%91%E6%97%A5%E8%91%B5%E8%BF%9C%E7%A8%8B%E8%BD%AF%E4%BB%B6%E7%9A%84%E5%BC%80%E6%9C%BA%E8%87%AA%E5%8A%A8%E5%90%AF%E5%8A%A8/</guid>
       <description>前一段时间发现Teamviewer不能用了，总是提示连不上网络等问题，后来才知道被国内代理了，真是日了狗了！没办法就只好找类似的软件，就找到了向日葵，用起来还可以，除了有一点，就是每次开机启动都会自启，而且还启动项里还找不到，当时想算了忍忍吧，毕竟免费的，然而今天多重启了几次系统，实在是忍不了了，遂找了找方法，方法是在下面的目录中：
 /Library/LaunchDaemons//Library/LaunchAgents/~/Library/LaunchAgents/找到名称包含sunlogin的plist，删除掉就可以了，很简单。
 参考：
@@ -99,10 +99,10 @@ https://www.jiangxianli.com/?p=82</description>
     
     <item>
       <title>在新Mac上继续hexo</title>
-      <link>http://hellojxl.com/posts/%E5%9C%A8%E6%96%B0mac%E4%B8%8A%E7%BB%A7%E7%BB%ADhexo/</link>
+      <link>/posts/%E5%9C%A8%E6%96%B0mac%E4%B8%8A%E7%BB%A7%E7%BB%ADhexo/</link>
       <pubDate>Tue, 25 Dec 2018 22:26:33 +0000</pubDate>
       
-      <guid>http://hellojxl.com/posts/%E5%9C%A8%E6%96%B0mac%E4%B8%8A%E7%BB%A7%E7%BB%ADhexo/</guid>
+      <guid>/posts/%E5%9C%A8%E6%96%B0mac%E4%B8%8A%E7%BB%A7%E7%BB%ADhexo/</guid>
       <description>起因 最近好久没写东西了，借口呢就是事情有点多，没有时间，其实就是😄。为什么又想写了呢？这几天刚把域名从腾讯云迁移到了Cloudflare，原因就是腾讯域名想多配置几个解析地址都不行，真是腻歪透了，刚好赶上Cloudflare的第八波，就直接迁移了，而且也比别的地便宜。好了，闲话不多说，下面开始。
 糟心and沮丧🙍‍♂️ 本以为很简单的东西，直接就是装node跟npm嘛，最多加上hexo跟git，好嘛，全有问题！！！
   Git不能用了
@@ -125,10 +125,10 @@ ssh-add 你的私钥然后将你的公钥内容复制到github或者是其它�
     
     <item>
       <title>关于人生追求的迷惑</title>
-      <link>http://hellojxl.com/posts/%E5%85%B3%E4%BA%8E%E4%BA%BA%E7%94%9F%E8%BF%BD%E6%B1%82%E7%9A%84%E8%BF%B7%E6%83%91/</link>
+      <link>/posts/%E5%85%B3%E4%BA%8E%E4%BA%BA%E7%94%9F%E8%BF%BD%E6%B1%82%E7%9A%84%E8%BF%B7%E6%83%91/</link>
       <pubDate>Sat, 03 Nov 2018 22:49:05 +0000</pubDate>
       
-      <guid>http://hellojxl.com/posts/%E5%85%B3%E4%BA%8E%E4%BA%BA%E7%94%9F%E8%BF%BD%E6%B1%82%E7%9A%84%E8%BF%B7%E6%83%91/</guid>
+      <guid>/posts/%E5%85%B3%E4%BA%8E%E4%BA%BA%E7%94%9F%E8%BF%BD%E6%B1%82%E7%9A%84%E8%BF%B7%E6%83%91/</guid>
       <description>之前看动漫《天行九歌》的时候，看到秦王向韩非请教是否有一种超越凡人的力量在掌控着命运，韩非答道(有改)：
  十年可见春去秋来
 百年可证生老病死
@@ -139,10 +139,10 @@ ssh-add 你的私钥然后将你的公钥内容复制到github或者是其它�
     
     <item>
       <title>html下ul_li横排居中</title>
-      <link>http://hellojxl.com/posts/html%E4%B8%8Bul-li%E6%A8%AA%E6%8E%92%E5%B1%85%E4%B8%AD/</link>
+      <link>/posts/html%E4%B8%8Bul-li%E6%A8%AA%E6%8E%92%E5%B1%85%E4%B8%AD/</link>
       <pubDate>Sat, 03 Nov 2018 20:22:10 +0000</pubDate>
       
-      <guid>http://hellojxl.com/posts/html%E4%B8%8Bul-li%E6%A8%AA%E6%8E%92%E5%B1%85%E4%B8%AD/</guid>
+      <guid>/posts/html%E4%B8%8Bul-li%E6%A8%AA%E6%8E%92%E5%B1%85%E4%B8%AD/</guid>
       <description>好久没写东西了，有点偷懒了，最近一直在研究three.js，目前在研究材质方面的东西，有成果了会分享出来。在做demo的时候遇到html中ul li需要横排居中并且贴近底部的问题，当时没来得及解决，就硬编码进去了，现在解决了，记录一下。
 方法一：flex布局 实际工作中不是采用这种方法解决的，毕竟刚接触时间不长，只是看看有没有其它解决方法的时候找到的，下面是参考了网上并修改后的代码：
 &amp;lt;!DOCTYPE html&amp;gt;&amp;lt;html&amp;gt;&amp;lt;head&amp;gt;&amp;lt;meta charset=&amp;#34;utf-8&amp;#34;&amp;gt;&amp;lt;title&amp;gt;demo&amp;lt;/title&amp;gt;&amp;lt;style type=&amp;#34;text/css&amp;#34;&amp;gt;html {width: 100%;height: 100%;}body {width: 100%;height: 100%;}.container {display: -webkit-box;-webkit-box-orient: vertical;height: 85%;}ul {display: flex;flex-flow: row nowrap;justify-content: center;flex-direction: row;}ul li {list-style: none;text-align: center;line-height: 30px;padding: 10px;height: 30px;width: 100px;margin: 0 10px;}&amp;lt;/style&amp;gt;&amp;lt;/head&amp;gt;&amp;lt;body&amp;gt;&amp;lt;div class=&amp;#34;container&amp;#34;&amp;gt;&amp;lt;/div&amp;gt;&amp;lt;footer&amp;gt;&amp;lt;ul&amp;gt;&amp;lt;li&amp;gt;列表1&amp;lt;/li&amp;gt;&amp;lt;li&amp;gt;列表2&amp;lt;/li&amp;gt;&amp;lt;li&amp;gt;列表3&amp;lt;/li&amp;gt;&amp;lt;/ul&amp;gt;&amp;lt;/footer&amp;gt;&amp;lt;/body&amp;gt;&amp;lt;/html&amp;gt;具体的用法就不说了，毕竟自己接触时间也不长就不误人子弟了。</description>
@@ -150,10 +150,10 @@ ssh-add 你的私钥然后将你的公钥内容复制到github或者是其它�
     
     <item>
       <title>记修理Mac的一件小事</title>
-      <link>http://hellojxl.com/posts/%E8%AE%B0%E4%BF%AE%E7%90%86mac%E7%9A%84%E4%B8%80%E4%BB%B6%E5%B0%8F%E4%BA%8B/</link>
+      <link>/posts/%E8%AE%B0%E4%BF%AE%E7%90%86mac%E7%9A%84%E4%B8%80%E4%BB%B6%E5%B0%8F%E4%BA%8B/</link>
       <pubDate>Sat, 18 Aug 2018 21:20:01 +0000</pubDate>
       
-      <guid>http://hellojxl.com/posts/%E8%AE%B0%E4%BF%AE%E7%90%86mac%E7%9A%84%E4%B8%80%E4%BB%B6%E5%B0%8F%E4%BA%8B/</guid>
+      <guid>/posts/%E8%AE%B0%E4%BF%AE%E7%90%86mac%E7%9A%84%E4%B8%80%E4%BB%B6%E5%B0%8F%E4%BA%8B/</guid>
       <description>最近老是老款的md101有点热，尤其是放在床上的时候，正常情况下就已经60多度了，再开个Chrome就70多度了，正好今天用另一台15款的macbook pro看视频，最多就是温热的，没有很烫的感觉，就感觉老款的有问题了。
 其实之前这台笔记本已经被拆很多次了，什么清理风扇了、更换硬盘什么的统统搞过一遍，后来还因为涂硅脂没涂好，花了500大洋，这两年岁数大了，不爱捣鼓了，心想这回又有的折腾了，随后就拿螺丝刀拆开了后盖，本想拆风扇的，结果发现梅花刀找不着了，正好又不想弄，就想清清灰的了，接着发现风扇了有个东西，像是一个碰碎的塑料块，转风扇的时候发现有时还会导致风扇卡住无法转动，联想到之前出现过一次kernel_task 进程占cpu非常高的情况，网上搜索说是有可能传感器坏了，这样一想可能是因为风扇卡住导致的，用各种方法都不好取出来，结果翻过来转了几下就出来了，然后安装后盖开机，Bingo！温度果然降下来了，基本保持在50度左右，偶尔会突然蹦到6、70然后再降下来，毕竟笔记本太老了。
 发现事情真是很有趣，就因为一个小小的东西，就会让你的电脑变的不正常，想一想一个项目、一个工程、一个国家，真是千里之堤，毁于蚁穴。</description>
@@ -161,10 +161,10 @@ ssh-add 你的私钥然后将你的公钥内容复制到github或者是其它�
     
     <item>
       <title>Springboot&#43;Mybatis下的增删查改</title>
-      <link>http://hellojxl.com/posts/springboot-mybatis%E4%B8%8B%E7%9A%84%E5%A2%9E%E5%88%A0%E6%9F%A5%E6%94%B9/</link>
+      <link>/posts/springboot-mybatis%E4%B8%8B%E7%9A%84%E5%A2%9E%E5%88%A0%E6%9F%A5%E6%94%B9/</link>
       <pubDate>Sat, 11 Aug 2018 19:42:45 +0000</pubDate>
       
-      <guid>http://hellojxl.com/posts/springboot-mybatis%E4%B8%8B%E7%9A%84%E5%A2%9E%E5%88%A0%E6%9F%A5%E6%94%B9/</guid>
+      <guid>/posts/springboot-mybatis%E4%B8%8B%E7%9A%84%E5%A2%9E%E5%88%A0%E6%9F%A5%E6%94%B9/</guid>
       <description>前言 上次写了一篇文章，但只是粗略了写了一下，这次本来是工作上有个小项目，本打算用java写，可惜死活没配置好，就放弃了。正好周末就又基于上次那个项目捣鼓了一遍，可算是成功了，在此记录下。
 开发工具 之前在公司试用了一下大名鼎鼎的IDEA旗舰版，虽然还算比较好用，可惜就是太贵了，所以就装了社区版，后来才知道社区版不支持web开发，那就只能用eclipse了，装上Springboot的STS插件也还可以，回到家本想也这么来，可惜最近网不好，各种被墙，代理也半死不活，慢的一匹，然后发现Springboot有基于eclipse封装好的STS，而且没有被墙，很是不错！👍
 开始 这篇文章是基于Xml进行的，虽然有注解，总感觉那样是没有灵魂的（笑～～），注解的非常简单，就不多介绍了，下面开始介绍xml的配置
@@ -175,10 +175,10 @@ public int getId() {return id;}public void setId(int id) {this.id = id;}pu
     
     <item>
       <title>v2ray安装注意记录</title>
-      <link>http://hellojxl.com/posts/v2ray%E5%AE%89%E8%A3%85%E6%B3%A8%E6%84%8F%E8%AE%B0%E5%BD%95/</link>
+      <link>/posts/v2ray%E5%AE%89%E8%A3%85%E6%B3%A8%E6%84%8F%E8%AE%B0%E5%BD%95/</link>
       <pubDate>Fri, 27 Jul 2018 21:02:19 +0000</pubDate>
       
-      <guid>http://hellojxl.com/posts/v2ray%E5%AE%89%E8%A3%85%E6%B3%A8%E6%84%8F%E8%AE%B0%E5%BD%95/</guid>
+      <guid>/posts/v2ray%E5%AE%89%E8%A3%85%E6%B3%A8%E6%84%8F%E8%AE%B0%E5%BD%95/</guid>
       <description>原因 新购了一个国外VPS，肯定要(你懂的)，主机商提供了三种系统，Ubuntu、Debian和Centos，由于某些原因三种系统都轮流安装了一遍，或者说都虐了一遍了，其中经历惨不忍睹啊！
 相关问题 不得不说v2ray的官方文档还是很齐全的，但是由于linux的版本太多过程还是会遇到问题的，所以具体的安装文档还是参照官方文档，我这里只是记录遇到的问题
  问题一：Centos7下Nginx下无法进行数据转发，报Permission Denied
@@ -188,10 +188,10 @@ public int getId() {return id;}public void setId(int id) {this.id = id;}pu
     
     <item>
       <title>关于Nginx启用Https的记录</title>
-      <link>http://hellojxl.com/posts/%E5%85%B3%E4%BA%8Enginx%E5%90%AF%E7%94%A8https%E7%9A%84%E8%AE%B0%E5%BD%95/</link>
+      <link>/posts/%E5%85%B3%E4%BA%8Enginx%E5%90%AF%E7%94%A8https%E7%9A%84%E8%AE%B0%E5%BD%95/</link>
       <pubDate>Sat, 21 Jul 2018 22:54:45 +0000</pubDate>
       
-      <guid>http://hellojxl.com/posts/%E5%85%B3%E4%BA%8Enginx%E5%90%AF%E7%94%A8https%E7%9A%84%E8%AE%B0%E5%BD%95/</guid>
+      <guid>/posts/%E5%85%B3%E4%BA%8Enginx%E5%90%AF%E7%94%A8https%E7%9A%84%E8%AE%B0%E5%BD%95/</guid>
       <description>记录原因 之前也部署过，结果上次因为买了一个新的VPS，打算部署v2ray的时候，遇到点问题，感觉还是要记录下来，因为是自己用所以就直接用Let&#39;s Encrypt部署吧，因为可以自动续期，90天也无所谓。
 安装部署 啥也不说，直接上certbot,详细的可以参考官方文档，这里只记录简单的部署
  安装前提
@@ -205,10 +205,10 @@ server {listen	80;server_name	www.domain.com domain.com;return	301	$scheme:ht
     
     <item>
       <title>Manjaro折腾笔记</title>
-      <link>http://hellojxl.com/posts/manjaro%E6%8A%98%E8%85%BE%E7%AC%94%E8%AE%B0/</link>
+      <link>/posts/manjaro%E6%8A%98%E8%85%BE%E7%AC%94%E8%AE%B0/</link>
       <pubDate>Mon, 16 Jul 2018 22:16:18 +0000</pubDate>
       
-      <guid>http://hellojxl.com/posts/manjaro%E6%8A%98%E8%85%BE%E7%AC%94%E8%AE%B0/</guid>
+      <guid>/posts/manjaro%E6%8A%98%E8%85%BE%E7%AC%94%E8%AE%B0/</guid>
       <description>前言 由于公司配的E460笔记本经常死机，不清楚是不是win10的问题，同时由于win10是家庭版无法使用Docker，所以打算换一下系统看看有没有改善，并且不想装双系统，所以用虚拟机代替，下面就是整个折腾的过程，虽然最终以失败而告终。
 1.选择宿主主机系统   以win10为宿主主机，虚拟linux，但是由于win10系统下大概率会死机，所以不想采用这种方案
   以linux为宿主主机，虚拟Windows，可能会消耗资源多一些，不过还可以承受。所以打算采用这种方式。
@@ -221,10 +221,10 @@ server {listen	80;server_name	www.domain.com domain.com;return	301	$scheme:ht
     
     <item>
       <title>关于Hangfire的用法</title>
-      <link>http://hellojxl.com/posts/%E5%85%B3%E4%BA%8Ehangfire%E7%9A%84%E7%94%A8%E6%B3%95/</link>
+      <link>/posts/%E5%85%B3%E4%BA%8Ehangfire%E7%9A%84%E7%94%A8%E6%B3%95/</link>
       <pubDate>Thu, 28 Jun 2018 21:56:14 +0000</pubDate>
       
-      <guid>http://hellojxl.com/posts/%E5%85%B3%E4%BA%8Ehangfire%E7%9A%84%E7%94%A8%E6%B3%95/</guid>
+      <guid>/posts/%E5%85%B3%E4%BA%8Ehangfire%E7%9A%84%E7%94%A8%E6%B3%95/</guid>
       <description>最近项目中要执行后台任务，所以找了一下相关库，刚开始用的是TimedJob，用起来很简单，本身提供依赖注入,代码如下：
 //先在ConfigureServices添加app.AddTimedJob(); //然后在Configure中使用app.UseTimedJob();//定义一个类继承接口Jobpublic Class MyJob:Job{private IConfigure _configure;//注入配置文件public MyJob(IConfigure configure){_configure=configure;}[Invoke(Begin = &amp;#34;2018-11-29 23:00:00&amp;#34;, Interval = 1000 * 3600 * 24, SkipWhileExecuting =true)]public void Run(){//Job要执行的逻辑代码Console.WriteLine(&amp;#34;hello world&amp;#34;);}} 整个用法还是很简单的，如果只是一些简单任务可以采用这种方式，只是如果想通过UI控制的话，这种方式做的工作有点多，所以接下来就要说到Hangfire了,这个用起来就更简单了，而且自带UI，可以直接在UI上进行任务触发，用法跟TimedJob差不多，同时由于Hangfire需要保存任务，需要数据库支持，第三方插件也支持Redis，由于项目正好用Sql Server，再加上任务不是很复杂就直接用数据库了
 //添加Hangfire，此处用的是PostgreSqlservices.AddHangfire(config=&amp;gt;{config.UsePostgreSqlStorage(&amp;#34;ConnectionString&amp;#34;);}); //使用Hangfireapp.UseHangfireServer();//自定义认证，默认只能本地DashboardOptions options=new DashboardOptions();options.Authorization=new []{new MyAuthorization()};app.UseHangfireDashboard(&amp;#34;/Job&amp;#34;,options);//添加任务RecurringJob.AddOrUpdate(&amp;#34;MyJob&amp;#34;,x=&amp;gt;x.HelloTest(&amp;#34;Hello World&amp;#34;),Cron.Minutely);这里有两个问题需要解决一下
@@ -233,10 +233,10 @@ server {listen	80;server_name	www.domain.com domain.com;return	301	$scheme:ht
     
     <item>
       <title>关于Supervisor和Nginx的使用</title>
-      <link>http://hellojxl.com/posts/%E5%85%B3%E4%BA%8Esupervisor%E5%92%8Cnginx%E7%9A%84%E4%BD%BF%E7%94%A8/</link>
+      <link>/posts/%E5%85%B3%E4%BA%8Esupervisor%E5%92%8Cnginx%E7%9A%84%E4%BD%BF%E7%94%A8/</link>
       <pubDate>Fri, 08 Jun 2018 21:44:06 +0000</pubDate>
       
-      <guid>http://hellojxl.com/posts/%E5%85%B3%E4%BA%8Esupervisor%E5%92%8Cnginx%E7%9A%84%E4%BD%BF%E7%94%A8/</guid>
+      <guid>/posts/%E5%85%B3%E4%BA%8Esupervisor%E5%92%8Cnginx%E7%9A%84%E4%BD%BF%E7%94%A8/</guid>
       <description>感觉好久没写了，那就简单说一下最近工作中所用到的Nginx和Supervisor吧，虽然网上也一搜一大把，就当自己做下总结吧
 Nginx的使用 工作中用的是centos，安装简单的用yum直接安装的，还可以直接开机启动，下面简单说说路径匹配的问题，项目刚开始的是用的是后缀名进行匹配，规则如下：
 location ~*\.(gif|png|jpg|jpeg|bmp)$ {default_type	&amp;#39;application/octet-stream&amp;#39;;root	/home/Images/;expires	1d;}如果项目中只需要匹配一种类型的图片用这种模式就可以了，另外这种匹配比location要精确，所以默认最终会匹配这种类型，比如想访问swagger的图片，结果就因为这个原因访问不了，可以尝试加^~进行处理并且要放到这个之前，但是因为这个项目中分好几种类型的图片，需要单独分开访问，所以最终全是用location进行匹配的，而且变简单了
@@ -248,10 +248,10 @@ Supervisor的使用 下面说说Supervisor的用法，刚开始折腾了半天�
     
     <item>
       <title>Springboot&#43;Mybatis测试成功</title>
-      <link>http://hellojxl.com/posts/springboot-mybatis%E6%B5%8B%E8%AF%95%E6%88%90%E5%8A%9F/</link>
+      <link>/posts/springboot-mybatis%E6%B5%8B%E8%AF%95%E6%88%90%E5%8A%9F/</link>
       <pubDate>Tue, 24 Apr 2018 23:26:27 +0000</pubDate>
       
-      <guid>http://hellojxl.com/posts/springboot-mybatis%E6%B5%8B%E8%AF%95%E6%88%90%E5%8A%9F/</guid>
+      <guid>/posts/springboot-mybatis%E6%B5%8B%E8%AF%95%E6%88%90%E5%8A%9F/</guid>
       <description>实现目标 由于只是测试，所以只要当前目标只要用Springboot+mybatis启动成功即可，只当自己的学习，数据库用的是postgresql，目前网上的mysql居多，自己学习肯定要有点区别
 原因 目前公司一直在转java，而且年前那会招.net确实不太好招，就算以后自己离职也好进行交接，就当为自己留条后路
 具体实现 之前偶尔也测试过，有时候成功，有时候失败，虽然sprintboot已经封装的很好了，可惜对我这个门外汉还是有点摸不着门路，其实只是不熟悉而已，而且之前其实是没做过这方面的东西的，之前客户端居多，dotnet core也是一上来就学，确实也少了许多包袱，但愿Java也是，言归正传：
@@ -261,10 +261,10 @@ Supervisor的使用 下面说说Supervisor的用法，刚开始折腾了半天�
     
     <item>
       <title>关于dapper迁移到SqlSugar的记录</title>
-      <link>http://hellojxl.com/posts/%E5%85%B3%E4%BA%8Edapper%E8%BF%81%E7%A7%BB%E5%88%B0sqlsugar%E7%9A%84%E8%AE%B0%E5%BD%95/</link>
+      <link>/posts/%E5%85%B3%E4%BA%8Edapper%E8%BF%81%E7%A7%BB%E5%88%B0sqlsugar%E7%9A%84%E8%AE%B0%E5%BD%95/</link>
       <pubDate>Mon, 23 Apr 2018 23:36:46 +0000</pubDate>
       
-      <guid>http://hellojxl.com/posts/%E5%85%B3%E4%BA%8Edapper%E8%BF%81%E7%A7%BB%E5%88%B0sqlsugar%E7%9A%84%E8%AE%B0%E5%BD%95/</guid>
+      <guid>/posts/%E5%85%B3%E4%BA%8Edapper%E8%BF%81%E7%A7%BB%E5%88%B0sqlsugar%E7%9A%84%E8%AE%B0%E5%BD%95/</guid>
       <description>迁移原因 由于接受的是之前项目组开发的项目的，项目是由本人从.net framework迁移至dotnet core的，目前用到Predicate，发现各种异常，加之时间比较紧而且dapperextensions貌似还没有完全迁移到dotnet core，最后考虑再三打算放弃dapper(其实dapper本身来说还是很好用的，只是dapperextensions现在来说不太好用)，看了看发现了SqlSugar，经过测试发现，如果忽略SqlSugar的orm特性，完全可以无缝迁移过去，而且由于国人开发的原因，文档还算齐全，发现国人的库还是比较靠谱的😊，给国人点个👍
 迁移过程 具体细节就不多说了，只写自己目前用到的特性
   sql语句查询，这个不必说，因为dapper主要是操作sql语句，由于项目中变动不能太大，不然非得疯了不可，实际迁移过程中还是很方便的
@@ -277,10 +277,10 @@ Supervisor的使用 下面说说Supervisor的用法，刚开始折腾了半天�
     
     <item>
       <title>dotnet core在swagger中添加认证</title>
-      <link>http://hellojxl.com/posts/dotnet-core%E5%9C%A8swagger%E4%B8%AD%E6%B7%BB%E5%8A%A0%E8%AE%A4%E8%AF%81/</link>
+      <link>/posts/dotnet-core%E5%9C%A8swagger%E4%B8%AD%E6%B7%BB%E5%8A%A0%E8%AE%A4%E8%AF%81/</link>
       <pubDate>Wed, 11 Apr 2018 22:24:08 +0000</pubDate>
       
-      <guid>http://hellojxl.com/posts/dotnet-core%E5%9C%A8swagger%E4%B8%AD%E6%B7%BB%E5%8A%A0%E8%AE%A4%E8%AF%81/</guid>
+      <guid>/posts/dotnet-core%E5%9C%A8swagger%E4%B8%AD%E6%B7%BB%E5%8A%A0%E8%AE%A4%E8%AF%81/</guid>
       <description>2018-04-16更新：经过测试，这么写是可以的，只是每次调用前都要加上：bearer token,可以在命名Filter的时候加上提醒一下，暂时没去想其它更好的方法
 还有当前如果有多个项目的话，比如这个项目引用了另一个项目的model，默认是不会显示注释的，解决方法是：每个项目单独生成xml文件，然后在include XML文档时同时引入，那么就可以显示了
 Nignx反向代理的情况下，默认会找不到swagger的json文件导致失败，方法是：
@@ -294,10 +294,10 @@ Nignx反向代理的情况下，默认会找不到swagger的json文件导致失�
     
     <item>
       <title>Vscode插件sqltools的用法</title>
-      <link>http://hellojxl.com/posts/vscode%E6%8F%92%E4%BB%B6sqltools%E7%9A%84%E7%94%A8%E6%B3%95/</link>
+      <link>/posts/vscode%E6%8F%92%E4%BB%B6sqltools%E7%9A%84%E7%94%A8%E6%B3%95/</link>
       <pubDate>Tue, 10 Apr 2018 21:26:58 +0000</pubDate>
       
-      <guid>http://hellojxl.com/posts/vscode%E6%8F%92%E4%BB%B6sqltools%E7%9A%84%E7%94%A8%E6%B3%95/</guid>
+      <guid>/posts/vscode%E6%8F%92%E4%BB%B6sqltools%E7%9A%84%E7%94%A8%E6%B3%95/</guid>
       <description>好久没写东西了，感觉不能再这样下去了，赶紧补一补，正好今天边查数据库边写Api，突然想为何不都在vscode中干活呢，然后就搜了搜，还真有这样的插件，就是sqltools，其实之前最早是sublime上找的，貌似是一个开发者，但是没配置成功，今天在vscode里配置成功了，就此记录下
 sqltools的安装 这个很简单，如果方便呢直接在vscode的插件里搜索sqltools，或者用命令安装，貌似呼出控制台的快捷键不一样，Windows上是：F1，Mac上是：Shift+Command+P，或许是跟我设置的快捷键有关，因为本人之前比较喜欢sublime(现在也用)，输入命令：ext install sqltools就可以了
 sqltools的配置 之前在sublime中没配置成功，按网上的教程好像不起作用，这次花了点时间具体研究了vscode的，具体是：
@@ -312,20 +312,20 @@ sqltools的配置 之前在sublime中没配置成功，按网上的教程好像�
     
     <item>
       <title>在vscode中禁用just my code</title>
-      <link>http://hellojxl.com/posts/%E5%9C%A8vscode%E4%B8%AD%E5%90%AF%E7%94%A8just-my-code/</link>
+      <link>/posts/%E5%9C%A8vscode%E4%B8%AD%E5%90%AF%E7%94%A8just-my-code/</link>
       <pubDate>Thu, 29 Mar 2018 20:32:32 +0000</pubDate>
       
-      <guid>http://hellojxl.com/posts/%E5%9C%A8vscode%E4%B8%AD%E5%90%AF%E7%94%A8just-my-code/</guid>
+      <guid>/posts/%E5%9C%A8vscode%E4%B8%AD%E5%90%AF%E7%94%A8just-my-code/</guid>
       <description>最近打算开始用vscode写代码，之前用过一段时间，感觉不怎么好用，最近又用了用，感觉好用很多，今天打开一个项目发现调试不了其它项目，同时调试中一直在打印启用了just my code，所以就搜怎么禁用，当时还没搜到，后来偶然在微软的网站上查到可以在launch.json下添加：
 &amp;#34;just my code&amp;#34;:false就可以禁用just my code了，试用下来感觉已经不比vs差了，还有智能提示，感觉很智能，对了顺便说一下，可以装一下由开发者jchannon开发的C# Extensions，非常好用！</description>
     </item>
     
     <item>
       <title>hexo在windows subsystem for linux 环境下的配置</title>
-      <link>http://hellojxl.com/posts/windows-subsystem-linux-%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/</link>
+      <link>/posts/windows-subsystem-linux-%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/</link>
       <pubDate>Sat, 24 Mar 2018 18:58:27 +0000</pubDate>
       
-      <guid>http://hellojxl.com/posts/windows-subsystem-linux-%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/</guid>
+      <guid>/posts/windows-subsystem-linux-%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/</guid>
       <description>最近想重新启用hexo来写博客，可总不能只在一台机子上写，于是就在公司的Windows笔记本hexo环境，正好最近捣鼓sublinux，就想在Linux里部署，当时选的Debian系统，然后麻烦就来了，Windows上的sublinux跟mini版一样，各种环境都没有，什么命令都没有，可经过一番折腾，现在回想起来可能跟自己的Linux水平太差有关，废话不多说，进入正题
 安装nodejs 先开始在Mac上安装的时候太顺了，本以为Linux上也不会太难，结果折腾了一天才安装上 nodejs官网有三种安装方式，①Debian的本身的apt②已经编译好的二进制文件③源码编译，这三个里面最简单的事第二种，下载完成之后只需配置环境变量即可，由于是sublinux的缘故，配置环境变量只有用户下的.bashrc文件里才行，比如root用户需要如下操作:
   vi ~/.bashrc 在最后一行添加：export PATH=$PATH:/usr/local/node/bin 注：路径可以自由写 source ~/.bashrc 立即生效即可   安装Git和ssh 这个就比较简单了，直接apt-get install就可以了，具体的配置就不多说了，网上多的是。

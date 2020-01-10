@@ -2,256 +2,256 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Tags on hellojxl</title>
-    <link>http://hellojxl.com/tags/</link>
+    <link>/tags/</link>
     <description>Recent content in Tags on hellojxl</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>© Copyright notice</copyright>
     <lastBuildDate>Sat, 23 Mar 2019 14:38:10 +0000</lastBuildDate>
     
-	<atom:link href="http://hellojxl.com/tags/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="/tags/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>cron</title>
-      <link>http://hellojxl.com/tags/cron/</link>
+      <link>/tags/cron/</link>
       <pubDate>Sat, 23 Mar 2019 14:38:10 +0000</pubDate>
       
-      <guid>http://hellojxl.com/tags/cron/</guid>
+      <guid>/tags/cron/</guid>
       <description></description>
     </item>
     
     <item>
       <title>linux</title>
-      <link>http://hellojxl.com/tags/linux/</link>
+      <link>/tags/linux/</link>
       <pubDate>Sat, 23 Mar 2019 14:38:10 +0000</pubDate>
       
-      <guid>http://hellojxl.com/tags/linux/</guid>
+      <guid>/tags/linux/</guid>
       <description></description>
     </item>
     
     <item>
       <title>c#</title>
-      <link>http://hellojxl.com/tags/c#/</link>
+      <link>/tags/c#/</link>
       <pubDate>Mon, 11 Feb 2019 21:50:50 +0000</pubDate>
       
-      <guid>http://hellojxl.com/tags/c#/</guid>
+      <guid>/tags/c#/</guid>
       <description></description>
     </item>
     
     <item>
       <title>dotnet core</title>
-      <link>http://hellojxl.com/tags/dotnet-core/</link>
+      <link>/tags/dotnet-core/</link>
       <pubDate>Sat, 26 Jan 2019 15:53:52 +0000</pubDate>
       
-      <guid>http://hellojxl.com/tags/dotnet-core/</guid>
+      <guid>/tags/dotnet-core/</guid>
       <description></description>
     </item>
     
     <item>
       <title>mysql</title>
-      <link>http://hellojxl.com/tags/mysql/</link>
+      <link>/tags/mysql/</link>
       <pubDate>Sat, 26 Jan 2019 15:53:52 +0000</pubDate>
       
-      <guid>http://hellojxl.com/tags/mysql/</guid>
+      <guid>/tags/mysql/</guid>
       <description></description>
     </item>
     
     <item>
       <title>nodejs</title>
-      <link>http://hellojxl.com/tags/nodejs/</link>
+      <link>/tags/nodejs/</link>
       <pubDate>Sat, 12 Jan 2019 15:38:03 +0000</pubDate>
       
-      <guid>http://hellojxl.com/tags/nodejs/</guid>
+      <guid>/tags/nodejs/</guid>
       <description></description>
     </item>
     
     <item>
       <title>nvm</title>
-      <link>http://hellojxl.com/tags/nvm/</link>
+      <link>/tags/nvm/</link>
       <pubDate>Sat, 12 Jan 2019 15:38:03 +0000</pubDate>
       
-      <guid>http://hellojxl.com/tags/nvm/</guid>
+      <guid>/tags/nvm/</guid>
       <description></description>
     </item>
     
     <item>
       <title>域名</title>
-      <link>http://hellojxl.com/tags/%E5%9F%9F%E5%90%8D/</link>
+      <link>/tags/%E5%9F%9F%E5%90%8D/</link>
       <pubDate>Sat, 05 Jan 2019 21:31:10 +0000</pubDate>
       
-      <guid>http://hellojxl.com/tags/%E5%9F%9F%E5%90%8D/</guid>
+      <guid>/tags/%E5%9F%9F%E5%90%8D/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Mac</title>
-      <link>http://hellojxl.com/tags/mac/</link>
+      <link>/tags/mac/</link>
       <pubDate>Wed, 26 Dec 2018 15:43:49 +0000</pubDate>
       
-      <guid>http://hellojxl.com/tags/mac/</guid>
+      <guid>/tags/mac/</guid>
       <description></description>
     </item>
     
     <item>
       <title>hexo</title>
-      <link>http://hellojxl.com/tags/hexo/</link>
+      <link>/tags/hexo/</link>
       <pubDate>Tue, 25 Dec 2018 22:26:33 +0000</pubDate>
       
-      <guid>http://hellojxl.com/tags/hexo/</guid>
+      <guid>/tags/hexo/</guid>
       <description></description>
     </item>
     
     <item>
       <title>人生感悟</title>
-      <link>http://hellojxl.com/tags/%E4%BA%BA%E7%94%9F%E6%84%9F%E6%82%9F/</link>
+      <link>/tags/%E4%BA%BA%E7%94%9F%E6%84%9F%E6%82%9F/</link>
       <pubDate>Sat, 03 Nov 2018 22:49:05 +0000</pubDate>
       
-      <guid>http://hellojxl.com/tags/%E4%BA%BA%E7%94%9F%E6%84%9F%E6%82%9F/</guid>
+      <guid>/tags/%E4%BA%BA%E7%94%9F%E6%84%9F%E6%82%9F/</guid>
       <description></description>
     </item>
     
     <item>
       <title>css</title>
-      <link>http://hellojxl.com/tags/css/</link>
+      <link>/tags/css/</link>
       <pubDate>Sat, 03 Nov 2018 20:22:10 +0000</pubDate>
       
-      <guid>http://hellojxl.com/tags/css/</guid>
+      <guid>/tags/css/</guid>
       <description></description>
     </item>
     
     <item>
       <title>html</title>
-      <link>http://hellojxl.com/tags/html/</link>
+      <link>/tags/html/</link>
       <pubDate>Sat, 03 Nov 2018 20:22:10 +0000</pubDate>
       
-      <guid>http://hellojxl.com/tags/html/</guid>
+      <guid>/tags/html/</guid>
       <description></description>
     </item>
     
     <item>
       <title>macbook pro</title>
-      <link>http://hellojxl.com/tags/macbook-pro/</link>
+      <link>/tags/macbook-pro/</link>
       <pubDate>Sat, 18 Aug 2018 21:20:01 +0000</pubDate>
       
-      <guid>http://hellojxl.com/tags/macbook-pro/</guid>
+      <guid>/tags/macbook-pro/</guid>
       <description></description>
     </item>
     
     <item>
       <title>java</title>
-      <link>http://hellojxl.com/tags/java/</link>
+      <link>/tags/java/</link>
       <pubDate>Sat, 11 Aug 2018 19:42:45 +0000</pubDate>
       
-      <guid>http://hellojxl.com/tags/java/</guid>
+      <guid>/tags/java/</guid>
       <description></description>
     </item>
     
     <item>
       <title>mybatis</title>
-      <link>http://hellojxl.com/tags/mybatis/</link>
+      <link>/tags/mybatis/</link>
       <pubDate>Sat, 11 Aug 2018 19:42:45 +0000</pubDate>
       
-      <guid>http://hellojxl.com/tags/mybatis/</guid>
+      <guid>/tags/mybatis/</guid>
       <description></description>
     </item>
     
     <item>
       <title>springboot</title>
-      <link>http://hellojxl.com/tags/springboot/</link>
+      <link>/tags/springboot/</link>
       <pubDate>Sat, 11 Aug 2018 19:42:45 +0000</pubDate>
       
-      <guid>http://hellojxl.com/tags/springboot/</guid>
+      <guid>/tags/springboot/</guid>
       <description></description>
     </item>
     
     <item>
       <title>vps</title>
-      <link>http://hellojxl.com/tags/vps/</link>
+      <link>/tags/vps/</link>
       <pubDate>Fri, 27 Jul 2018 21:02:19 +0000</pubDate>
       
-      <guid>http://hellojxl.com/tags/vps/</guid>
+      <guid>/tags/vps/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Let&#39;s Encrypt</title>
-      <link>http://hellojxl.com/tags/lets-encrypt/</link>
+      <link>/tags/lets-encrypt/</link>
       <pubDate>Sat, 21 Jul 2018 22:54:45 +0000</pubDate>
       
-      <guid>http://hellojxl.com/tags/lets-encrypt/</guid>
+      <guid>/tags/lets-encrypt/</guid>
       <description></description>
     </item>
     
     <item>
       <title>nginx</title>
-      <link>http://hellojxl.com/tags/nginx/</link>
+      <link>/tags/nginx/</link>
       <pubDate>Sat, 21 Jul 2018 22:54:45 +0000</pubDate>
       
-      <guid>http://hellojxl.com/tags/nginx/</guid>
+      <guid>/tags/nginx/</guid>
       <description></description>
     </item>
     
     <item>
       <title>manjaro</title>
-      <link>http://hellojxl.com/tags/manjaro/</link>
+      <link>/tags/manjaro/</link>
       <pubDate>Mon, 16 Jul 2018 22:16:18 +0000</pubDate>
       
-      <guid>http://hellojxl.com/tags/manjaro/</guid>
+      <guid>/tags/manjaro/</guid>
       <description></description>
     </item>
     
     <item>
       <title>supervisor</title>
-      <link>http://hellojxl.com/tags/supervisor/</link>
+      <link>/tags/supervisor/</link>
       <pubDate>Fri, 08 Jun 2018 21:44:06 +0000</pubDate>
       
-      <guid>http://hellojxl.com/tags/supervisor/</guid>
+      <guid>/tags/supervisor/</guid>
       <description></description>
     </item>
     
     <item>
       <title>SqlSugar</title>
-      <link>http://hellojxl.com/tags/sqlsugar/</link>
+      <link>/tags/sqlsugar/</link>
       <pubDate>Mon, 23 Apr 2018 23:36:46 +0000</pubDate>
       
-      <guid>http://hellojxl.com/tags/sqlsugar/</guid>
+      <guid>/tags/sqlsugar/</guid>
       <description></description>
     </item>
     
     <item>
       <title>swagger</title>
-      <link>http://hellojxl.com/tags/swagger/</link>
+      <link>/tags/swagger/</link>
       <pubDate>Wed, 11 Apr 2018 22:24:08 +0000</pubDate>
       
-      <guid>http://hellojxl.com/tags/swagger/</guid>
+      <guid>/tags/swagger/</guid>
       <description></description>
     </item>
     
     <item>
       <title>日常生活</title>
-      <link>http://hellojxl.com/tags/%E6%97%A5%E5%B8%B8%E7%94%9F%E6%B4%BB/</link>
+      <link>/tags/%E6%97%A5%E5%B8%B8%E7%94%9F%E6%B4%BB/</link>
       <pubDate>Tue, 10 Apr 2018 21:26:58 +0000</pubDate>
       
-      <guid>http://hellojxl.com/tags/%E6%97%A5%E5%B8%B8%E7%94%9F%E6%B4%BB/</guid>
+      <guid>/tags/%E6%97%A5%E5%B8%B8%E7%94%9F%E6%B4%BB/</guid>
       <description></description>
     </item>
     
     <item>
       <title>vscode</title>
-      <link>http://hellojxl.com/tags/vscode/</link>
+      <link>/tags/vscode/</link>
       <pubDate>Thu, 29 Mar 2018 20:32:32 +0000</pubDate>
       
-      <guid>http://hellojxl.com/tags/vscode/</guid>
+      <guid>/tags/vscode/</guid>
       <description></description>
     </item>
     
     <item>
       <title>windows</title>
-      <link>http://hellojxl.com/tags/windows/</link>
+      <link>/tags/windows/</link>
       <pubDate>Sat, 24 Mar 2018 18:58:27 +0000</pubDate>
       
-      <guid>http://hellojxl.com/tags/windows/</guid>
+      <guid>/tags/windows/</guid>
       <description></description>
     </item>
     

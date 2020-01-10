@@ -2,22 +2,22 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>nvm on hellojxl</title>
-    <link>http://hellojxl.com/tags/nvm/</link>
+    <link>/tags/nvm/</link>
     <description>Recent content in nvm on hellojxl</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>© Copyright notice</copyright>
     <lastBuildDate>Sat, 12 Jan 2019 15:38:03 +0000</lastBuildDate>
     
-	<atom:link href="http://hellojxl.com/tags/nvm/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="/tags/nvm/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>关于nvm的使用</title>
-      <link>http://hellojxl.com/posts/%E5%85%B3%E4%BA%8Envm%E7%9A%84%E4%BD%BF%E7%94%A8/</link>
+      <link>/posts/%E5%85%B3%E4%BA%8Envm%E7%9A%84%E4%BD%BF%E7%94%A8/</link>
       <pubDate>Sat, 12 Jan 2019 15:38:03 +0000</pubDate>
       
-      <guid>http://hellojxl.com/posts/%E5%85%B3%E4%BA%8Envm%E7%9A%84%E4%BD%BF%E7%94%A8/</guid>
+      <guid>/posts/%E5%85%B3%E4%BA%8Envm%E7%9A%84%E4%BD%BF%E7%94%A8/</guid>
       <description>关于nvm nvm是一个nodejs的版本管理工具，可以在多个node.js的版本之间进行切换。
 原因 一不小心升级了旧MBP上node版本，hexo直接GG，心中真是一万个草泥马崩腾而过，顿时就不想用hexo了，烦的不行。偶然发现了nvm，虽说有n包管理工具，但是感觉不好用，于是直接尝试了一下，很顺畅，心里立马就舒心了。
 nvm的安装和使用 nvm的github是这里，总体来说还是非常简单的，Mac下直接用：

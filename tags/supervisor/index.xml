@@ -2,22 +2,22 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>supervisor on hellojxl</title>
-    <link>http://hellojxl.com/tags/supervisor/</link>
+    <link>/tags/supervisor/</link>
     <description>Recent content in supervisor on hellojxl</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>© Copyright notice</copyright>
     <lastBuildDate>Fri, 08 Jun 2018 21:44:06 +0000</lastBuildDate>
     
-	<atom:link href="http://hellojxl.com/tags/supervisor/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="/tags/supervisor/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>关于Supervisor和Nginx的使用</title>
-      <link>http://hellojxl.com/posts/%E5%85%B3%E4%BA%8Esupervisor%E5%92%8Cnginx%E7%9A%84%E4%BD%BF%E7%94%A8/</link>
+      <link>/posts/%E5%85%B3%E4%BA%8Esupervisor%E5%92%8Cnginx%E7%9A%84%E4%BD%BF%E7%94%A8/</link>
       <pubDate>Fri, 08 Jun 2018 21:44:06 +0000</pubDate>
       
-      <guid>http://hellojxl.com/posts/%E5%85%B3%E4%BA%8Esupervisor%E5%92%8Cnginx%E7%9A%84%E4%BD%BF%E7%94%A8/</guid>
+      <guid>/posts/%E5%85%B3%E4%BA%8Esupervisor%E5%92%8Cnginx%E7%9A%84%E4%BD%BF%E7%94%A8/</guid>
       <description>感觉好久没写了，那就简单说一下最近工作中所用到的Nginx和Supervisor吧，虽然网上也一搜一大把，就当自己做下总结吧
 Nginx的使用 工作中用的是centos，安装简单的用yum直接安装的，还可以直接开机启动，下面简单说说路径匹配的问题，项目刚开始的是用的是后缀名进行匹配，规则如下：
 location ~*\.(gif|png|jpg|jpeg|bmp)$ {default_type	&amp;#39;application/octet-stream&amp;#39;;root	/home/Images/;expires	1d;}如果项目中只需要匹配一种类型的图片用这种模式就可以了，另外这种匹配比location要精确，所以默认最终会匹配这种类型，比如想访问swagger的图片，结果就因为这个原因访问不了，可以尝试加^~进行处理并且要放到这个之前，但是因为这个项目中分好几种类型的图片，需要单独分开访问，所以最终全是用location进行匹配的，而且变简单了

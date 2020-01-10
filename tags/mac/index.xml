@@ -2,22 +2,22 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Mac on hellojxl</title>
-    <link>http://hellojxl.com/tags/mac/</link>
+    <link>/tags/mac/</link>
     <description>Recent content in Mac on hellojxl</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>© Copyright notice</copyright>
     <lastBuildDate>Wed, 26 Dec 2018 15:43:49 +0000</lastBuildDate>
     
-	<atom:link href="http://hellojxl.com/tags/mac/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="/tags/mac/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>禁用向日葵远程软件的开机自动启动</title>
-      <link>http://hellojxl.com/posts/%E7%A6%81%E7%94%A8%E5%90%91%E6%97%A5%E8%91%B5%E8%BF%9C%E7%A8%8B%E8%BD%AF%E4%BB%B6%E7%9A%84%E5%BC%80%E6%9C%BA%E8%87%AA%E5%8A%A8%E5%90%AF%E5%8A%A8/</link>
+      <link>/posts/%E7%A6%81%E7%94%A8%E5%90%91%E6%97%A5%E8%91%B5%E8%BF%9C%E7%A8%8B%E8%BD%AF%E4%BB%B6%E7%9A%84%E5%BC%80%E6%9C%BA%E8%87%AA%E5%8A%A8%E5%90%AF%E5%8A%A8/</link>
       <pubDate>Wed, 26 Dec 2018 15:43:49 +0000</pubDate>
       
-      <guid>http://hellojxl.com/posts/%E7%A6%81%E7%94%A8%E5%90%91%E6%97%A5%E8%91%B5%E8%BF%9C%E7%A8%8B%E8%BD%AF%E4%BB%B6%E7%9A%84%E5%BC%80%E6%9C%BA%E8%87%AA%E5%8A%A8%E5%90%AF%E5%8A%A8/</guid>
+      <guid>/posts/%E7%A6%81%E7%94%A8%E5%90%91%E6%97%A5%E8%91%B5%E8%BF%9C%E7%A8%8B%E8%BD%AF%E4%BB%B6%E7%9A%84%E5%BC%80%E6%9C%BA%E8%87%AA%E5%8A%A8%E5%90%AF%E5%8A%A8/</guid>
       <description>前一段时间发现Teamviewer不能用了，总是提示连不上网络等问题，后来才知道被国内代理了，真是日了狗了！没办法就只好找类似的软件，就找到了向日葵，用起来还可以，除了有一点，就是每次开机启动都会自启，而且还启动项里还找不到，当时想算了忍忍吧，毕竟免费的，然而今天多重启了几次系统，实在是忍不了了，遂找了找方法，方法是在下面的目录中：
 /Library/LaunchDaemons//Library/LaunchAgents/~/Library/LaunchAgents/找到名称包含sunlogin的plist，删除掉就可以了，很简单。
 参考：
