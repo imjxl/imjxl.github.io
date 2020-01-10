@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>nvm on hellojxl</title>
+    <link>http://hellojxl.com/tags/nvm/</link>
+    <description>Recent content in nvm on hellojxl</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>© Copyright notice</copyright>
+    <lastBuildDate>Sat, 12 Jan 2019 15:38:03 +0000</lastBuildDate>
+    
+	<atom:link href="http://hellojxl.com/tags/nvm/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>关于nvm的使用</title>
+      <link>http://hellojxl.com/posts/%E5%85%B3%E4%BA%8Envm%E7%9A%84%E4%BD%BF%E7%94%A8/</link>
+      <pubDate>Sat, 12 Jan 2019 15:38:03 +0000</pubDate>
+      
+      <guid>http://hellojxl.com/posts/%E5%85%B3%E4%BA%8Envm%E7%9A%84%E4%BD%BF%E7%94%A8/</guid>
+      <description>关于nvm nvm是一个nodejs的版本管理工具，可以在多个node.js的版本之间进行切换。
+原因 一不小心升级了旧MBP上node版本，hexo直接GG，心中真是一万个草泥马崩腾而过，顿时就不想用hexo了，烦的不行。偶然发现了nvm，虽说有n包管理工具，但是感觉不好用，于是直接尝试了一下，很顺畅，心里立马就舒心了。
+nvm的安装和使用 nvm的github是这里，总体来说还是非常简单的，Mac下直接用：
+curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.34.0/install.sh | bash进行安装，但是如果如果发现没有nvm的命令的话需要在执行touch ~/.bash_profile后重新执行上面的命令就可以了。
+用法也很简单nvm install node就可以了，这样会安装最新、稳定的node版本，但是我在安装过程中发现hexo目前还无法在node v11版本下使用，所以最好安装LTS版本，命令是nvm install --lts，默认好像是使用最新的版本，我当时在安装最新版本后直接用了nvm use node，后来发现不能用了之后才安装的lts版本，查资料说是use只会在当前终端中生效，如果想默认一个其它版本可以用nvm alias default node版本，比如我装的最新版本是11.x，LTS版本是10.x的，那么可以用nvm alias default 10即可。
+结束 当时接连因为node版本的问题，都想自己弄了，找到了一个基于dotnet core版的博客XBlog,貌似好几个开源博客都叫这名的，这个博客是基于作者自己封装的ORM，完全用不惯，自己已经魔改成sqlsugar了，不过前端样式还在整改中，还有一些其它用不惯的地方，慢慢改着吧，等自己满意了再发出来，就酱了。</description>
+    </item>
+    
+  </channel>
+</rss>

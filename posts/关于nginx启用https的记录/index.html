@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"><title>关于Nginx启用Https的记录 - hellojxl</title><link rel="icon" type="image/png" href=icons/myicon.png /><meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta property="og:title" content="关于Nginx启用Https的记录" />
+<meta property="og:description" content="记录原因 之前也部署过，结果上次因为买了一个新的VPS，打算部署v2ray的时候，遇到点问题，感觉还是要记录下来，因为是自己用所以就直接用Let&#39;s Encrypt部署吧，因为可以自动续期，90天也无所谓。
+安装部署 啥也不说，直接上certbot,详细的可以参考官方文档，这里只记录简单的部署
+ 安装前提
+因为certbot基于python，所以系统需要先安装Python 2.7 or 3.4&#43;以上的版本 下载certbot  # wget https://dl.eff.org/certbot-auto //下载# chmod a&#43;x ./certbot-auto //修改权限# ./certbot-auto --help //验证是否成功 开始部署  首先要看nginx的根目录在什么位置，有的在/var/www/html下，有的在/usr/share/nginx/html下。
+然后配置nginx读取certbot产生的文本文件
+location ~ /.well-known/acme-challenge/ {allow	all;root /usr/share/nginx/html;default_type	&#34;text/plain&#34;;}location = /.well-known/acme-challenge/ {return 404;} 运行nginx -s reload重新加载配置
+./certbot-auto certonly --webroot -w /usr/share/nginx/html/ -d your.domain.com 指定webroot和域名，只要能够访问就成功了，切记一次最多五次，否则会被限制，当时因为地址弄错了，等了一个星期&hellip;
+发放证书了还需要配置nginx启用
+server {listen	80;server_name	www.domain.com domain.com;return	301	$scheme:https://www." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://hellojxl.com/posts/%E5%85%B3%E4%BA%8Enginx%E5%90%AF%E7%94%A8https%E7%9A%84%E8%AE%B0%E5%BD%95/" />
+<meta property="article:published_time" content="2018-07-21T22:54:45+00:00" />
+<meta property="article:modified_time" content="2018-07-21T22:54:45+00:00" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="关于Nginx启用Https的记录"/>
+<meta name="twitter:description" content="记录原因 之前也部署过，结果上次因为买了一个新的VPS，打算部署v2ray的时候，遇到点问题，感觉还是要记录下来，因为是自己用所以就直接用Let&#39;s Encrypt部署吧，因为可以自动续期，90天也无所谓。
+安装部署 啥也不说，直接上certbot,详细的可以参考官方文档，这里只记录简单的部署
+ 安装前提
+因为certbot基于python，所以系统需要先安装Python 2.7 or 3.4&#43;以上的版本 下载certbot  # wget https://dl.eff.org/certbot-auto //下载# chmod a&#43;x ./certbot-auto //修改权限# ./certbot-auto --help //验证是否成功 开始部署  首先要看nginx的根目录在什么位置，有的在/var/www/html下，有的在/usr/share/nginx/html下。
+然后配置nginx读取certbot产生的文本文件
+location ~ /.well-known/acme-challenge/ {allow	all;root /usr/share/nginx/html;default_type	&#34;text/plain&#34;;}location = /.well-known/acme-challenge/ {return 404;} 运行nginx -s reload重新加载配置
+./certbot-auto certonly --webroot -w /usr/share/nginx/html/ -d your.domain.com 指定webroot和域名，只要能够访问就成功了，切记一次最多五次，否则会被限制，当时因为地址弄错了，等了一个星期&hellip;
+发放证书了还需要配置nginx启用
+server {listen	80;server_name	www.domain.com domain.com;return	301	$scheme:https://www."/>
+<link href="https://fonts.googleapis.com/css?family=Ubuntu:300,400,300italic,400italic|Raleway:200,300" rel="stylesheet">
+
+	<link rel="stylesheet" type="text/css" media="screen" href="http://hellojxl.comcss/normalize.css" />
+	<link rel="stylesheet" type="text/css" media="screen" href="http://hellojxl.comcss/main.css" />
+	<link rel="stylesheet" type="text/css" href="http://hellojxl.comcss/custom.css" />
+	<link rel="stylesheet" type="text/css" href="http://hellojxl.comcss/dark.css" media="(prefers-color-scheme: dark)" />
+	<link rel="stylesheet" type="text/css" href="http://hellojxl.comcss/custom-dark.css" media="(prefers-color-scheme: dark)" />
+
+	<script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+	<script src="http://hellojxl.comjs/main.js"></script>
+	<script src="http://hellojxl.comjs/abc.js"></script>
+	<script src="http://hellojxl.comjs/xyz.js"></script>
+	<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+</head>
+
+<body>
+	<div class="container wrapper post">
+		<div class="header">
+	<h1 class="site-title"><a href="http://hellojxl.com">hellojxl</a></h1>
+	<div class="site-description"><h2></h2><nav class="nav social">
+			<ul class="flat"><a href="https://github.com/jxl922/" title="Github"><i data-feather="github"></i></a><a href="https://twitter.com/hellojxl" title="Twitter"><i data-feather="twitter"></i></a></ul>
+		</nav>
+	</div>
+
+	<nav class="nav">
+		<ul class="flat">
+			
+			<li>
+				<a href="/">首页</a>
+			</li>
+			
+			<li>
+				<a href="/posts">所有文章</a>
+			</li>
+			
+			<li>
+				<a href="/tags">标签</a>
+			</li>
+			
+			<li>
+				<a href="/about">关于我</a>
+			</li>
+			
+		</ul>
+	</nav>
+</div>
+
+
+		<div class="post-header">
+			<h1 class="title">关于Nginx启用Https的记录</h1>
+			<div class="meta">Posted at &mdash; Jul 21, 2018</div>
+		</div>
+
+		<div class="markdown">
+			<h4 id="记录原因">记录原因</h4>
+<p>之前也部署过，结果上次因为买了一个新的VPS，打算部署<a href="https://www.v2ray.com">v2ray</a>的时候，遇到点问题，感觉还是要记录下来，因为是自己用所以就直接用Let's Encrypt部署吧，因为可以自动续期，90天也无所谓。</p>
+<h4 id="安装部署">安装部署</h4>
+<p>啥也不说，直接上<a href="https://certbot.eff.org/">certbot</a>,详细的可以参考官方文档，这里只记录简单的部署</p>
+<ul>
+<li>安装前提<br>
+因为certbot基于python，所以系统需要先安装Python 2.7 or 3.4+以上的版本</li>
+<li>下载certbot</li>
+</ul>
+<div class="highlight"><pre style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback"># wget https://dl.eff.org/certbot-auto //下载
+# chmod a+x ./certbot-auto  //修改权限
+# ./certbot-auto --help  //验证是否成功
+</code></pre></div><ul>
+<li>开始部署</li>
+</ul>
+<p>首先要看nginx的根目录在什么位置，有的在/var/www/html下，有的在/usr/share/nginx/html下。</p>
+<p>然后配置nginx读取certbot产生的文本文件</p>
+<div class="highlight"><pre style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">location ~ /.well-known/acme-challenge/ {
+	allow	all;
+	root /usr/share/nginx/html;
+	default_type	&#34;text/plain&#34;;
+}
+location = /.well-known/acme-challenge/ {
+	return 404;
+} 
+</code></pre></div><p>运行nginx -s reload重新加载配置</p>
+<div class="highlight"><pre style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">./certbot-auto certonly --webroot -w /usr/share/nginx/html/ -d your.domain.com  
+</code></pre></div><p>指定webroot和域名，只要能够访问就成功了，切记一次最多五次，否则会被限制，当时因为地址弄错了，等了一个星期&hellip;</p>
+<p>发放证书了还需要配置nginx启用</p>
+<div class="highlight"><pre style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">server {
+	listen	80;
+	server_name	www.domain.com domain.com;
+	return	301	$scheme:https://www.$host$request_uri;
+}
+
+server {
+    listen       443	ssl http2;
+    ssl	on;
+    server_name  your.domain.com;
+    add_header Strict-Transport-Security &#34;max-age=63072000; includeSubdomains; preload&#34;;
+    ssl_certificate	/etc/letsencrypt/live/your.domain.com/fullchain.pem;
+    ssl_certificate_key	 /etc/letsencrypt/live/your.domain.com/privkey.pem;
+    ssl_trusted_certificate	/etc/letsencrypt/live/your.domain.com/chain.pem;
+    ssl_protocols	TLSV1.1	TLSV1.2;
+    ssl_prefer_server_ciphers	on;
+    ssl_ciphers	AES256+EECDH:AES256+EDH:!aNULL;
+}
+</code></pre></div><p>这里遇到一个问题就是网上好多配置的ssl_certificate是fullchain.pem，结果浏览器上都会报不信任错误，后来发现原来是访问地址的问题，这里涉及到裸域的问题，默认配置的可能是www.example.com，如果我直接访问example.com那么浏览器就会报域名不匹配的问题，因为签名的时候是带www的，所以需要301重定向到www上就可以了。</p>
+<p>接下来就是自动续期了，很简单</p>
+<div class="highlight"><pre style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">./certbot-auto renew --quiet
+</code></pre></div><p>因为我是在centos7上执行的，不同的系统命令可能不太一样，精力有限没办法一一测试，一定要注意。</p>
+<h4 id="结尾">结尾</h4>
+<p>部署完之后可以用<a href="https://www.ssllabs.com/ssltest/">SSL Labs</a>服务进行测试看看得多少分，也挺好玩的😄，之前知道git pages也启用https之后，一直想启用，结果发现腾讯的dns记录只能添加三条，再多就得加钱，快到期的时候一定要迁出去，目前打算迁到namesilo，国内真是各种受限😖</p>
+
+		</div>
+
+		<div class="post-tags">
+			
+				
+					<nav class="nav tags">
+							<ul class="flat">
+								
+								<li><a href="/tags/nginx">Nginx</a></li>
+								
+								<li><a href="/tags/lets-encrypt">Let&#39;s Encrypt</a></li>
+								
+							</ul>
+					</nav>
+				
+			
+		</div>
+		<div id="disqus_thread"></div>
+<script type="text/javascript">
+	(function () {
+		
+		
+		if (window.location.hostname == "localhost")
+			return;
+
+		var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+		var disqus_shortname = 'localhost';
+		dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+		(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+	})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by
+		Disqus.</a></noscript>
+<a href="http://disqus.com/" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</div>
+	<div class="footer wrapper">
+	<nav class="nav">
+		<div> © Copyright notice |  <a href="https://github.com/vividvilla/ezhil">Ezhil theme</a> | Built with <a href="https://gohugo.io">Hugo</a></div>
+	</nav>
+</div>
+
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-123-45', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+<script>feather.replace()</script>
+</body>
+</html>

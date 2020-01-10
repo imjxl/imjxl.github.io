@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>dotnet core on hellojxl</title>
+    <link>http://hellojxl.com/tags/dotnet-core/</link>
+    <description>Recent content in dotnet core on hellojxl</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>© Copyright notice</copyright>
+    <lastBuildDate>Sat, 26 Jan 2019 15:53:52 +0000</lastBuildDate>
+    
+	<atom:link href="http://hellojxl.com/tags/dotnet-core/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>初次使用Mysql遇到的问题</title>
+      <link>http://hellojxl.com/posts/%E5%88%9D%E6%AC%A1%E4%BD%BF%E7%94%A8mysql%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/</link>
+      <pubDate>Sat, 26 Jan 2019 15:53:52 +0000</pubDate>
+      
+      <guid>http://hellojxl.com/posts/%E5%88%9D%E6%AC%A1%E4%BD%BF%E7%94%A8mysql%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/</guid>
+      <description>前言 最近一直忙着弄一个博客系统，以防那天node又坏了，那我就直接换了，目前是在之前文章里提到的beetlex blog的基础上进行改造的，主要想修改一下几点：
+ 进行前后端分离，因为我不想改动一点东西就要重新编译。 放弃cookie将，所有的认证方式更改为JWT形式。 前端样式改为类Next的主题。 数据库更改为mysql。 去掉某些不用的组件，像elasticsearch、腾讯云等。  暂时只有这些，当然还有一些迁移过程中出现的bug，目前感觉差不多已经可以用了，不过在Safari下面会报一些错误，正在解决。
+所谓的问题 其实也不是第一次用，只是迁移过程中初次遇到的问题：
+ DBeaver报无法识别的DateTimeZone的问题。  这个其实很简单，只要在设置的时候选择正确的时区即可，起初我以为会自动选择，看来还是没那么智能，还需要手动选择一下。
+保存emoji表情时出现的Incorrect string value: &amp;lsquo;\xF0\x9F\x98\xAD&amp;rdquo;,&amp;hellip;&amp;rsquo; for column &amp;lsquo;commentContent&amp;rsquo; at row ‘rowname’的问题。  这个网上查询说因为Utf8编码的问题，需要将编码设置为uft8mb4，我设置的时候记着选择的是utf8，但是不是uft8mb4就忘记了，但是从DBeaver上面看的话编码确实是uft8mb4，应该默认就是，我的异常是从代码里报出来的，是要在连接字符串中也要指定的，就涉及到下面这个问题了。 3. dotnet core连接字符串中设置编码的问题
+之前配置Java的时候遇到过，但是还没有在C#里配置过，其实只需要加上charset=&#39;utf8mb4&amp;rsquo; 即可，最开始设置的是utf8，发现还是保存不了emoji，网上说是如果配置为utf8会在服务端自动转换，但是我这里还是不行，需要明确指定。
+结尾 本来打算安装mariaDB的，结果发现没有Mac版本的，没办法只好装mysql了，另外最近转了部门，公司也要明确转Java，所以研究了一下Spring cloud的服务中心，结果发现运行起来之后注册不了，目前还不知道啥原因，等排除了也要记录一下。</description>
+    </item>
+    
+    <item>
+      <title>关于Hangfire的用法</title>
+      <link>http://hellojxl.com/posts/%E5%85%B3%E4%BA%8Ehangfire%E7%9A%84%E7%94%A8%E6%B3%95/</link>
+      <pubDate>Thu, 28 Jun 2018 21:56:14 +0000</pubDate>
+      
+      <guid>http://hellojxl.com/posts/%E5%85%B3%E4%BA%8Ehangfire%E7%9A%84%E7%94%A8%E6%B3%95/</guid>
+      <description>最近项目中要执行后台任务，所以找了一下相关库，刚开始用的是TimedJob，用起来很简单，本身提供依赖注入,代码如下：
+//先在ConfigureServices添加app.AddTimedJob(); //然后在Configure中使用app.UseTimedJob();//定义一个类继承接口Jobpublic Class MyJob:Job{private IConfigure _configure;//注入配置文件public MyJob(IConfigure configure){_configure=configure;}[Invoke(Begin = &amp;#34;2018-11-29 23:00:00&amp;#34;, Interval = 1000 * 3600 * 24, SkipWhileExecuting =true)]public void Run(){//Job要执行的逻辑代码Console.WriteLine(&amp;#34;hello world&amp;#34;);}} 整个用法还是很简单的，如果只是一些简单任务可以采用这种方式，只是如果想通过UI控制的话，这种方式做的工作有点多，所以接下来就要说到Hangfire了,这个用起来就更简单了，而且自带UI，可以直接在UI上进行任务触发，用法跟TimedJob差不多，同时由于Hangfire需要保存任务，需要数据库支持，第三方插件也支持Redis，由于项目正好用Sql Server，再加上任务不是很复杂就直接用数据库了
+//添加Hangfire，此处用的是PostgreSqlservices.AddHangfire(config=&amp;gt;{config.UsePostgreSqlStorage(&amp;#34;ConnectionString&amp;#34;);}); //使用Hangfireapp.UseHangfireServer();//自定义认证，默认只能本地DashboardOptions options=new DashboardOptions();options.Authorization=new []{new MyAuthorization()};app.UseHangfireDashboard(&amp;#34;/Job&amp;#34;,options);//添加任务RecurringJob.AddOrUpdate(&amp;#34;MyJob&amp;#34;,x=&amp;gt;x.HelloTest(&amp;#34;Hello World&amp;#34;),Cron.Minutely);这里有两个问题需要解决一下
+ 依赖注入，这个通过以下方式实现  //先定义接口public interface IGoodJob{void HelloTest(string test);}//实现接口public class MyJob : IGoodJob{private IConfiguration _configure;public MyJob(IConfiguration Configuration){_configure=Configuration;}public void HelloTest(string test){Console.</description>
+    </item>
+    
+    <item>
+      <title>关于dapper迁移到SqlSugar的记录</title>
+      <link>http://hellojxl.com/posts/%E5%85%B3%E4%BA%8Edapper%E8%BF%81%E7%A7%BB%E5%88%B0sqlsugar%E7%9A%84%E8%AE%B0%E5%BD%95/</link>
+      <pubDate>Mon, 23 Apr 2018 23:36:46 +0000</pubDate>
+      
+      <guid>http://hellojxl.com/posts/%E5%85%B3%E4%BA%8Edapper%E8%BF%81%E7%A7%BB%E5%88%B0sqlsugar%E7%9A%84%E8%AE%B0%E5%BD%95/</guid>
+      <description>迁移原因 由于接受的是之前项目组开发的项目的，项目是由本人从.net framework迁移至dotnet core的，目前用到Predicate，发现各种异常，加之时间比较紧而且dapperextensions貌似还没有完全迁移到dotnet core，最后考虑再三打算放弃dapper(其实dapper本身来说还是很好用的，只是dapperextensions现在来说不太好用)，看了看发现了SqlSugar，经过测试发现，如果忽略SqlSugar的orm特性，完全可以无缝迁移过去，而且由于国人开发的原因，文档还算齐全，发现国人的库还是比较靠谱的😊，给国人点个👍
+迁移过程 具体细节就不多说了，只写自己目前用到的特性
+  sql语句查询，这个不必说，因为dapper主要是操作sql语句，由于项目中变动不能太大，不然非得疯了不可，实际迁移过程中还是很方便的
+  实体及表结构操作，更改对应表名的功能dapper也有，但发现dapperextensions完全需要再重新做一遍对应的操作，而且会有异常问题，很是麻烦，这个在sqlSugar中就很简单
+  条件查询系统，项目迁移对主要原因就是因为dapperextensions的Predicate系统貌似完全处于瘫痪状态，自己又没有时间去修改，迁移到SqlSugar之后用的很是舒心，而且语法上也差别不大
+  分页功能，这本是一个常用的功能，都有提供，不多说。
+  由于SqlSugar本身就是ORM，所以可以省好多事，而且也像文档介绍的那样Lambda的解析也非常完善
+迁移结果 目前已经完成迁移，正在进行开发，目前还没有什么坑，并发性还没有测试，等项目完成了来个测试，看看结果如果，也希望能多多支持国人的项目SqlSugar4文档地址，GitHub地址</description>
+    </item>
+    
+    <item>
+      <title>在vscode中禁用just my code</title>
+      <link>http://hellojxl.com/posts/%E5%9C%A8vscode%E4%B8%AD%E5%90%AF%E7%94%A8just-my-code/</link>
+      <pubDate>Thu, 29 Mar 2018 20:32:32 +0000</pubDate>
+      
+      <guid>http://hellojxl.com/posts/%E5%9C%A8vscode%E4%B8%AD%E5%90%AF%E7%94%A8just-my-code/</guid>
+      <description>最近打算开始用vscode写代码，之前用过一段时间，感觉不怎么好用，最近又用了用，感觉好用很多，今天打开一个项目发现调试不了其它项目，同时调试中一直在打印启用了just my code，所以就搜怎么禁用，当时还没搜到，后来偶然在微软的网站上查到可以在launch.json下添加：
+&amp;#34;just my code&amp;#34;:false就可以禁用just my code了，试用下来感觉已经不比vs差了，还有智能提示，感觉很智能，对了顺便说一下，可以装一下由开发者jchannon开发的C# Extensions，非常好用！</description>
+    </item>
+    
+  </channel>
+</rss>

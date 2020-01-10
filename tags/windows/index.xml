@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>windows on hellojxl</title>
+    <link>http://hellojxl.com/tags/windows/</link>
+    <description>Recent content in windows on hellojxl</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>© Copyright notice</copyright>
+    <lastBuildDate>Sat, 24 Mar 2018 18:58:27 +0000</lastBuildDate>
+    
+	<atom:link href="http://hellojxl.com/tags/windows/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>hexo在windows subsystem for linux 环境下的配置</title>
+      <link>http://hellojxl.com/posts/windows-subsystem-linux-%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/</link>
+      <pubDate>Sat, 24 Mar 2018 18:58:27 +0000</pubDate>
+      
+      <guid>http://hellojxl.com/posts/windows-subsystem-linux-%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/</guid>
+      <description>最近想重新启用hexo来写博客，可总不能只在一台机子上写，于是就在公司的Windows笔记本hexo环境，正好最近捣鼓sublinux，就想在Linux里部署，当时选的Debian系统，然后麻烦就来了，Windows上的sublinux跟mini版一样，各种环境都没有，什么命令都没有，可经过一番折腾，现在回想起来可能跟自己的Linux水平太差有关，废话不多说，进入正题
+安装nodejs 先开始在Mac上安装的时候太顺了，本以为Linux上也不会太难，结果折腾了一天才安装上 nodejs官网有三种安装方式，①Debian的本身的apt②已经编译好的二进制文件③源码编译，这三个里面最简单的事第二种，下载完成之后只需配置环境变量即可，由于是sublinux的缘故，配置环境变量只有用户下的.bashrc文件里才行，比如root用户需要如下操作:
+  vi ~/.bashrc 在最后一行添加：export PATH=$PATH:/usr/local/node/bin 注：路径可以自由写 source ~/.bashrc 立即生效即可   安装Git和ssh 这个就比较简单了，直接apt-get install就可以了，具体的配置就不多说了，网上多的是。
+安装hexo 这里还是要再提一句Windows下的subsystem for Linux，感觉还是跟缺少相关库，安装的时候会提示：gyp WARN EACCES user &amp;ldquo;root&amp;rdquo; does not have permission to access the dev dir：xxx，网上参考查到的stackoverflow,用的第二种方法：
+ node install -g hexo-cli &amp;ndash;unsafe-perm
+ 安装过程中会装几个库，然后就可以用了。
+最后 至于同步问题，我也是参考网上的教程，用的码云的git，因为可以创建私有的git，至于其它方面因为自己git方面也不是很熟，就不误人子弟了，最近也一直在折腾Linux，感觉也挺有意思，后续有什么也会再贴出来。</description>
+    </item>
+    
+  </channel>
+</rss>

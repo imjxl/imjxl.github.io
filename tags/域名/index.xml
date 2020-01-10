@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>域名 on hellojxl</title>
+    <link>http://hellojxl.com/tags/%E5%9F%9F%E5%90%8D/</link>
+    <description>Recent content in 域名 on hellojxl</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>© Copyright notice</copyright>
+    <lastBuildDate>Sat, 05 Jan 2019 21:31:10 +0000</lastBuildDate>
+    
+	<atom:link href="http://hellojxl.com/tags/%E5%9F%9F%E5%90%8D/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>迁移Hexo到VPS</title>
+      <link>http://hellojxl.com/posts/%E8%BF%81%E7%A7%BBhexo%E5%88%B0vps/</link>
+      <pubDate>Sat, 05 Jan 2019 21:31:10 +0000</pubDate>
+      
+      <guid>http://hellojxl.com/posts/%E8%BF%81%E7%A7%BBhexo%E5%88%B0vps/</guid>
+      <description>前言 自从Cloudflare可以迁移域名了，就陆续将手里的域名迁移了过来，当前这个域名最开始是在腾讯上注册的，当时是部署在Gitpages上，用的CNAME的方式，听说Gitpages可以启用HTTPS的时候就打算启用，然后只能添加2条解析，无法启用，真是腻歪透了。迁移过来之后就又想直接放到自己VPS上。
+方式   直接部署hexo服务端，通过git方式直接提交到VPS上。目前没有采用这种方式，首先VPS在国外，大批量的数据传输害怕被针对；其次网络环境也是个问题，所以不做多介绍这种方式了。
+  依旧提交代码到Github，然后通过git拉取到VPS上。 本质上Github上是已经是html了，所以在VPS上通过nginx直接部署就可以了，感觉这种方式更好。
+  部署服务 1、首先部署git服务到VPS，方便进行git拉取最新数据。
+2、不能每次都手动拉取代码，所以查了一下GitHub，有Webhooks可以进行调用，可以直接hook push方法，然后自动拉取最新的代码，又看到网上有现成的lua脚本，直接继承到Nginx上就可以了，可惜由于对Nginx不是非常熟悉，又懒的研究，既然是学C#的，就打算用C#研究一下接口调用就完了，发现微软有现成封装好的WebHook，直接引用Microsoft.AspNetCore.WebHooks即可，可惜发现封装的实在是太死了，不仅要定义固定的配置文件格式，连调用方式都是写死的，文档还不太全，最后部署到VPS上后还各种报错，不容易调试，直接就放弃了。
+3、实在不行那就只能自己动手了，直接用WebApi，唯一的难点是当时没弄明白签名是怎么弄的，后来在stackoverflow.com找到了解决方法，用到的加密算法如下：
+private byte[] SignWithHmac(byte[] dataToSign, byte[] keyBody){using (var hmacAlgorithm = new System.Security.Cryptography.HMACSHA1(keyBody)){return hmacAlgorithm.ComputeHash(dataToSign);}}private string ConvertToHexadecimal(IEnumerable&amp;lt;byte&amp;gt; bytes){var builder = new StringBuilder();foreach (var b in bytes){builder.Append(b.ToString(&amp;#34;x2&amp;#34;));}return builder.ToString();}完整的校验方法如下：
+var mac = Request.Headers[&amp;#34;X-Hub-Signature&amp;#34;];string signature = Request.Headers[&amp;#34;X-Hub-Signature&amp;#34;];StreamReader reader = new StreamReader(Request.Body);string json = reader.</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"><title>关于dapper迁移到SqlSugar的记录 - hellojxl</title><link rel="icon" type="image/png" href=icons/myicon.png /><meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta property="og:title" content="关于dapper迁移到SqlSugar的记录" />
+<meta property="og:description" content="迁移原因 由于接受的是之前项目组开发的项目的，项目是由本人从.net framework迁移至dotnet core的，目前用到Predicate，发现各种异常，加之时间比较紧而且dapperextensions貌似还没有完全迁移到dotnet core，最后考虑再三打算放弃dapper(其实dapper本身来说还是很好用的，只是dapperextensions现在来说不太好用)，看了看发现了SqlSugar，经过测试发现，如果忽略SqlSugar的orm特性，完全可以无缝迁移过去，而且由于国人开发的原因，文档还算齐全，发现国人的库还是比较靠谱的😊，给国人点个👍
+迁移过程 具体细节就不多说了，只写自己目前用到的特性
+  sql语句查询，这个不必说，因为dapper主要是操作sql语句，由于项目中变动不能太大，不然非得疯了不可，实际迁移过程中还是很方便的
+  实体及表结构操作，更改对应表名的功能dapper也有，但发现dapperextensions完全需要再重新做一遍对应的操作，而且会有异常问题，很是麻烦，这个在sqlSugar中就很简单
+  条件查询系统，项目迁移对主要原因就是因为dapperextensions的Predicate系统貌似完全处于瘫痪状态，自己又没有时间去修改，迁移到SqlSugar之后用的很是舒心，而且语法上也差别不大
+  分页功能，这本是一个常用的功能，都有提供，不多说。
+  由于SqlSugar本身就是ORM，所以可以省好多事，而且也像文档介绍的那样Lambda的解析也非常完善
+迁移结果 目前已经完成迁移，正在进行开发，目前还没有什么坑，并发性还没有测试，等项目完成了来个测试，看看结果如果，也希望能多多支持国人的项目SqlSugar4文档地址，GitHub地址" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://hellojxl.com/posts/%E5%85%B3%E4%BA%8Edapper%E8%BF%81%E7%A7%BB%E5%88%B0sqlsugar%E7%9A%84%E8%AE%B0%E5%BD%95/" />
+<meta property="article:published_time" content="2018-04-23T23:36:46+00:00" />
+<meta property="article:modified_time" content="2018-04-23T23:36:46+00:00" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="关于dapper迁移到SqlSugar的记录"/>
+<meta name="twitter:description" content="迁移原因 由于接受的是之前项目组开发的项目的，项目是由本人从.net framework迁移至dotnet core的，目前用到Predicate，发现各种异常，加之时间比较紧而且dapperextensions貌似还没有完全迁移到dotnet core，最后考虑再三打算放弃dapper(其实dapper本身来说还是很好用的，只是dapperextensions现在来说不太好用)，看了看发现了SqlSugar，经过测试发现，如果忽略SqlSugar的orm特性，完全可以无缝迁移过去，而且由于国人开发的原因，文档还算齐全，发现国人的库还是比较靠谱的😊，给国人点个👍
+迁移过程 具体细节就不多说了，只写自己目前用到的特性
+  sql语句查询，这个不必说，因为dapper主要是操作sql语句，由于项目中变动不能太大，不然非得疯了不可，实际迁移过程中还是很方便的
+  实体及表结构操作，更改对应表名的功能dapper也有，但发现dapperextensions完全需要再重新做一遍对应的操作，而且会有异常问题，很是麻烦，这个在sqlSugar中就很简单
+  条件查询系统，项目迁移对主要原因就是因为dapperextensions的Predicate系统貌似完全处于瘫痪状态，自己又没有时间去修改，迁移到SqlSugar之后用的很是舒心，而且语法上也差别不大
+  分页功能，这本是一个常用的功能，都有提供，不多说。
+  由于SqlSugar本身就是ORM，所以可以省好多事，而且也像文档介绍的那样Lambda的解析也非常完善
+迁移结果 目前已经完成迁移，正在进行开发，目前还没有什么坑，并发性还没有测试，等项目完成了来个测试，看看结果如果，也希望能多多支持国人的项目SqlSugar4文档地址，GitHub地址"/>
+<link href="https://fonts.googleapis.com/css?family=Ubuntu:300,400,300italic,400italic|Raleway:200,300" rel="stylesheet">
+
+	<link rel="stylesheet" type="text/css" media="screen" href="http://hellojxl.comcss/normalize.css" />
+	<link rel="stylesheet" type="text/css" media="screen" href="http://hellojxl.comcss/main.css" />
+	<link rel="stylesheet" type="text/css" href="http://hellojxl.comcss/custom.css" />
+	<link rel="stylesheet" type="text/css" href="http://hellojxl.comcss/dark.css" media="(prefers-color-scheme: dark)" />
+	<link rel="stylesheet" type="text/css" href="http://hellojxl.comcss/custom-dark.css" media="(prefers-color-scheme: dark)" />
+
+	<script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+	<script src="http://hellojxl.comjs/main.js"></script>
+	<script src="http://hellojxl.comjs/abc.js"></script>
+	<script src="http://hellojxl.comjs/xyz.js"></script>
+	<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+</head>
+
+<body>
+	<div class="container wrapper post">
+		<div class="header">
+	<h1 class="site-title"><a href="http://hellojxl.com">hellojxl</a></h1>
+	<div class="site-description"><h2></h2><nav class="nav social">
+			<ul class="flat"><a href="https://github.com/jxl922/" title="Github"><i data-feather="github"></i></a><a href="https://twitter.com/hellojxl" title="Twitter"><i data-feather="twitter"></i></a></ul>
+		</nav>
+	</div>
+
+	<nav class="nav">
+		<ul class="flat">
+			
+			<li>
+				<a href="/">首页</a>
+			</li>
+			
+			<li>
+				<a href="/posts">所有文章</a>
+			</li>
+			
+			<li>
+				<a href="/tags">标签</a>
+			</li>
+			
+			<li>
+				<a href="/about">关于我</a>
+			</li>
+			
+		</ul>
+	</nav>
+</div>
+
+
+		<div class="post-header">
+			<h1 class="title">关于dapper迁移到SqlSugar的记录</h1>
+			<div class="meta">Posted at &mdash; Apr 23, 2018</div>
+		</div>
+
+		<div class="markdown">
+			<h4 id="迁移原因">迁移原因</h4>
+<p>由于接受的是之前项目组开发的项目的，项目是由本人从.net framework迁移至dotnet core的，目前用到Predicate，发现各种异常，加之时间比较紧而且dapperextensions貌似还没有完全迁移到dotnet core，最后考虑再三打算放弃dapper(其实dapper本身来说还是很好用的，只是dapperextensions现在来说不太好用)，看了看发现了SqlSugar，经过测试发现，如果忽略SqlSugar的orm特性，完全可以无缝迁移过去，而且由于国人开发的原因，文档还算齐全，发现国人的库还是比较靠谱的😊，给国人点个👍</p>
+<h4 id="迁移过程">迁移过程</h4>
+<p>具体细节就不多说了，只写自己目前用到的特性</p>
+<ul>
+<li>
+<p>sql语句查询，这个不必说，因为dapper主要是操作sql语句，由于项目中变动不能太大，不然非得疯了不可，实际迁移过程中还是很方便的</p>
+</li>
+<li>
+<p>实体及表结构操作，更改对应表名的功能dapper也有，但发现dapperextensions完全需要再重新做一遍对应的操作，而且会有异常问题，很是麻烦，这个在sqlSugar中就很简单</p>
+</li>
+<li>
+<p>条件查询系统，项目迁移对主要原因就是因为dapperextensions的Predicate系统貌似完全处于瘫痪状态，自己又没有时间去修改，迁移到SqlSugar之后用的很是舒心，而且语法上也差别不大</p>
+</li>
+<li>
+<p>分页功能，这本是一个常用的功能，都有提供，不多说。</p>
+</li>
+</ul>
+<p>由于SqlSugar本身就是ORM，所以可以省好多事，而且也像文档介绍的那样Lambda的解析也非常完善</p>
+<h4 id="迁移结果">迁移结果</h4>
+<p>目前已经完成迁移，正在进行开发，目前还没有什么坑，并发性还没有测试，等项目完成了来个测试，看看结果如果，也希望能多多支持国人的项目<a href="http://www.codeisbug.com/Doc/8/1121">SqlSugar4文档地址</a>，<a href="https://github.com/sunkaixuan/sqlsugar">GitHub地址</a></p>
+
+		</div>
+
+		<div class="post-tags">
+			
+				
+					<nav class="nav tags">
+							<ul class="flat">
+								
+								<li><a href="/tags/c">c#</a></li>
+								
+								<li><a href="/tags/dotnet-core">dotnet core</a></li>
+								
+								<li><a href="/tags/sqlsugar">SqlSugar</a></li>
+								
+							</ul>
+					</nav>
+				
+			
+		</div>
+		<div id="disqus_thread"></div>
+<script type="text/javascript">
+	(function () {
+		
+		
+		if (window.location.hostname == "localhost")
+			return;
+
+		var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+		var disqus_shortname = 'localhost';
+		dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+		(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+	})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by
+		Disqus.</a></noscript>
+<a href="http://disqus.com/" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</div>
+	<div class="footer wrapper">
+	<nav class="nav">
+		<div> © Copyright notice |  <a href="https://github.com/vividvilla/ezhil">Ezhil theme</a> | Built with <a href="https://gohugo.io">Hugo</a></div>
+	</nav>
+</div>
+
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-123-45', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+<script>feather.replace()</script>
+</body>
+</html>

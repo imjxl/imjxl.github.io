@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>c# on hellojxl</title>
+    <link>http://hellojxl.com/tags/c#/</link>
+    <description>Recent content in c# on hellojxl</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>© Copyright notice</copyright>
+    <lastBuildDate>Mon, 11 Feb 2019 21:50:50 +0000</lastBuildDate>
+    
+	<atom:link href="http://hellojxl.com/tags/c#/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>c#调用c&#43;&#43;出现的内存异常</title>
+      <link>http://hellojxl.com/posts/c-%E8%B0%83%E7%94%A8c-%E5%87%BA%E7%8E%B0%E7%9A%84%E5%86%85%E5%AD%98%E5%BC%82%E5%B8%B8/</link>
+      <pubDate>Mon, 11 Feb 2019 21:50:50 +0000</pubDate>
+      
+      <guid>http://hellojxl.com/posts/c-%E8%B0%83%E7%94%A8c-%E5%87%BA%E7%8E%B0%E7%9A%84%E5%86%85%E5%AD%98%E5%BC%82%E5%B8%B8/</guid>
+      <description>补充：
+当时测试的时候是在控制台里测试的，但是放在Unity里依然会崩溃，后来对比了一下网上的一些Demo，发现原来C++的指针里少了点代码：
+//回调函数typedef void(__stdcall *callback)(int result, char *message);就是说需要加上__stdcall修饰，具体的说明见微软官方。
+ 问题 年前由另一个同事负责写了套SDK，由于当初只是给VR资源集成的，所以只制作了64位，后来其它公司问是否有32位的，就只好自己来生成了，所有的都是基于C++写的，主要基于libcurl和openssl，编译libcurl时稍微费了点事，完成后发现用C#调用x86的时候会报：“尝试读取或写入受保护的内存，这通常指示其他内存已损坏”，当时以为是自己编译的libcurl有问题，正好也是最后一天，折腾到下班也没解决，干脆就放弃了。
+解决 今天是第一天上班，公司来的人也不多，想起这件事来就打算再处理一下，各种编译之后发现整个过程还是会提交到的，只有等到返回值的时候才会报上面的错误，网上查也说这个错就跟C#中“未将对象引用到实例”是一样的，由于已经有几年没处理这种问题了，也没弄懂这个意思，而且当时编码好像还不太一样，然后在统一了编码之后发现了CallingConvention，下面先简单说一下C++的函数
+//回调函数typedef void(*callback)(int result, char *message);//函数定义int test(char *msg, callback fuc);//实现int test(char *msg, callback fuc){return do(msg,fuc);}其实就是一个函数，带一个参数和一个回调指针，C#的调用也非常简单
+[DllImport(&amp;#34;testdll&amp;#34;)]public static extern int test(string msg,CallBackDelegate fuc);//新定义的委托public delegate void CallBackDelegate(int result, string ResultMessage);这是一开始的调用方式，64位下是正常的，但是一切换到32位下就会在调用时提示“尝试读取或写入受保护的内存，这通常指示其他内存已损坏”这样的错误，解决方式如下：
+[DllImport(&amp;#34;testdll&amp;#34;,CallingConvention= CallingConvention.Cdecl)]public static extern int test(string msg,CallBackDelegate fuc);//新定义的委托[UnmanagedFunctionPointer(CallingConvention.Cdecl)]public delegate void CallBackDelegate(int result, string ResultMessage);这样再调用就不会有任何问题了，后来简单查了一下CallingConvention的含义：</description>
+    </item>
+    
+    <item>
+      <title>关于Hangfire的用法</title>
+      <link>http://hellojxl.com/posts/%E5%85%B3%E4%BA%8Ehangfire%E7%9A%84%E7%94%A8%E6%B3%95/</link>
+      <pubDate>Thu, 28 Jun 2018 21:56:14 +0000</pubDate>
+      
+      <guid>http://hellojxl.com/posts/%E5%85%B3%E4%BA%8Ehangfire%E7%9A%84%E7%94%A8%E6%B3%95/</guid>
+      <description>最近项目中要执行后台任务，所以找了一下相关库，刚开始用的是TimedJob，用起来很简单，本身提供依赖注入,代码如下：
+//先在ConfigureServices添加app.AddTimedJob(); //然后在Configure中使用app.UseTimedJob();//定义一个类继承接口Jobpublic Class MyJob:Job{private IConfigure _configure;//注入配置文件public MyJob(IConfigure configure){_configure=configure;}[Invoke(Begin = &amp;#34;2018-11-29 23:00:00&amp;#34;, Interval = 1000 * 3600 * 24, SkipWhileExecuting =true)]public void Run(){//Job要执行的逻辑代码Console.WriteLine(&amp;#34;hello world&amp;#34;);}} 整个用法还是很简单的，如果只是一些简单任务可以采用这种方式，只是如果想通过UI控制的话，这种方式做的工作有点多，所以接下来就要说到Hangfire了,这个用起来就更简单了，而且自带UI，可以直接在UI上进行任务触发，用法跟TimedJob差不多，同时由于Hangfire需要保存任务，需要数据库支持，第三方插件也支持Redis，由于项目正好用Sql Server，再加上任务不是很复杂就直接用数据库了
+//添加Hangfire，此处用的是PostgreSqlservices.AddHangfire(config=&amp;gt;{config.UsePostgreSqlStorage(&amp;#34;ConnectionString&amp;#34;);}); //使用Hangfireapp.UseHangfireServer();//自定义认证，默认只能本地DashboardOptions options=new DashboardOptions();options.Authorization=new []{new MyAuthorization()};app.UseHangfireDashboard(&amp;#34;/Job&amp;#34;,options);//添加任务RecurringJob.AddOrUpdate(&amp;#34;MyJob&amp;#34;,x=&amp;gt;x.HelloTest(&amp;#34;Hello World&amp;#34;),Cron.Minutely);这里有两个问题需要解决一下
+ 依赖注入，这个通过以下方式实现  //先定义接口public interface IGoodJob{void HelloTest(string test);}//实现接口public class MyJob : IGoodJob{private IConfiguration _configure;public MyJob(IConfiguration Configuration){_configure=Configuration;}public void HelloTest(string test){Console.</description>
+    </item>
+    
+    <item>
+      <title>关于dapper迁移到SqlSugar的记录</title>
+      <link>http://hellojxl.com/posts/%E5%85%B3%E4%BA%8Edapper%E8%BF%81%E7%A7%BB%E5%88%B0sqlsugar%E7%9A%84%E8%AE%B0%E5%BD%95/</link>
+      <pubDate>Mon, 23 Apr 2018 23:36:46 +0000</pubDate>
+      
+      <guid>http://hellojxl.com/posts/%E5%85%B3%E4%BA%8Edapper%E8%BF%81%E7%A7%BB%E5%88%B0sqlsugar%E7%9A%84%E8%AE%B0%E5%BD%95/</guid>
+      <description>迁移原因 由于接受的是之前项目组开发的项目的，项目是由本人从.net framework迁移至dotnet core的，目前用到Predicate，发现各种异常，加之时间比较紧而且dapperextensions貌似还没有完全迁移到dotnet core，最后考虑再三打算放弃dapper(其实dapper本身来说还是很好用的，只是dapperextensions现在来说不太好用)，看了看发现了SqlSugar，经过测试发现，如果忽略SqlSugar的orm特性，完全可以无缝迁移过去，而且由于国人开发的原因，文档还算齐全，发现国人的库还是比较靠谱的😊，给国人点个👍
+迁移过程 具体细节就不多说了，只写自己目前用到的特性
+  sql语句查询，这个不必说，因为dapper主要是操作sql语句，由于项目中变动不能太大，不然非得疯了不可，实际迁移过程中还是很方便的
+  实体及表结构操作，更改对应表名的功能dapper也有，但发现dapperextensions完全需要再重新做一遍对应的操作，而且会有异常问题，很是麻烦，这个在sqlSugar中就很简单
+  条件查询系统，项目迁移对主要原因就是因为dapperextensions的Predicate系统貌似完全处于瘫痪状态，自己又没有时间去修改，迁移到SqlSugar之后用的很是舒心，而且语法上也差别不大
+  分页功能，这本是一个常用的功能，都有提供，不多说。
+  由于SqlSugar本身就是ORM，所以可以省好多事，而且也像文档介绍的那样Lambda的解析也非常完善
+迁移结果 目前已经完成迁移，正在进行开发，目前还没有什么坑，并发性还没有测试，等项目完成了来个测试，看看结果如果，也希望能多多支持国人的项目SqlSugar4文档地址，GitHub地址</description>
+    </item>
+    
+    <item>
+      <title>dotnet core在swagger中添加认证</title>
+      <link>http://hellojxl.com/posts/dotnet-core%E5%9C%A8swagger%E4%B8%AD%E6%B7%BB%E5%8A%A0%E8%AE%A4%E8%AF%81/</link>
+      <pubDate>Wed, 11 Apr 2018 22:24:08 +0000</pubDate>
+      
+      <guid>http://hellojxl.com/posts/dotnet-core%E5%9C%A8swagger%E4%B8%AD%E6%B7%BB%E5%8A%A0%E8%AE%A4%E8%AF%81/</guid>
+      <description>2018-04-16更新：经过测试，这么写是可以的，只是每次调用前都要加上：bearer token,可以在命名Filter的时候加上提醒一下，暂时没去想其它更好的方法
+还有当前如果有多个项目的话，比如这个项目引用了另一个项目的model，默认是不会显示注释的，解决方法是：每个项目单独生成xml文件，然后在include XML文档时同时引入，那么就可以显示了
+Nignx反向代理的情况下，默认会找不到swagger的json文件导致失败，方法是：
+//加入两个点c.SwaggerEndpoint(&amp;#34;../swagger/v1/swagger.json&amp;#34;, &amp;#34;My API V1&amp;#34;); 最近项目中用到swagger进行Api文档说明，之前只是匆匆的测试了一下，这次前端说要看一下就仔细研究了一下，由于项目中增加了jwt认证，当然也要在swagger中体现出来，就网上搜索了一下，虽然文章不少可是不是版本对不上就是用不了，好不容易在这个博客上找到点线索，在此记录一下。
+添加Swagger 这个很简单，网上教程也多的是，具体流程如下:
+//添加引用using Swashbuckle.AspNetCore.Swagger;//在ConfigureServices中添加services.AddSwaggerGen(c =&amp;gt;{c.SwaggerDoc(&amp;#34;v1&amp;#34;, new Info { Title = &amp;#34;My API&amp;#34;, Version = &amp;#34;v1&amp;#34; });//添加xml注释说明，下面会说var filePath = Path.Combine(PlatformServices.Default.Application.ApplicationBasePath, &amp;#34;MyApi.xml&amp;#34;);c.IncludeXmlComments(filePath);//添加认证，下面会说c.OperationFilter&amp;lt;AuthorizationHeaderFilter&amp;gt;();});//在Configure中添加app.UseSwagger();app.UseSwaggerUI(c =&amp;gt;{c.SwaggerEndpoint(&amp;#34;/swagger/v1/swagger.json&amp;#34;, &amp;#34;My API V1&amp;#34;);});这样默认swagger就可以启动了，当然如果现在真要运行是起不来的，因为还没有生成xml注释文档，下面来添加
+添加xml文档注释 这个如果用vs的话很简单，在项目配置里配置一下就好，如果用vs code的话稍微有点麻烦，其实更简单，只是刚开始不知道怎么加而已，只需要在csproj文件中添加下面代码
+&amp;lt;PropertyGroup&amp;gt;&amp;lt;TargetFramework&amp;gt;netcoreapp2.0&amp;lt;/TargetFramework&amp;gt;//下面这句，注意文件名称&amp;lt;DocumentationFile&amp;gt;bin/Debug/netcoreapp2.0/myApi.xml&amp;lt;/DocumentationFile&amp;gt; &amp;lt;/PropertyGroup&amp;gt; 其实也可以添加到这里
+&amp;lt;PropertyGroup Condition=&amp;#34;&amp;#39;$(Configuration)|$(Platform)&amp;#39;==&amp;#39;Debug|AnyCPU&amp;#39;&amp;#34;&amp;gt;&amp;lt;DocumentationFile&amp;gt;bin/Debug/netcoreapp2.0/myApi.xml&amp;lt;/DocumentationFile&amp;gt; 只是我发现有的工程里没有Condition选项，发现添加到TargetFramework下也可以就都写上了，vs code添加注释可以用XML Documentation Comments Support for Visual Studio Code插件，和vs一样，只是有的时候貌似会多加个return，而且一旦要注释，整个工程都要有注释，否则无法运行，暂时没考虑怎么解决，以后再说</description>
+    </item>
+    
+    <item>
+      <title>在vscode中禁用just my code</title>
+      <link>http://hellojxl.com/posts/%E5%9C%A8vscode%E4%B8%AD%E5%90%AF%E7%94%A8just-my-code/</link>
+      <pubDate>Thu, 29 Mar 2018 20:32:32 +0000</pubDate>
+      
+      <guid>http://hellojxl.com/posts/%E5%9C%A8vscode%E4%B8%AD%E5%90%AF%E7%94%A8just-my-code/</guid>
+      <description>最近打算开始用vscode写代码，之前用过一段时间，感觉不怎么好用，最近又用了用，感觉好用很多，今天打开一个项目发现调试不了其它项目，同时调试中一直在打印启用了just my code，所以就搜怎么禁用，当时还没搜到，后来偶然在微软的网站上查到可以在launch.json下添加：
+&amp;#34;just my code&amp;#34;:false就可以禁用just my code了，试用下来感觉已经不比vs差了，还有智能提示，感觉很智能，对了顺便说一下，可以装一下由开发者jchannon开发的C# Extensions，非常好用！</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"><title>关于nvm的使用 - hellojxl</title><link rel="icon" type="image/png" href=icons/myicon.png /><meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta property="og:title" content="关于nvm的使用" />
+<meta property="og:description" content="关于nvm nvm是一个nodejs的版本管理工具，可以在多个node.js的版本之间进行切换。
+原因 一不小心升级了旧MBP上node版本，hexo直接GG，心中真是一万个草泥马崩腾而过，顿时就不想用hexo了，烦的不行。偶然发现了nvm，虽说有n包管理工具，但是感觉不好用，于是直接尝试了一下，很顺畅，心里立马就舒心了。
+nvm的安装和使用 nvm的github是这里，总体来说还是非常简单的，Mac下直接用：
+curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.34.0/install.sh | bash进行安装，但是如果如果发现没有nvm的命令的话需要在执行touch ~/.bash_profile后重新执行上面的命令就可以了。
+用法也很简单nvm install node就可以了，这样会安装最新、稳定的node版本，但是我在安装过程中发现hexo目前还无法在node v11版本下使用，所以最好安装LTS版本，命令是nvm install --lts，默认好像是使用最新的版本，我当时在安装最新版本后直接用了nvm use node，后来发现不能用了之后才安装的lts版本，查资料说是use只会在当前终端中生效，如果想默认一个其它版本可以用nvm alias default node版本，比如我装的最新版本是11.x，LTS版本是10.x的，那么可以用nvm alias default 10即可。
+结束 当时接连因为node版本的问题，都想自己弄了，找到了一个基于dotnet core版的博客XBlog,貌似好几个开源博客都叫这名的，这个博客是基于作者自己封装的ORM，完全用不惯，自己已经魔改成sqlsugar了，不过前端样式还在整改中，还有一些其它用不惯的地方，慢慢改着吧，等自己满意了再发出来，就酱了。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://hellojxl.com/posts/%E5%85%B3%E4%BA%8Envm%E7%9A%84%E4%BD%BF%E7%94%A8/" />
+<meta property="article:published_time" content="2019-01-12T15:38:03+00:00" />
+<meta property="article:modified_time" content="2019-01-12T15:38:03+00:00" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="关于nvm的使用"/>
+<meta name="twitter:description" content="关于nvm nvm是一个nodejs的版本管理工具，可以在多个node.js的版本之间进行切换。
+原因 一不小心升级了旧MBP上node版本，hexo直接GG，心中真是一万个草泥马崩腾而过，顿时就不想用hexo了，烦的不行。偶然发现了nvm，虽说有n包管理工具，但是感觉不好用，于是直接尝试了一下，很顺畅，心里立马就舒心了。
+nvm的安装和使用 nvm的github是这里，总体来说还是非常简单的，Mac下直接用：
+curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.34.0/install.sh | bash进行安装，但是如果如果发现没有nvm的命令的话需要在执行touch ~/.bash_profile后重新执行上面的命令就可以了。
+用法也很简单nvm install node就可以了，这样会安装最新、稳定的node版本，但是我在安装过程中发现hexo目前还无法在node v11版本下使用，所以最好安装LTS版本，命令是nvm install --lts，默认好像是使用最新的版本，我当时在安装最新版本后直接用了nvm use node，后来发现不能用了之后才安装的lts版本，查资料说是use只会在当前终端中生效，如果想默认一个其它版本可以用nvm alias default node版本，比如我装的最新版本是11.x，LTS版本是10.x的，那么可以用nvm alias default 10即可。
+结束 当时接连因为node版本的问题，都想自己弄了，找到了一个基于dotnet core版的博客XBlog,貌似好几个开源博客都叫这名的，这个博客是基于作者自己封装的ORM，完全用不惯，自己已经魔改成sqlsugar了，不过前端样式还在整改中，还有一些其它用不惯的地方，慢慢改着吧，等自己满意了再发出来，就酱了。"/>
+<link href="https://fonts.googleapis.com/css?family=Ubuntu:300,400,300italic,400italic|Raleway:200,300" rel="stylesheet">
+
+	<link rel="stylesheet" type="text/css" media="screen" href="http://hellojxl.comcss/normalize.css" />
+	<link rel="stylesheet" type="text/css" media="screen" href="http://hellojxl.comcss/main.css" />
+	<link rel="stylesheet" type="text/css" href="http://hellojxl.comcss/custom.css" />
+	<link rel="stylesheet" type="text/css" href="http://hellojxl.comcss/dark.css" media="(prefers-color-scheme: dark)" />
+	<link rel="stylesheet" type="text/css" href="http://hellojxl.comcss/custom-dark.css" media="(prefers-color-scheme: dark)" />
+
+	<script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+	<script src="http://hellojxl.comjs/main.js"></script>
+	<script src="http://hellojxl.comjs/abc.js"></script>
+	<script src="http://hellojxl.comjs/xyz.js"></script>
+	<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+</head>
+
+<body>
+	<div class="container wrapper post">
+		<div class="header">
+	<h1 class="site-title"><a href="http://hellojxl.com">hellojxl</a></h1>
+	<div class="site-description"><h2></h2><nav class="nav social">
+			<ul class="flat"><a href="https://github.com/jxl922/" title="Github"><i data-feather="github"></i></a><a href="https://twitter.com/hellojxl" title="Twitter"><i data-feather="twitter"></i></a></ul>
+		</nav>
+	</div>
+
+	<nav class="nav">
+		<ul class="flat">
+			
+			<li>
+				<a href="/">首页</a>
+			</li>
+			
+			<li>
+				<a href="/posts">所有文章</a>
+			</li>
+			
+			<li>
+				<a href="/tags">标签</a>
+			</li>
+			
+			<li>
+				<a href="/about">关于我</a>
+			</li>
+			
+		</ul>
+	</nav>
+</div>
+
+
+		<div class="post-header">
+			<h1 class="title">关于nvm的使用</h1>
+			<div class="meta">Posted at &mdash; Jan 12, 2019</div>
+		</div>
+
+		<div class="markdown">
+			<h4 id="关于nvm">关于nvm</h4>
+<p>nvm是一个nodejs的版本管理工具，可以在多个node.js的版本之间进行切换。</p>
+<h4 id="原因">原因</h4>
+<p>一不小心升级了旧MBP上node版本，hexo直接GG，心中真是一万个草泥马崩腾而过，顿时就不想用hexo了，烦的不行。偶然发现了nvm，虽说有n包管理工具，但是感觉不好用，于是直接尝试了一下，很顺畅，心里立马就舒心了。</p>
+<h4 id="nvm的安装和使用">nvm的安装和使用</h4>
+<p>nvm的github是<a href="https://github.com/creationix/nvm">这里</a>，总体来说还是非常简单的，Mac下直接用：</p>
+<div class="highlight"><pre style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.34.0/install.sh | bash
+</code></pre></div><p>进行安装，但是如果如果发现没有nvm的命令的话需要在执行<code>touch ~/.bash_profile</code>后重新执行上面的命令就可以了。</p>
+<p>用法也很简单<code>nvm install node</code>就可以了，这样会安装最新、稳定的node版本，但是我在安装过程中发现hexo目前还无法在node v11版本下使用，所以最好安装LTS版本，命令是<code>nvm install --lts</code>，默认好像是使用最新的版本，我当时在安装最新版本后直接用了<code>nvm use node</code>，后来发现不能用了之后才安装的lts版本，查资料说是use只会在当前终端中生效，如果想默认一个其它版本可以用<code>nvm alias default node版本</code>，比如我装的最新版本是11.x，LTS版本是10.x的，那么可以用<code>nvm alias default 10</code>即可。</p>
+<h4 id="结束">结束</h4>
+<p>当时接连因为node版本的问题，都想自己弄了，找到了一个基于dotnet core版的博客<a href="https://github.com/IKende/XBlog">XBlog</a>,貌似好几个开源博客都叫这名的，这个博客是基于作者自己封装的ORM，完全用不惯，自己已经魔改成sqlsugar了，不过前端样式还在整改中，还有一些其它用不惯的地方，慢慢改着吧，等自己满意了再发出来，就酱了。</p>
+
+		</div>
+
+		<div class="post-tags">
+			
+				
+					<nav class="nav tags">
+							<ul class="flat">
+								
+								<li><a href="/tags/nodejs">nodejs</a></li>
+								
+								<li><a href="/tags/nvm">nvm</a></li>
+								
+							</ul>
+					</nav>
+				
+			
+		</div>
+		<div id="disqus_thread"></div>
+<script type="text/javascript">
+	(function () {
+		
+		
+		if (window.location.hostname == "localhost")
+			return;
+
+		var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+		var disqus_shortname = 'localhost';
+		dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+		(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+	})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by
+		Disqus.</a></noscript>
+<a href="http://disqus.com/" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</div>
+	<div class="footer wrapper">
+	<nav class="nav">
+		<div> © Copyright notice |  <a href="https://github.com/vividvilla/ezhil">Ezhil theme</a> | Built with <a href="https://gohugo.io">Hugo</a></div>
+	</nav>
+</div>
+
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-123-45', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+<script>feather.replace()</script>
+</body>
+</html>
