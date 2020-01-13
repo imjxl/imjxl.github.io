@@ -7,10 +7,24 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>© Copyright hellojxl</copyright>
-    <lastBuildDate>Sat, 23 Mar 2019 14:38:10 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 13 Jan 2020 22:08:52 +0800</lastBuildDate>
     
 	<atom:link href="https://www.hellojxl.com/posts/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>迁移hexo到hugo</title>
+      <link>https://www.hellojxl.com/posts/%E8%BF%81%E7%A7%BBhexo%E5%88%B0hugo/</link>
+      <pubDate>Mon, 13 Jan 2020 22:08:52 +0800</pubDate>
+      
+      <guid>https://www.hellojxl.com/posts/%E8%BF%81%E7%A7%BBhexo%E5%88%B0hugo/</guid>
+      <description>已经好长时间没写文章了，最近有点忙也懒得写了，最近看到hugo就又想折腾一下，毕竟只需要一个exe就可以了，不像hexo还需要node.js，mac上还好说，Windows上实在是懒得折腾，其实上周末就已经迁移完了，拖延到今天才开始弄，就大概说一下吧。
+迁移心得 这个对我来说还算简单吧，可能是因为文章比较少，直接把原来md文档放到posts文件夹就完了，选择好主题直接生成，就能看到预览界面了，主要折腾是在环境配置跟主题选择上了，说一下整个流程下来的体验hugo的优缺点吧。
+优点  1、简单，这个很明显，毕竟是用go打造的，没有乱七八糟的依赖之类的，这也是迁移到hugo的最主要原因。
+2、快速，这个实际中没体会到，毕竟文章少，不过看网上说速度还是很快的。
+ 缺点  1、主题样式少，这个跟hexo的主题没法比，而且大部分很简陋，找了半天没有找到自己想要的，可能这个跟开发群体也有关系，用node的毕竟大部分是前端，专业做UI，而用go的大部分是后端，对前端不太擅长，而且hugo的时间毕竟短，还需要时间。 2、git部署需要自己来弄，不像hexo直接基础了自动化部署，不过这点倒是无所谓，就是简单敲几行命令的问题，感觉还可以接受。
+ 就大概写一写吧，本来打算写一写今天在开发环境中遇到的问题的，先写一下这个作为开端吧。</description>
+    </item>
     
     <item>
       <title>学习Linux下cron服务</title>
