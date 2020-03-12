@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"><title>记录Sql Server在Win10上重启无法启动的问题 - hellojxl</title><link rel="icon" type="image/png" href=icons/l.png /><meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta property="og:title" content="记录Sql Server在Win10上重启无法启动的问题" />
+<meta property="og:description" content="由于疫情原因，只能在家办公，由于项目中需要Sql Server且公司的那台服务器暂时没有连接VPN，没办法只能在电脑上安装。因为在之前的公司用过，所以不用多说，安装配置完了就用起来了，结果第二天再次启动之后就发现启动不起来了，查看日志提示是master数据损坏，没办法进行修复之后正常了，等第二次开机重启的时候又提示无法启动，心想这也太垃圾了吧这么容易坏？于是开始根据错误码开始爬文（具体错误码忘了）终于找到原因了：
+ 启用了区域设置中的[Beta版：使用Unicode UTF-8提供全球语音支持]
+ 这个原因造成Sql Server启动的时候编码出问题了，所以就会启动失败，果然还是Beta版啊，再吐槽一下，Sql Server的管理终端真是太占磁盘了。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://www.hellojxl.com/posts/%E8%AE%B0%E5%BD%95sql-server%E5%9C%A8win10%E4%B8%8A%E9%87%8D%E5%90%AF%E6%97%A0%E6%B3%95%E5%90%AF%E5%8A%A8%E7%9A%84%E9%97%AE%E9%A2%98/" />
+<meta property="article:published_time" content="2020-03-09T10:12:48+00:00" />
+<meta property="article:modified_time" content="2020-03-09T10:12:48+00:00" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="记录Sql Server在Win10上重启无法启动的问题"/>
+<meta name="twitter:description" content="由于疫情原因，只能在家办公，由于项目中需要Sql Server且公司的那台服务器暂时没有连接VPN，没办法只能在电脑上安装。因为在之前的公司用过，所以不用多说，安装配置完了就用起来了，结果第二天再次启动之后就发现启动不起来了，查看日志提示是master数据损坏，没办法进行修复之后正常了，等第二次开机重启的时候又提示无法启动，心想这也太垃圾了吧这么容易坏？于是开始根据错误码开始爬文（具体错误码忘了）终于找到原因了：
+ 启用了区域设置中的[Beta版：使用Unicode UTF-8提供全球语音支持]
+ 这个原因造成Sql Server启动的时候编码出问题了，所以就会启动失败，果然还是Beta版啊，再吐槽一下，Sql Server的管理终端真是太占磁盘了。"/>
+<link href="https://fonts.googleapis.com/css?family=Ubuntu:300,400,300italic,400italic|Raleway:200,300" rel="stylesheet">
+
+	<link rel="stylesheet" type="text/css" media="screen" href="https://www.hellojxl.com/css/normalize.css" />
+	<link rel="stylesheet" type="text/css" media="screen" href="https://www.hellojxl.com/css/main.css" /><link rel="stylesheet" type="text/css" href="https://www.hellojxl.com/css/dark.css" media="(prefers-color-scheme: dark)" />
+
+	<script src="https://www.hellojxl.com/js/feather.min.js"></script>
+	
+	<script src="https://www.hellojxl.com/js/main.js"></script>
+	<script src="https://www.hellojxl.com/js/jquery-3.4.1.min.js"></script>
+</head>
+
+<body>
+	<div class="container wrapper post">
+		<div class="header">
+	<h1 class="site-title"><a href="https://www.hellojxl.com/">hellojxl</a></h1>
+	<div class="site-description"><h2></h2><nav class="nav social">
+			<ul class="flat"><a href="https://github.com/jxl922/" title="Github"><i data-feather="github"></i></a><a href="https://twitter.com/hellojxl" title="Twitter"><i data-feather="twitter"></i></a></ul>
+		</nav>
+	</div>
+
+	<nav class="nav">
+		<ul class="flat">
+			
+			<li>
+				<a href="/">首页</a>
+			</li>
+			
+			<li>
+				<a href="/posts">所有文章</a>
+			</li>
+			
+			<li>
+				<a href="/tags">标签</a>
+			</li>
+			
+			<li>
+				<a href="/about">关于我</a>
+			</li>
+			
+		</ul>
+	</nav>
+</div>
+
+
+		<div class="post-header">
+			<h1 class="title">记录Sql Server在Win10上重启无法启动的问题</h1>
+			<div class="meta">Posted at &mdash; Mar 9, 2020</div>
+		</div>
+
+		<div class="markdown">
+			<p>由于疫情原因，只能在家办公，由于项目中需要Sql Server且公司的那台服务器暂时没有连接VPN，没办法只能在电脑上安装。因为在之前的公司用过，所以不用多说，安装配置完了就用起来了，结果第二天再次启动之后就发现启动不起来了，查看日志提示是master数据损坏，没办法进行修复之后正常了，等第二次开机重启的时候又提示无法启动，心想这也太垃圾了吧这么容易坏？于是开始根据错误码开始爬文（具体错误码忘了）终于找到原因了：</p>
+<blockquote>
+<p>启用了区域设置中的[<em>Beta版：使用Unicode UTF-8提供全球语音支持</em>]</p>
+</blockquote>
+<p>这个原因造成Sql Server启动的时候编码出问题了，所以就会启动失败，果然还是Beta版啊，再吐槽一下，Sql Server的管理终端真是太占磁盘了。</p>
+
+		</div>
+
+		<div class="post-tags">
+			
+				
+					<nav class="nav tags">
+							<ul class="flat">
+								
+								<li><a href="/tags/sql-server">sql server</a></li>
+								
+							</ul>
+					</nav>
+				
+			
+		</div>
+		</div>
+	<div class="footer wrapper">
+	<nav class="nav">
+		<div> © Copyright hellojxl |  <a href="https://github.com/vividvilla/ezhil">Ezhil theme</a> | Built with <a href="https://gohugo.io">Hugo</a></div>
+	</nav>
+</div>
+
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-155998474-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+<script>feather.replace()</script>
+</body>
+</html>

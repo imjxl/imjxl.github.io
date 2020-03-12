@@ -7,10 +7,21 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>© Copyright hellojxl</copyright>
-    <lastBuildDate>Mon, 13 Jan 2020 22:08:52 +0800</lastBuildDate>
+    <lastBuildDate>Mon, 09 Mar 2020 10:12:48 +0000</lastBuildDate>
     
 	<atom:link href="https://www.hellojxl.com/posts/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>记录Sql Server在Win10上重启无法启动的问题</title>
+      <link>https://www.hellojxl.com/posts/%E8%AE%B0%E5%BD%95sql-server%E5%9C%A8win10%E4%B8%8A%E9%87%8D%E5%90%AF%E6%97%A0%E6%B3%95%E5%90%AF%E5%8A%A8%E7%9A%84%E9%97%AE%E9%A2%98/</link>
+      <pubDate>Mon, 09 Mar 2020 10:12:48 +0000</pubDate>
+      
+      <guid>https://www.hellojxl.com/posts/%E8%AE%B0%E5%BD%95sql-server%E5%9C%A8win10%E4%B8%8A%E9%87%8D%E5%90%AF%E6%97%A0%E6%B3%95%E5%90%AF%E5%8A%A8%E7%9A%84%E9%97%AE%E9%A2%98/</guid>
+      <description>由于疫情原因，只能在家办公，由于项目中需要Sql Server且公司的那台服务器暂时没有连接VPN，没办法只能在电脑上安装。因为在之前的公司用过，所以不用多说，安装配置完了就用起来了，结果第二天再次启动之后就发现启动不起来了，查看日志提示是master数据损坏，没办法进行修复之后正常了，等第二次开机重启的时候又提示无法启动，心想这也太垃圾了吧这么容易坏？于是开始根据错误码开始爬文（具体错误码忘了）终于找到原因了：
+ 启用了区域设置中的[Beta版：使用Unicode UTF-8提供全球语音支持]
+ 这个原因造成Sql Server启动的时候编码出问题了，所以就会启动失败，果然还是Beta版啊，再吐槽一下，Sql Server的管理终端真是太占磁盘了。</description>
+    </item>
     
     <item>
       <title>迁移hexo到hugo</title>
